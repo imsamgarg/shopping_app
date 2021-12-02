@@ -5,7 +5,7 @@ abstract class UserInterface {
   Future signInWithEmail(String email, String password);
   Future<bool> signInWithGoogle();
   Future updateName(String name);
-
+  Future<bool> isUserLogged();
   String get userName;
   String get phoneNumber;
   String get uid;

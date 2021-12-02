@@ -4,7 +4,7 @@ import 'package:shopping_app/app/core/interfaces.dart';
 import 'package:shopping_app/app/core/utils/helper.dart';
 
 class FirebaseUserRepository extends UserInterface {
-  late final _auth = FirebaseAuth.instance;
+  final _auth = FirebaseAuth.instance;
   late final _user = _auth.currentUser;
 
   @override
@@ -70,5 +70,11 @@ class FirebaseUserRepository extends UserInterface {
   @override
   Future updateName(String name) async {
     return await _auth.currentUser?.updateDisplayName(name);
+  }
+
+  @override
+  Future<bool> isUserLogged() async {
+    final user = await _auth.authStateChanges().first;
+    return user != null;
   }
 }
