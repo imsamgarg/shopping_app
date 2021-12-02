@@ -1,20 +1,25 @@
 import 'package:get/get.dart';
+import 'package:shopping_app/app/data/services/user_service.dart';
+import 'package:shopping_app/app/modules/startup/views/welcome_view.dart';
+import 'package:shopping_app/app/routes/app_pages.dart';
 
 class StartupController extends GetxController {
-  //TODO: Implement StartupController
-
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
   @override
   void onReady() {
     super.onReady();
+    checkForUser();
   }
 
-  @override
-  void onClose() {}
-  void increment() => count.value++;
+  void checkForUser() async {
+    final service = Get.find<UserService>();
+    if (await service.isUserSignedIn()) {
+      Get.off(Routes.HOME);
+    } else {
+      Get.to(() => WelcomeView(), routeName: "Welcome Screen");
+    }
+  }
+
+  void onNextTap() {
+    Get.toNamed(Routes.REGISTER);
+  }
 }
