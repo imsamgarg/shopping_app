@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import '../controllers/phone_auth_controller.dart';
-
-class PhoneAuthView extends GetView<PhoneAuthController> {
+class PhoneAuthView extends GetView {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

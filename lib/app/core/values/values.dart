@@ -11,7 +11,18 @@ enum NavigateScreen {
   Post,
   Profile,
 }
+enum ScreenSize {
+  sm,
+  md,
+  lg,
+  xl,
+}
 
 const homeScreen = NavigateScreen.Home;
 const postScreen = NavigateScreen.Post;
 const profileScreen = NavigateScreen.Profile;
+
+const double sm = 400;
+const double md = 500;
+const double lg = 600;
+const double xl = 700;

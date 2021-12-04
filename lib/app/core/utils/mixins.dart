@@ -12,6 +12,26 @@ mixin Validators {
     return null;
   }
 
+  String? emailValidator(String? value, [int minLen = 10]) {
+    value ??= "";
+    value.removeAllWhitespace;
+
+    if (value.isEmpty) return "Please Enter Phone Number";
+    if (!value.isPhoneNumber) return "Enter Valid Number";
+    if (value.length < 10) return "Enter Valid Number";
+    return null;
+  }
+
+  String? passValidator(String? value, [int minLen = 10]) {
+    value ??= "";
+    value.removeAllWhitespace;
+
+    if (value.isEmpty) return "Please Enter Phone Number";
+    if (!value.isPhoneNumber) return "Enter Valid Number";
+    if (value.length < 10) return "Enter Valid Number";
+    return null;
+  }
+
   String? otpCodeValidator(String? value, [int minLen = 6]) {
     value ??= "";
     value.removeAllWhitespace;
@@ -22,7 +42,7 @@ mixin Validators {
     return null;
   }
 
-  String? nameValidotor(String? value, [bool numbersAllowed = false]) {
+  String? nameValidator(String? value, [bool numbersAllowed = false]) {
     value ??= "";
     value = value.removeAllWhitespace;
     if (value.isEmpty) return "Please Enter Name";

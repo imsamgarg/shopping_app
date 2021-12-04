@@ -20,6 +20,6 @@ class StartupController extends GetxController {
   }
 
   void onNextTap() {
-    Get.toNamed(Routes.REGISTER);
+    Get.toNamed(Routes.AUTH);
   }
 }
