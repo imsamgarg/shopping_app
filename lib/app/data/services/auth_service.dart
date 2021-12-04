@@ -17,7 +17,7 @@ class AuthService extends GetxService {
     return _repo.signUpWithEmail(email, password, name: name);
   }
 
-  Future<void> signInWitwhEmail(email, pass) {
+  Future<void> signInWithEmail(String email, String pass) {
     return _repo.signInWithEmail(email, pass);
   }
 
