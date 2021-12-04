@@ -79,4 +79,11 @@ class FirebaseUserRepository extends UserInterface {
     final user = await _auth.authStateChanges().first;
     return user != null;
   }
+
+  @override
+  Future sendPassResetEmail(String email) async {
+    return await handleFirebaseAuthError(() async {
+      await _auth.sendPasswordResetEmail(email: email);
+    });
+  }
 }

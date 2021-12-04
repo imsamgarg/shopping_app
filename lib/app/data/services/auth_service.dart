@@ -30,4 +30,8 @@ class AuthService extends GetxService {
   }
 
   PhoneAuthCallback get initPhoneAuth => _repo.loginWithPhoneNumber;
+
+  Future sendPassResetEmail(String email) {
+    return _repo.sendPassResetEmail(email);
+  }
 }
