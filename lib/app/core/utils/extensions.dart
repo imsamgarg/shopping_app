@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/state_manager.dart';
 import 'package:path/path.dart' as p;
 
 extension ColorExtension on BuildContext {

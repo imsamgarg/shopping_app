@@ -1,5 +1,10 @@
 import 'package:custom_utils/log_utils.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/utils.dart';
+import 'package:shopping_app/app/data/services/auth_service.dart';
+import 'package:shopping_app/app/modules/auth/views/google_auth_view.dart';
+import 'package:shopping_app/app/modules/auth/views/register_view.dart';
+import 'package:shopping_app/app/modules/auth/views/phone_auth_view.dart';
 
 mixin Validators {
   String? phoneNumberValidator(String? value, [int minLen = 10]) {
@@ -64,4 +69,14 @@ mixin Validators {
       return "Max $maxLen Characters Allowed";
     }
   }
+}
+
+mixin AuthMixin {
+  late final AuthService service = AuthService.service();
+
+  void onRegisterTap() => Get.to(() => RegisterView());
+
+  void onGoogleTap() => Get.to(() => GoogleAuthView());
+
+  void onCallTap() => Get.to(() => PhoneAuthView());
 }
