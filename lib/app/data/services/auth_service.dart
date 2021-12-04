@@ -1,8 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_disposable.dart';
+import 'package:shopping_app/app/core/utils/typedefs.dart';
 import 'package:shopping_app/app/data/repository/user_repository.dart';
 
 class AuthService extends GetxService {
   late final _repo = FirebaseUserRepository();
+
+  static AuthService service() => Get.find<AuthService>();
 
   Future<void> registerWithEmail(
     String email,
@@ -12,11 +17,17 @@ class AuthService extends GetxService {
     return _repo.signUpWithEmail(email, password, name: name);
   }
 
-  get signInWithEmail => _repo.signInWithEmail;
+  Future<void> signInWitwhEmail(email, pass) {
+    return _repo.signInWithEmail(email, pass);
+  }
 
-  get signInWithGoogle => _repo.signInWithGoogle;
+  Future<bool> signInWithGoogle() {
+    return _repo.signInWithGoogle();
+  }
 
-  get loginWithPhone => _repo.loginWithPhoneCreds;
+  Future<bool> loginWithPhone(AuthCredential credential) {
+    return _repo.loginWithPhoneCreds(credential);
+  }
 
-  get initPhoneAuth => _repo.loginWithPhoneNumber;
+  PhoneAuthCallback get initPhoneAuth => _repo.loginWithPhoneNumber;
 }

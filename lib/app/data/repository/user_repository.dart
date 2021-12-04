@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shopping_app/app/core/interfaces.dart';
 import 'package:shopping_app/app/core/utils/helper.dart';
+import 'package:shopping_app/app/core/utils/typedefs.dart';
 
 class FirebaseUserRepository extends UserInterface {
   final _auth = FirebaseAuth.instance;
@@ -22,7 +23,7 @@ class FirebaseUserRepository extends UserInterface {
   @override
   String get userName => _user?.displayName ?? "";
 
-  get loginWithPhoneNumber => _auth.verifyPhoneNumber;
+  PhoneAuthCallback get loginWithPhoneNumber => _auth.verifyPhoneNumber;
 
   Future<bool> loginWithPhoneCreds(AuthCredential credential) async {
     return await handleFirebaseAuthError(() async {
@@ -32,7 +33,7 @@ class FirebaseUserRepository extends UserInterface {
   }
 
   @override
-  Future signInWithEmail(String email, String password) async {
+  Future<void> signInWithEmail(String email, String password) async {
     return await handleFirebaseAuthError(() async {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
     });
@@ -57,7 +58,8 @@ class FirebaseUserRepository extends UserInterface {
   }
 
   @override
-  Future signUpWithEmail(String email, String password, {String? name}) async {
+  Future<void> signUpWithEmail(String email, String password,
+      {String? name}) async {
     return await handleFirebaseAuthError(() async {
       await _auth.createUserWithEmailAndPassword(
         email: email,

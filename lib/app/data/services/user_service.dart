@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:shopping_app/app/data/repository/user_repository.dart';
 
 class UserService extends GetxService {
+  static UserService service() => Get.find<UserService>();
   late final _repo = FirebaseUserRepository();
 
   String get userName => _repo.userName;
