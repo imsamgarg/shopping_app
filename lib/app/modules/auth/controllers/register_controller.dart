@@ -1,20 +1,44 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shopping_app/app/core/utils/helper.dart';
+import 'package:shopping_app/app/core/utils/mixins.dart';
+import 'package:shopping_app/app/routes/app_pages.dart';
 
-class RegisterController extends GetxController {
-  //TODO: Implement RegisterController
+class RegisterController extends GetxController with AuthMixin {
+  late final GlobalKey<FormState> formKey = GlobalKey();
+  late final nameController = TextEditingController();
+  late final emailController = TextEditingController();
+  late final passController = TextEditingController();
 
-  final count = 0.obs;
+  bool isButtonLoading = false;
+
+  final String buttonId = "button";
+
   @override
-  void onInit() {
-    super.onInit();
+  void onClose() {
+    emailController.dispose();
+    passController.dispose();
+    super.onClose();
   }
 
   @override
-  void onReady() {
-    super.onReady();
+  void onRegisterTap() {
+    if (!formKey.currentState!.validate()) return;
+    handleAuthError(_tryRegister, onFinally: () => toggleLoading(false));
   }
 
-  @override
-  void onClose() {}
-  void increment() => count.value++;
+  Future _tryRegister() async {
+    toggleLoading(true);
+    final email = emailController.text;
+    final pass = passController.text;
+    final name = nameController.text;
+    await service.registerWithEmail(email, pass, name: name);
+    Get.offAllNamed(Routes.HOME);
+    successSnackbar("Account Created Successfully");
+  }
+
+  void toggleLoading(bool value) {
+    isButtonLoading = value;
+    update([buttonId]);
+  }
 }
