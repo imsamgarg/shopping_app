@@ -125,7 +125,7 @@ class LoginButton extends GetView<LoginController> {
         return Hero(
           tag: "button",
           child: IgnorePointer(
-            ignoring: controller.isLoading,
+            ignoring: controller.isButtonLoading,
             child: TextButton(
               style: TextButton.styleFrom(
                 backgroundColor: primaryColor(context),
@@ -133,7 +133,7 @@ class LoginButton extends GetView<LoginController> {
                 shape: Sizing.cardShape,
               ),
               onPressed: controller.onLoginTap,
-              child: controller.isLoading
+              child: controller.isButtonLoading
                   ? CenterLoading(size: 18)
                   : "Login".text.bold.size(18).makeCentered(),
             ),
