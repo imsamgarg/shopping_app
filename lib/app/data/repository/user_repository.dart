@@ -23,12 +23,36 @@ class FirebaseUserRepository extends UserInterface {
   @override
   String get userName => _user?.displayName ?? "";
 
-  PhoneAuthCallback get loginWithPhoneNumber => _auth.verifyPhoneNumber;
+  Future<void> loginWithPhoneNumber({
+    required String phoneNumber,
+    required void Function(PhoneAuthCredential) verificationCompleted,
+    required void Function(FirebaseAuthException) verificationFailed,
+    required void Function(String, int?) codeSent,
+    required void Function(String) codeAutoRetrievalTimeout,
+    Duration timeout = const Duration(seconds: 30),
+    int? forceResendingToken,
+  }) {
+    return _auth.verifyPhoneNumber(
+      phoneNumber: phoneNumber,
+      verificationCompleted: verificationCompleted,
+      verificationFailed: verificationFailed,
+      codeSent: codeSent,
+      codeAutoRetrievalTimeout: codeAutoRetrievalTimeout,
+      timeout: timeout,
+      forceResendingToken: forceResendingToken,
+    );
+  }
 
   Future<bool> loginWithPhoneCreds(AuthCredential credential) async {
     return await handleFirebaseAuthError(() async {
       final userCreds = await _auth.signInWithCredential(credential);
       return userCreds.additionalUserInfo!.isNewUser ? true : false;
+    });
+  }
+
+  Future<void> linkWithCreds(AuthCredential credential) async {
+    return await handleFirebaseAuthError(() async {
+      await _user!.linkWithCredential(credential);
     });
   }
 

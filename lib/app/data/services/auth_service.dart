@@ -29,9 +29,31 @@ class AuthService extends GetxService {
     return _repo.loginWithPhoneCreds(credential);
   }
 
-  PhoneAuthCallback get initPhoneAuth => _repo.loginWithPhoneNumber;
+  Future<void> initPhoneAuth({
+    required String phoneNumber,
+    required void Function(PhoneAuthCredential) verificationCompleted,
+    required void Function(FirebaseAuthException) verificationFailed,
+    required void Function(String, int?) codeSent,
+    required void Function(String) codeAutoRetrievalTimeout,
+    Duration timeout = const Duration(seconds: 30),
+    int? forceResendingToken,
+  }) {
+    return _repo.loginWithPhoneNumber(
+      phoneNumber: phoneNumber,
+      verificationCompleted: verificationCompleted,
+      verificationFailed: verificationFailed,
+      codeSent: codeSent,
+      codeAutoRetrievalTimeout: codeAutoRetrievalTimeout,
+      timeout: timeout,
+      forceResendingToken: forceResendingToken,
+    );
+  }
 
   Future sendPassResetEmail(String email) {
     return _repo.sendPassResetEmail(email);
+  }
+
+  Future linkWithCreds(AuthCredential credential) {
+    return _repo.linkWithCreds(credential);
   }
 }
