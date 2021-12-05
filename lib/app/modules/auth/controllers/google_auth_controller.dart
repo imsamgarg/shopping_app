@@ -1,20 +1,30 @@
 import 'package:get/get.dart';
+import 'package:shopping_app/app/core/utils/helper.dart';
+import 'package:shopping_app/app/core/utils/mixins.dart';
+import 'package:shopping_app/app/routes/app_pages.dart';
 
-class GoogleAuthController extends GetxController {
-  //TODO: Implement GoogleAuthController
+class GoogleAuthController extends GetxController with AuthMixin {
+  final String buttonId = "button";
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
-  }
+  bool isTryAgainButtonVisible = false;
 
   @override
   void onReady() {
     super.onReady();
+    onLoginWithGoogle();
   }
 
-  @override
-  void onClose() {}
-  void increment() => count.value++;
+  void onLoginWithGoogle() {
+    handleAuthError(_login, onError: _tryAgain);
+  }
+
+  Future _login() async {
+    await service.signInWithGoogle();
+    Get.offAllNamed(Routes.HOME);
+  }
+
+  void _tryAgain() {
+    isTryAgainButtonVisible = true;
+    update([buttonId]);
+  }
 }
