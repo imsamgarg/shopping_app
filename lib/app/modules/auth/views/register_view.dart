@@ -12,12 +12,14 @@ import 'package:shopping_app/app/modules/auth/controllers/register_controller.da
 import 'package:velocity_x/velocity_x.dart';
 import 'package:get/get.dart';
 
-class RegisterView extends GetView<RegisterController> with Validators {
+class RegisterView extends StatelessWidget with Validators {
   final registerHeading =
       "Register".text.size(35).fontWeight(FontWeight.bold).make();
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(RegisterController());
+
     final _height = context.screenHeight;
     final _bottomInsets = context.mq.viewInsets.bottom;
     final isSmallScreen = _height - _bottomInsets < 550;
