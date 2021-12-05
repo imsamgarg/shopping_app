@@ -125,10 +125,12 @@ Future<T> handleFirebaseAuthError<T>(Future<T> Function() callback) async {
 Future handleAuthError(
   Future Function() callback, {
   VoidCallback? onFinally,
+  VoidCallback? onError,
 }) async {
   try {
     await callback();
   } on AuthException catch (e) {
+    onError?.call();
     errorSnackbar(e.errorMsg);
   } finally {
     onFinally?.call();
