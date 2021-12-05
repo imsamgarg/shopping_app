@@ -1,20 +1,134 @@
+import 'dart:async';
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shopping_app/app/core/utils/helper.dart';
+import 'package:shopping_app/app/core/utils/mixins.dart';
+import 'package:shopping_app/app/routes/app_pages.dart';
 
-class PhoneAuthController extends GetxController {
-  //TODO: Implement PhoneAuthController
+class PhoneAuthController extends GetxController with AuthMixin {
+  late String _verificationId;
 
-  final count = 0.obs;
+  PhoneAuthController(this.link);
+  final bool link;
+  late final GlobalKey<FormState> formKey = GlobalKey();
+  late final phoneController = TextEditingController();
+  late final otpController = TextEditingController();
+
+  bool isButtonLoading = false;
+  bool isOtpSent = false;
+
+  final String buttonId = "button";
+  final String timerId = "timer";
+  final String inputFieldsId = "fields";
+
+  final _timer = 60.obs;
+  get timer => _timer.value;
+  set timer(value) => _timer.value = value;
+
   @override
-  void onInit() {
-    super.onInit();
+  void onClose() {
+    phoneController.dispose();
+    otpController.dispose();
+    super.onClose();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  Future _verifyOtp(AuthCredential credential) async {
+    if (link) {
+      await service.linkWithCreds(credential);
+      Get.back();
+      successSnackbar("Mobile Successfully Linked", 3);
+      return;
+    }
+
+    final isNewUser = await service.loginWithPhone(credential);
+    Get.offAllNamed(Routes.HOME);
+    if (isNewUser) {
+      successSnackbar("Phone Number Authenticated");
+    } else {
+      successSnackbar("Welcome Back!!");
+    }
   }
 
-  @override
-  void onClose() {}
-  void increment() => count.value++;
+  _onVerificationCompletion(PhoneAuthCredential credential) {
+    otpController.text = credential.smsCode!;
+    toggleButtonLoading(true);
+
+    handleAuthError(
+      () => _verifyOtp(credential),
+      onFinally: () {
+        toggleButtonLoading(false);
+      },
+    );
+  }
+
+  _onVerificationFailed(FirebaseAuthException e) {
+    String errorMsg = handleFirebaseAuthErrorCodes(e.code);
+    errorSnackbar(errorMsg);
+    toggleButtonLoading(false);
+    isOtpSent = true;
+    update([inputFieldsId, timerId]);
+  }
+
+  void onVerifyOtp() async {
+    PhoneAuthCredential credential = PhoneAuthProvider.credential(
+      verificationId: _verificationId,
+      smsCode: otpController.text,
+    );
+
+    toggleButtonLoading(true);
+
+    handleAuthError(
+      () => _verifyOtp(credential),
+      onFinally: () {
+        toggleButtonLoading(false);
+      },
+    );
+  }
+
+  _onCodeSent(String verificationId, int? resendToken) {
+    final timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      if (_timer.value > 0) --_timer.value;
+    });
+
+    Future.delayed(Duration(seconds: 62)).then((value) {
+      timer.cancel();
+    });
+
+    _verificationId = verificationId;
+    toggleButtonLoading(false);
+    isOtpSent = true;
+    update([inputFieldsId, timerId]);
+
+    customSnackBar(
+      "Otp Sent!! Auto Retrieving Otp in 60 Seconds",
+      Icon(Icons.timer),
+      Colors.grey.shade800,
+    );
+  }
+
+  _onCodeAutoRetrievalTimeout(String verificationId) {
+    // errorSnackbar("Auto Detect Timer Expired")
+  }
+
+  void onSendOtp() {
+    if (!formKey.currentState!.validate()) return;
+
+    toggleButtonLoading(true);
+    String phone = phoneController.text;
+    phone = "+91$phone";
+    service.initPhoneAuth(
+      phoneNumber: phone,
+      verificationCompleted: _onVerificationCompletion,
+      verificationFailed: _onVerificationFailed,
+      codeSent: _onCodeSent,
+      codeAutoRetrievalTimeout: _onCodeAutoRetrievalTimeout,
+    );
+  }
+
+  void toggleButtonLoading(bool value) {
+    isButtonLoading = value;
+    update([buttonId]);
+  }
 }
