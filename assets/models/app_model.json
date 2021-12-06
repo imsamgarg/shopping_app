@@ -1,0 +1,47 @@
+{
+    "config": {
+        "sizeCharts": [
+            ""
+        ],
+        "returnPolicy": [
+            ""
+        ],
+        "codCharges": 12,
+        "codFreeOn": 12,
+        "fbLink": "",
+        "instaLink": "",
+        "playLink": "",
+        "isCodAvailable": true,
+        "isRazorPayAvailable": false,
+        "razorPayCharges": 12,
+        "razorPayFreeOn": 12,
+        "razorPayKey": "",
+        "waLink": "",
+        "emailAddress": [
+            ""
+        ],
+        "phoneNumber": [
+            ""
+        ],
+        "description": ""
+    },
+    "offers": [
+        {
+            "id": "",
+            "img": "",
+            "isProduct": true
+        }
+    ],
+    "categories": [
+        {
+            "name": "",
+            "img": "",
+            "subCats": [
+                {
+                    "name": "",
+                    "img": ""
+                }
+            ]
+        }
+    ]
+}

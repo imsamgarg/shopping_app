@@ -1,0 +1,40 @@
+{
+    "id": "",
+    "name": "",
+    "category": "",
+    "subCategory": "",
+    "description": "",
+    "link": "",
+    "price": 12,
+    "discount": 12,
+    "popularity": 12,
+    "returnDays": 12,
+    "sizechart": 1,
+    "isPopular": true,
+    "isReturnable": true,
+    "img": [
+        ""
+    ],
+    "tags": [
+        ""
+    ],
+    "features": [
+        ""
+    ],
+    "options": [
+        {
+            "isRequired": true,
+            "name": "",
+            "selectedValue": 1,
+            "isDifferent": false,
+            "values": [
+                {
+                    "img": "",
+                    "inStock": true,
+                    "name": "vlue",
+                    "priceDifference": 1
+                }
+            ]
+        }
+    ]
+}
