@@ -6,11 +6,6 @@ const double fontSizeXL = 24;
 ///16
 const double fontSizeM = 16;
 
-enum NavigateScreen {
-  Home,
-  Post,
-  Profile,
-}
 enum ScreenSize {
   sm,
   md,
@@ -18,9 +13,7 @@ enum ScreenSize {
   xl,
 }
 
-const homeScreen = NavigateScreen.Home;
-const postScreen = NavigateScreen.Post;
-const profileScreen = NavigateScreen.Profile;
+enum SortBy { popularity, priceLTH, priceHTL }
 
 const double sm = 400;
 const double md = 500;
