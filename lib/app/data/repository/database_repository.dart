@@ -5,6 +5,11 @@ import 'package:shopping_app/app/core/values/values.dart';
 import 'package:shopping_app/app/data/models/product_model.dart';
 
 class FirebaseDbRepository {
+  static final FirebaseDbRepository instance = FirebaseDbRepository();
+
+  factory FirebaseDbRepository() {
+    return instance;
+  }
   late final _firestore = FirebaseFirestore.instance;
   late final _database = db.FirebaseDatabase.instance;
 

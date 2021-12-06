@@ -2,9 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shopping_app/app/core/interfaces.dart';
 import 'package:shopping_app/app/core/utils/helper.dart';
-import 'package:shopping_app/app/core/utils/typedefs.dart';
 
 class FirebaseUserRepository extends UserInterface {
+  static final FirebaseUserRepository instance = FirebaseUserRepository();
+
+  factory FirebaseUserRepository() {
+    return instance;
+  }
   final _auth = FirebaseAuth.instance;
   late final _user = _auth.currentUser;
 
