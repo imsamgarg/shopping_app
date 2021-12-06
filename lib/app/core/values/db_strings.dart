@@ -12,6 +12,8 @@ abstract class Db {
 
   static const String popularityField = "popularity";
   static const String favouriteField = "favourite";
+  static const String addressField = "address";
+  static const String cartField = "cart";
   static const String priceField = "price";
   static const String isPopularField = "isPopular";
 
