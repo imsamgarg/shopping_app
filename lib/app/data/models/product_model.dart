@@ -37,7 +37,7 @@ class ProductModel {
     this.options,
   });
 
-  ProductModel.fromJson(Map<String, dynamic> json) {
+  ProductModel.fromJson(json) {
     id = json['id'];
     name = json['name'];
     category = json['category'];
@@ -102,7 +102,7 @@ class Options {
     this.values,
   });
 
-  Options.fromJson(Map<String, dynamic> json) {
+  Options.fromJson(json) {
     isRequired = json['isRequired'];
     name = json['name'];
     selectedValue = json['selectedValue'];
@@ -141,7 +141,7 @@ class Values {
     this.priceDifference,
   });
 
-  Values.fromJson(Map<String, dynamic> json) {
+  Values.fromJson(json) {
     img = json['img'];
     inStock = json['inStock'];
     name = json['name'];

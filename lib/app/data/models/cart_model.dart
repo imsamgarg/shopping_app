@@ -1,16 +1,19 @@
-class Cart {
+import 'package:shopping_app/app/data/models/product_model.dart';
+
+class CartModel {
   int? fullPrice;
   int? quantity;
-  Product? product;
+  ProductModel? product;
   List<int>? options;
 
-  Cart({this.fullPrice, this.quantity, this.product, this.options});
+  CartModel({this.fullPrice, this.quantity, this.product, this.options});
 
-  Cart.fromJson(Map<String, dynamic> json) {
+  CartModel.fromJson(json) {
     fullPrice = json['fullPrice'];
     quantity = json['quantity'];
-    product =
-        json['product'] != null ? Product?.fromJson(json['product']) : null;
+    product = json['product'] != null
+        ? ProductModel?.fromJson(json['product'])
+        : null;
     options = json['options'].cast<int>();
   }
 
@@ -22,22 +25,6 @@ class Cart {
       data['product'] = product?.toJson();
     }
     data['options'] = options;
-    return data;
-  }
-}
-
-class Product {
-  String? fu;
-
-  Product({this.fu});
-
-  Product.fromJson(Map<String, dynamic> json) {
-    fu = json['fu'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data['fu'] = fu;
     return data;
   }
 }

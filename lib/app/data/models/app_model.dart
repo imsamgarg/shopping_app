@@ -5,7 +5,7 @@ class AppModel {
 
   AppModel({this.config, this.offers, this.categories});
 
-  AppModel.fromJson(Map<String, dynamic> json) {
+  AppModel.fromJson(json) {
     config = json['config'] != null ? Config?.fromJson(json['config']) : null;
     if (json['offers'] != null) {
       offers = <Offer>[];
@@ -72,7 +72,7 @@ class Config {
       this.phoneNumber,
       this.description});
 
-  Config.fromJson(Map<String, dynamic> json) {
+  Config.fromJson(dynamic json) {
     sizeCharts = json['sizeCharts']?.cast<String>();
     returnPolicy = json['returnPolicy']?.cast<String>();
     codCharges = json['codCharges'];
@@ -120,13 +120,13 @@ class Offer {
 
   Offer({this.id, this.img, this.isProduct});
 
-  Offer.fromJson(Map<String, dynamic> json) {
+  Offer.fromJson(dynamic json) {
     id = json['id'];
     img = json['img'];
     isProduct = json['isProduct'];
   }
 
-  Map<String, dynamic> toJson() {
+  dynamic toJson() {
     final data = <String, dynamic>{};
     data['id'] = id;
     data['img'] = img;
@@ -142,7 +142,7 @@ class Category {
 
   Category({this.name, this.img, this.subCats});
 
-  Category.fromJson(Map<String, dynamic> json) {
+  Category.fromJson(dynamic json) {
     name = json['name'];
     img = json['img'];
     if (json['subCats'] != null) {
@@ -170,7 +170,7 @@ class SubCat {
 
   SubCat({this.name, this.img});
 
-  SubCat.fromJson(Map<String, dynamic> json) {
+  SubCat.fromJson(dynamic json) {
     name = json['name'];
     img = json['img'];
   }
