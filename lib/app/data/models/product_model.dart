@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class ProductModel {
   String? id;
   String? name;
@@ -156,4 +158,11 @@ class Values {
     data['priceDifference'] = priceDifference;
     return data;
   }
+}
+
+class ProductSnapshot {
+  final ProductModel product;
+  final QueryDocumentSnapshot<Map<String, dynamic>> snapshot;
+
+  ProductSnapshot(this.product, this.snapshot);
 }

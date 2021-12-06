@@ -34,7 +34,7 @@ class FirebaseDbRepository {
     await _firestore.collection(collection).doc(docId).update(data);
   }
 
-  Future<List<ProductModel>> getProducts({
+  Future<List<ProductSnapshot>> getProducts({
     int? count,
     DocumentSnapshot? startAfter,
     bool? isPopular,
@@ -65,9 +65,13 @@ class FirebaseDbRepository {
     if (count != null) {
       query = query.limit(count);
     }
-    return (await query.get())
-        .docs
-        .map((e) => ProductModel.fromJson(e.data()))
-        .toList();
+    final List<ProductSnapshot> list = [];
+    final docs = await query.get();
+    for (final doc in docs.docs) {
+      final product = ProductModel.fromJson(doc.data());
+      final snapshot = ProductSnapshot(product, doc);
+      list.add(snapshot);
+    }
+    return list;
   }
 }
