@@ -4,11 +4,13 @@ import 'package:shopping_app/app/core/interfaces.dart';
 import 'package:shopping_app/app/core/utils/helper.dart';
 
 class FirebaseUserRepository extends UserInterface {
-  static final FirebaseUserRepository instance = FirebaseUserRepository();
+  static final FirebaseUserRepository instance = FirebaseUserRepository._();
 
   factory FirebaseUserRepository() {
     return instance;
   }
+
+  FirebaseUserRepository._();
   final _auth = FirebaseAuth.instance;
   late final _user = _auth.currentUser;
 

@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
 import 'package:shopping_app/app/data/services/user_service.dart';
 import 'package:shopping_app/app/modules/startup/views/welcome_view.dart';
@@ -11,9 +12,10 @@ class StartupController extends GetxController {
   }
 
   void checkForUser() async {
+    await Firebase.initializeApp();
     final service = Get.find<UserService>();
     if (await service.isUserSignedIn()) {
-      Get.off(Routes.HOME);
+      Get.offAllNamed(Routes.HOME);
     } else {
       Get.to(() => WelcomeView(), routeName: "Welcome Screen");
     }

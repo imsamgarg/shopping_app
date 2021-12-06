@@ -23,10 +23,8 @@ mixin Validators {
   String? emailValidator(String? value, [int minLen = 10]) {
     value ??= "";
     value.removeAllWhitespace;
-
     if (value.isEmpty) return "Please Enter Phone Number";
-    if (!value.isPhoneNumber) return "Enter Valid Number";
-    if (value.length < 10) return "Enter Valid Number";
+    if (!value.isEmail) return "Please Enter Valid Email";
     return null;
   }
 
@@ -34,9 +32,7 @@ mixin Validators {
     value ??= "";
     value.removeAllWhitespace;
 
-    if (value.isEmpty) return "Please Enter Phone Number";
-    if (!value.isPhoneNumber) return "Enter Valid Number";
-    if (value.length < 10) return "Enter Valid Number";
+    if (value.isEmpty) return "Please Enter Password";
     return null;
   }
 
