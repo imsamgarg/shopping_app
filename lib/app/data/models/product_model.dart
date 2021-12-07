@@ -1,5 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+class ProductSnapshot {
+  final ProductModel product;
+  final QueryDocumentSnapshot<Map<String, dynamic>> snapshot;
+  ProductSnapshot(this.product, this.snapshot);
+}
+
 class ProductModel {
   String? id;
   String? name;
@@ -17,7 +23,12 @@ class ProductModel {
   List<String>? img;
   List<String>? tags;
   List<String>? features;
-  List<Options>? options;
+  bool? isSizeRequired;
+  bool? isColorRequired;
+  String? selectedSize;
+  String? selectedColor;
+  Map<String, int>? size;
+  Map<String, Color>? color;
 
   ProductModel({
     this.id,
@@ -36,10 +47,15 @@ class ProductModel {
     this.img,
     this.tags,
     this.features,
-    this.options,
+    this.isSizeRequired,
+    this.isColorRequired,
+    this.selectedSize,
+    this.selectedColor,
+    this.size,
+    this.color,
   });
 
-  ProductModel.fromJson(json) {
+  ProductModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     category = json['category'];
@@ -53,15 +69,19 @@ class ProductModel {
     sizechart = json['sizechart'];
     isPopular = json['isPopular'];
     isReturnable = json['isReturnable'];
-    img = json['img']?.cast<String>();
-    tags = json['tags']?.cast<String>();
-    features = json['features']?.cast<String>();
-    if (json['options'] != null) {
-      options = <Options>[];
-      json['options']?.forEach((v) {
-        options?.add(Options.fromJson(v));
-      });
-    }
+    img = json['img'].cast<String>();
+    tags = json['tags'].cast<String>();
+    features = json['features'].cast<String>();
+    isSizeRequired = json['isSizeRequired'];
+    isColorRequired = json['isColorRequired'];
+    selectedSize = json['selectedSize'];
+    selectedColor = json['selectedColor'];
+    size = json['size'] != null
+        ? (json['size'] as Map).map((k, v) => MapEntry(k, v))
+        : null;
+    color = json['color'] != null
+        ? (json['color'] as Map).map((k, v) => MapEntry(k, Color.fromJson(v)))
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -82,102 +102,66 @@ class ProductModel {
     data['img'] = img;
     data['tags'] = tags;
     data['features'] = features;
-    if (options != null) {
-      data['options'] = options?.map((v) => v.toJson()).toList();
+    data['isSizeRequired'] = isSizeRequired;
+    data['isColorRequired'] = isColorRequired;
+    data['selectedSize'] = selectedSize;
+    data['selectedColor'] = selectedColor;
+    if (size != null) {
+      data['size'] = size?.toString();
+    }
+    if (color != null) {
+      data['color'] = color?.toString();
     }
     return data;
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (other.runtimeType != runtimeType) {
-      return false;
-    }
-
-    return other is ProductModel && hashCode == other.hashCode;
+  String toString() {
+    return toJson().toString();
   }
-
-  @override
-  int get hashCode => Object.hash(id, price);
 }
 
-class Options {
-  bool? isRequired;
-  String? name;
-  int? selectedValue;
-  bool? isDifferent;
-  List<Values>? values;
+class Size {
+  int? sizeName;
 
-  Options({
-    this.isRequired,
-    this.name,
-    this.selectedValue,
-    this.isDifferent,
-    this.values,
-  });
+  Size({this.sizeName});
 
-  Options.fromJson(json) {
-    isRequired = json['isRequired'];
-    name = json['name'];
-    selectedValue = json['selectedValue'];
-    isDifferent = json['isDifferent'];
-    if (json['values'] != null) {
-      values = <Values>[];
-      json['values']?.forEach((v) {
-        values?.add(Values.fromJson(v));
-      });
-    }
+  Size.fromJson(Map<String, dynamic> json) {
+    sizeName = json['sizeName'];
   }
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
-    data['isRequired'] = isRequired;
-    data['name'] = name;
-    data['selectedValue'] = selectedValue;
-    data['isDifferent'] = isDifferent;
-    if (values != null) {
-      data['values'] = values?.map((v) => v.toJson()).toList();
-    }
+    data['sizeName'] = sizeName;
     return data;
+  }
+
+  @override
+  String toString() {
+    return toJson().toString();
   }
 }
 
-class Values {
+class Color {
+  int? priceDifferce;
   String? img;
-  bool? inStock;
-  String? name;
-  int? priceDifference;
 
-  Values({
-    this.img,
-    this.inStock,
-    this.name,
-    this.priceDifference,
-  });
+  Color({this.priceDifferce, this.img});
 
-  Values.fromJson(json) {
+  Color.fromJson(Map<String, dynamic> json) {
+    priceDifferce = json['priceDifferce'];
     img = json['img'];
-    inStock = json['inStock'];
-    name = json['name'];
-    priceDifference = json['priceDifference'];
   }
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
+    data['priceDifferce'] = priceDifferce;
     data['img'] = img;
-    data['inStock'] = inStock;
-    data['name'] = name;
-    data['priceDifference'] = priceDifference;
     return data;
   }
-}
 
-class ProductSnapshot {
-  final ProductModel product;
-  final QueryDocumentSnapshot<Map<String, dynamic>> snapshot;
-
-  ProductSnapshot(this.product, this.snapshot);
+  @override
+  String toString() {
+    return toJson().toString();
+  }
 }

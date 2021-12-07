@@ -3,6 +3,7 @@ abstract class Db {
   static const usersCol = "users";
   static const ordersCol = "orders";
   static const configCol = "config";
+  static const filterMapCol = "filters";
 
   static const configDocument = "config_doc";
 
@@ -19,6 +20,7 @@ abstract class Db {
   static const String addressField = "address";
   static const String cartField = "cart";
   static const String priceField = "price";
+  static const String stockField = "inStock";
   static const String isPopularField = "isPopular";
 
   // static const String catField = "fields";

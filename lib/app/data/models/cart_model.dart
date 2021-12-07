@@ -4,22 +4,20 @@ class CartModel {
   int? fullPrice;
   int? quantity;
   ProductModel? product;
-  late List<int> options;
+  String? color;
+  String? size;
 
-  CartModel({
-    this.fullPrice,
-    this.quantity,
-    this.product,
-    required this.options,
-  });
+  CartModel(
+      {this.fullPrice, this.quantity, this.product, this.color, this.size});
 
-  CartModel.fromJson(json) {
+  CartModel.fromJson(Map<String, dynamic> json) {
     fullPrice = json['fullPrice'];
     quantity = json['quantity'];
     product = json['product'] != null
-        ? (ProductModel.fromJson(json['product']))
+        ? ProductModel?.fromJson(json['product'])
         : null;
-    options = json['options']?.cast<int>() ?? [];
+    color = json['color'];
+    size = json['size'];
   }
 
   Map<String, dynamic> toJson() {
@@ -29,7 +27,24 @@ class CartModel {
     if (product != null) {
       data['product'] = product?.toJson();
     }
-    data['options'] = options;
+    data['color'] = color;
+    data['size'] = size;
+    return data;
+  }
+}
+
+class Product {
+  String? fu;
+
+  Product({this.fu});
+
+  Product.fromJson(Map<String, dynamic> json) {
+    fu = json['fu'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['fu'] = fu;
     return data;
   }
 }

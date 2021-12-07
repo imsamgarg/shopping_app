@@ -21,20 +21,17 @@
     "features": [
         ""
     ],
-    "options": [
-        {
-            "isRequired": true,
-            "name": "",
-            "selectedValue": 1,
-            "isDifferent": false,
-            "values": [
-                {
-                    "img": "",
-                    "inStock": true,
-                    "name": "vlue",
-                    "priceDifference": 1
-                }
-            ]
+    "isSizeRequired": true,
+    "isColorRequired": true,
+    "selectedSize": "",
+    "selectedColor": "",
+    "size": {
+        "sizeName": 12
+    },
+    "color": {
+        "colorName": {
+            "priceDifferce": 12,
+            "img": ""
         }
-    ]
+    }
 }
