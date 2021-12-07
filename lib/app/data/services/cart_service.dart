@@ -12,6 +12,12 @@ class CartService extends GetxService with ServicesMixin {
   late final _cart = _user.cartItems;
   bool isInit = false;
 
+  static CartService service() => Get.find<CartService>();
+
+  late final _cartLength = _getCartLength().obs;
+  get cartLength => _cartLength.value;
+  set cartLength(value) => _cartLength.value = value;
+
   Future<CartService> init() async {
     if (isInit) {
       return this;
@@ -48,6 +54,7 @@ class CartService extends GetxService with ServicesMixin {
       },
     );
     _cart.putIfAbsent(id, () => cartModel);
+    cartLength += 1;
   }
 
   Future removeFromCart(CartModel cartModel) async {
@@ -59,5 +66,14 @@ class CartService extends GetxService with ServicesMixin {
       userService.uid,
       data: {Db.cartField: data},
     );
+    cartLength -= 1;
+  }
+
+  int _getCartLength() {
+    var count = 0;
+    for (final _ in _cart.entries) {
+      count += 1;
+    }
+    return count;
   }
 }
