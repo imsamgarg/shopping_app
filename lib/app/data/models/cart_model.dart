@@ -12,7 +12,7 @@ class CartModel {
     fullPrice = json['fullPrice'];
     quantity = json['quantity'];
     product = json['product'] != null
-        ? ProductModel?.fromJson(json['product'])
+        ? (ProductModel.fromJson(json['product']))
         : null;
     options = json['options'].cast<int>();
   }
