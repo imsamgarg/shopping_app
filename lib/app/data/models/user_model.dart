@@ -1,7 +1,7 @@
 import 'cart_model.dart';
 
 class UserModel {
-  Map<String, dynamic>? favourites;
+  Map<String, DateTime>? favourites;
   Map<String, CartModel>? cartItems;
   List<Address>? address;
   List<String>? savedList;
@@ -9,13 +9,6 @@ class UserModel {
   UserModel({this.favourites, this.cartItems, this.address});
 
   UserModel.fromJson(Map<String, dynamic> json) {
-    // if (json['favourite'] != null) {
-    //   favourite = <String>[];
-    //   json['favourite'].forEach((v) {
-    //     favourite?.add(v);
-    //   });
-    // }
-
     if (json['cart'] != null) {
       cartItems = (json['cart'] as Map).map(
         (key, value) => MapEntry(key as String, CartModel.fromJson(value)),
@@ -23,7 +16,10 @@ class UserModel {
     }
     if (json['favourite'] != null) {
       favourites = (json['favourite'] as Map).map(
-        (key, value) => MapEntry(key as String, null),
+        (key, value) => MapEntry(
+          key as String,
+          DateTime.fromMillisecondsSinceEpoch(value),
+        ),
       );
       savedList = favourites?.entries.map((e) => e.key).toList() ?? [];
     }
@@ -35,7 +31,9 @@ class UserModel {
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
 
-    data['favourite'] = favourites;
+    data['favourite'] = favourites?.map(
+      (key, value) => MapEntry(key, value.millisecondsSinceEpoch),
+    );
 
     if (cartItems != null) {
       data['cart'] = cartItems?.toString();

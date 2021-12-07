@@ -86,7 +86,7 @@ mixin _Favourite on _Parent {
 
   Future<void> editFavourites(String id, bool save) async {
     if (save) {
-      user.favourites?.putIfAbsent(id, () => null);
+      user.favourites?.putIfAbsent(id, () => DateTime.now());
     } else {
       user.favourites?.remove(id);
     }
