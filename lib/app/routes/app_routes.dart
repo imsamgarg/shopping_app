@@ -7,6 +7,7 @@ abstract class Routes {
   static const HOME = _Paths.HOME;
   static const STARTUP = _Paths.STARTUP;
   static const CART = _Paths.CART;
+  static const PRODUCT_LIST = _Paths.PRODUCT_LIST;
   static const PRODUCT = _Paths.PRODUCT;
   static const ADDRESS = _Paths.ADDRESS;
   static const ORDERS = _Paths.ORDERS;
@@ -18,9 +19,10 @@ abstract class _Paths {
   static const HOME = '/home';
   static const STARTUP = '/startup';
   static const CART = '/cart';
-  static const PRODUCT = '/product';
+  static const PRODUCT_LIST = '/products';
   static const ADDRESS = '/address';
   static const ORDERS = '/orders';
   static const CHECKOUT = '/checkout';
   static const AUTH = '/auth';
+  static const PRODUCT = '/product';
 }

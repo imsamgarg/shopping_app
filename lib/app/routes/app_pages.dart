@@ -12,9 +12,10 @@ import 'package:shopping_app/app/modules/home/bindings/home_binding.dart';
 import 'package:shopping_app/app/modules/home/views/home_view.dart';
 import 'package:shopping_app/app/modules/orders/bindings/orders_binding.dart';
 import 'package:shopping_app/app/modules/orders/views/order_list_view.dart';
-import 'package:shopping_app/app/modules/orders/views/orders_view.dart';
 import 'package:shopping_app/app/modules/product/bindings/product_binding.dart';
+import 'package:shopping_app/app/modules/product/bindings/products_list_binding.dart';
 import 'package:shopping_app/app/modules/product/views/product_view.dart';
+import 'package:shopping_app/app/modules/product/views/products_list_view.dart';
 import 'package:shopping_app/app/modules/startup/bindings/startup_binding.dart';
 import 'package:shopping_app/app/modules/startup/views/startup_view.dart';
 
@@ -40,6 +41,11 @@ class AppPages {
       name: _Paths.CART,
       page: () => CartView(),
       binding: CartBinding(),
+    ),
+    GetPage(
+      name: _Paths.PRODUCT_LIST,
+      page: () => ProductsListView(),
+      binding: ProductsListBinding(),
     ),
     GetPage(
       name: _Paths.PRODUCT,
