@@ -1,6 +1,10 @@
 abstract class Db {
   static const productCol = "products";
   static const usersCol = "users";
+  static const ordersCol = "orders";
+  static const configCol = "config";
+
+  static const configDocument = "config_doc";
 
   // static const String postCol = "posts";
   // static const String catCol = "categories";
