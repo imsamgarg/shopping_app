@@ -73,7 +73,7 @@ mixin _Address implements _Parent {
 
 mixin _Favourite on _Parent {
   bool isProductFavourite(String id) {
-    return user.favourites?.containsKey(id) ?? false;
+    return user.favourites.containsKey(id);
   }
 
   Future<List<ProductModel>> getFavouriteProducts(int start, int end) async {
@@ -93,9 +93,9 @@ mixin _Favourite on _Parent {
 
   Future<void> editFavourites(String id, bool save) async {
     if (save) {
-      user.favourites?.putIfAbsent(id, () => DateTime.now());
+      user.favourites.putIfAbsent(id, () => DateTime.now());
     } else {
-      user.favourites?.remove(id);
+      user.favourites.remove(id);
     }
     await _dbRepo.updateFirebaseDocument(
       Db.usersCol,

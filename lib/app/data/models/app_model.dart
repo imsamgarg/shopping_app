@@ -1,22 +1,22 @@
 class AppModel {
   Config? config;
-  List<Offer>? offers;
-  List<Category>? categories;
+  late List<Offer> offers;
+  late List<Category> categories;
 
-  AppModel({this.config, this.offers, this.categories});
+  AppModel({this.config, required this.offers, required this.categories});
 
   AppModel.fromJson(json) {
     config = json['config'] != null ? Config?.fromJson(json['config']) : null;
     if (json['offers'] != null) {
       offers = <Offer>[];
       json['offers']?.forEach((v) {
-        offers?.add(Offer.fromJson(v));
+        offers.add(Offer.fromJson(v));
       });
     }
     if (json['categories'] != null) {
       categories = <Category>[];
       json['categories']?.forEach((v) {
-        categories?.add(Category.fromJson(v));
+        categories.add(Category.fromJson(v));
       });
     }
   }
@@ -26,69 +26,69 @@ class AppModel {
     if (config != null) {
       data['config'] = config?.toJson();
     }
-    if (offers != null) {
-      data['offers'] = offers?.map((v) => v.toJson()).toList();
-    }
-    if (categories != null) {
-      data['categories'] = categories?.map((v) => v.toJson()).toList();
-    }
+    data['offers'] = offers.map((v) => v.toJson()).toList();
+    data['categories'] = categories.map((v) => v.toJson()).toList();
     return data;
   }
 }
 
 class Config {
-  List<String>? sizeCharts;
-  List<String>? returnPolicy;
+  late List<String> sizeCharts;
+  late List<String> returnPolicy;
   int? codCharges;
   int? codFreeOn;
-  String? fbLink;
-  String? instaLink;
+  late String? fbLink;
+  late String? instaLink;
   String? playLink;
   bool? isCodAvailable;
-  bool? isRazorPayAvailable;
+  late bool isRazorPayAvailable;
   int? razorPayCharges;
   int? razorPayFreeOn;
   String? razorPayKey;
-  String? waLink;
-  List<String>? emailAddress;
-  List<String>? phoneNumber;
+  late String? waLink;
+  late List<String> emailAddress;
+  late List<String> phoneNumber;
   String? description;
 
   Config(
-      {this.sizeCharts,
-      this.returnPolicy,
+      {required this.sizeCharts,
+      required this.returnPolicy,
       this.codCharges,
       this.codFreeOn,
       this.fbLink,
       this.instaLink,
       this.playLink,
       this.isCodAvailable,
-      this.isRazorPayAvailable,
+      this.isRazorPayAvailable = false,
       this.razorPayCharges,
       this.razorPayFreeOn,
       this.razorPayKey,
       this.waLink,
-      this.emailAddress,
-      this.phoneNumber,
+      required this.emailAddress,
+      required this.phoneNumber,
       this.description});
 
   Config.fromJson(dynamic json) {
-    sizeCharts = json['sizeCharts']?.cast<String>();
-    returnPolicy = json['returnPolicy']?.cast<String>();
+    sizeCharts = json['sizeCharts']?.cast<String>() ?? [];
+    returnPolicy = json['returnPolicy']?.cast<String>() ?? [];
     codCharges = json['codCharges'];
     codFreeOn = json['codFreeOn'];
-    fbLink = json['fbLink'];
-    instaLink = json['instaLink'];
+    fbLink = json['fbLink'] ??
+        "https://www.facebook.com/fashion24x7coin-111679071026537/";
+    instaLink = json['instaLink'] ??
+        "https://instagram.com/invites/contact/?i=gyqos9lhrrpk&utm_content=3ujt000";
     playLink = json['playLink'];
     isCodAvailable = json['isCodAvailable'];
-    isRazorPayAvailable = json['isRazorPayAvailable'];
+    isRazorPayAvailable = json['isRazorPayAvailable'] ?? false;
     razorPayCharges = json['razorPayCharges'];
     razorPayFreeOn = json['razorPayFreeOn'];
     razorPayKey = json['razorPayKey'];
-    waLink = json['waLink'];
-    emailAddress = json['emailAddress']?.cast<String>();
-    phoneNumber = json['phoneNumber']?.cast<String>();
-    description = json['description'];
+    waLink = json['waLink'] ?? "https://wa.me/message/BYXC6AYL3AGSG1";
+    emailAddress =
+        json['emailAddress']?.cast<String>() ?? ["Thenewfashion24.7@gmail.com"];
+    phoneNumber = json['phoneNumber']?.cast<String>() ?? ["9878502440"];
+    description = json['description'] ??
+        '''Make your home elegant and composed with our wide range of curtains, custom picked by our architects and interior designers from Australia to suit your taste and fit perfectly in your home. Our team has over 35years experience in curtains and blinds.We are here to assist you to get your picture perfect home.''';
   }
 
   Map<String, dynamic> toJson() {
