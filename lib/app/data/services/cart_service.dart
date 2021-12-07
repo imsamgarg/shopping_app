@@ -22,16 +22,16 @@ class CartService extends GetxService with ServicesMixin {
   }
 
   Future _getCartProducts() async {
-    final ids = _cart?.keys.toList() ?? [];
+    final ids = _cart.keys.toList();
     final docs = await _repo.getDocsFromRealtimeDb(ids, Db.productCol);
     final products = docs.map((e) => ProductModel.fromJson(e));
     for (var element in products) {
-      _cart![element.id!]!.product = element;
+      _cart[element.id!]!.product = element;
     }
   }
 
   bool isInCart(String id) {
-    return _cart?.containsKey(id) ?? false;
+    return _cart.containsKey(id);
   }
 
   Future addToCart(CartModel cartModel) async {
@@ -47,13 +47,13 @@ class CartService extends GetxService with ServicesMixin {
         Db.cartField: {id: data}
       },
     );
-    _cart?.putIfAbsent(id, () => cartModel);
+    _cart.putIfAbsent(id, () => cartModel);
   }
 
   Future removeFromCart(CartModel cartModel) async {
     final id = cartModel.product!.id!;
-    _cart?.remove(id);
-    final data = _cart?.map((key, value) => MapEntry(key, value.toJson()));
+    _cart.remove(id);
+    final data = _cart.map((key, value) => MapEntry(key, value.toJson()));
     await _repo.updateFirebaseDocument(
       Db.usersCol,
       userService.uid,

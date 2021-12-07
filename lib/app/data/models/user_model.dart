@@ -1,28 +1,30 @@
 import 'cart_model.dart';
 
 class UserModel {
-  Map<String, DateTime>? favourites;
-  Map<String, CartModel>? cartItems;
+  late Map<String, DateTime> favourites;
+  late Map<String, CartModel> cartItems;
   List<Address>? address;
   List<String>? savedList;
 
-  UserModel({this.favourites, this.cartItems, this.address});
+  UserModel({required this.favourites, required this.cartItems, this.address});
 
   UserModel.fromJson(Map<String, dynamic> json) {
-    if (json['cart'] != null) {
-      cartItems = (json['cart'] as Map).map(
-        (key, value) => MapEntry(key as String, CartModel.fromJson(value)),
-      );
-    }
-    if (json['favourite'] != null) {
-      favourites = (json['favourite'] as Map).map(
-        (key, value) => MapEntry(
-          key as String,
-          DateTime.fromMillisecondsSinceEpoch(value),
-        ),
-      );
-      savedList = favourites?.entries.map((e) => e.key).toList() ?? [];
-    }
+    json['cart'] != null
+        ? cartItems = (json['cart'] as Map).map(
+            (key, value) => MapEntry(key as String, CartModel.fromJson(value)),
+          )
+        : {};
+
+    json['favourite'] != null
+        ? favourites = (json['favourite'] as Map).map(
+            (key, value) => MapEntry(
+              key as String,
+              DateTime.fromMillisecondsSinceEpoch(value),
+            ),
+          )
+        : {};
+    savedList = favourites.entries.map((e) => e.key).toList();
+
     address = json['address'] != null
         ? (json['address'] as List).map((e) => Address.fromJson(e)).toList()
         : <Address>[];
@@ -31,13 +33,11 @@ class UserModel {
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
 
-    data['favourite'] = favourites?.map(
+    data['favourite'] = favourites.map(
       (key, value) => MapEntry(key, value.millisecondsSinceEpoch),
     );
 
-    if (cartItems != null) {
-      data['cart'] = cartItems?.toString();
-    }
+    data['cart'] = cartItems.toString();
 
     data['address'] = address?.map((e) => e.toJson()).toList();
 
