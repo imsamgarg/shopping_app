@@ -13,6 +13,15 @@ class AppNavbar extends StatefulWidget {
 
 typedef NavbarCallback = void Function(int);
 
+class _Placeholder extends StatelessWidget {
+  const _Placeholder({Key? key, required this.child}) : super(key: key);
+  final Widget child;
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(child: Container(child: Center(child: child)));
+  }
+}
+
 class _AppNavbarState extends State<AppNavbar> {
   int index = 0;
 
@@ -28,31 +37,37 @@ class _AppNavbarState extends State<AppNavbar> {
     return SizedBox(
       height: 70,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _NavbarItem(
-            title: "Home",
-            onTap: () => changeIndex(0),
-            isExpanded: index == 0,
-            icon: Icons.home_rounded,
-            color: primaryColor(context),
+          _Placeholder(
+            child: _NavbarItem(
+              title: "Home",
+              onTap: () => changeIndex(0),
+              isExpanded: index == 0,
+              icon: Icons.home_rounded,
+              color: primaryColor(context),
+            ),
           ),
-          _NavbarItem(
-            title: "Favourite",
-            onTap: () => changeIndex(1),
-            icon: Icons.home_rounded,
-            isExpanded: index == 1,
-            color: Colors.pink,
+          _Placeholder(
+            child: _NavbarItem(
+              title: "Favourite",
+              onTap: () => changeIndex(1),
+              icon: Icons.favorite_rounded,
+              isExpanded: index == 1,
+              color: Colors.pink,
+            ),
           ),
-          _NavbarItem(
-            title: "Profile",
-            onTap: () => changeIndex(2),
-            icon: Icons.person_rounded,
-            isExpanded: index == 2,
-            color: Colors.orange,
+          _Placeholder(
+            child: _NavbarItem(
+              title: "Profile",
+              onTap: () => changeIndex(2),
+              icon: Icons.person_rounded,
+              isExpanded: index == 2,
+              color: Colors.orange,
+            ),
           ),
         ],
-      ).p8(),
+      ).p12(),
     );
   }
 }
@@ -73,18 +88,29 @@ class _NavbarItem extends StatelessWidget {
   final Color color;
   @override
   Widget build(BuildContext context) {
-    if (!isExpanded) {
-      return IconButton(
-        icon: Icon(icon),
-        onPressed: onTap,
-      );
-    }
-    return Row(
-      children: [
-        Icon(icon, color: color),
-        horSpacing10,
-        title.text.color(color).make(),
-      ],
-    ).box.p4.color(color.withOpacity(0.5)).roundedLg.make();
+    return AnimatedSwitcher(
+      duration: Duration(milliseconds: 200),
+      reverseDuration: Duration(milliseconds: 200),
+      transitionBuilder: (child, Animation<double> animation) {
+        return ScaleTransition(
+          scale: animation,
+          child: child,
+        );
+      },
+      child: !isExpanded
+          ? IconButton(
+              icon: Icon(icon),
+              color: Colors.grey,
+              onPressed: onTap,
+            )
+          : Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(icon, color: color),
+                horSpacing10,
+                title.text.bold.size(16).color(color).make(),
+              ],
+            ).py8().box.color(color.withOpacity(0.2)).roundedLg.make(),
+    );
   }
 }
