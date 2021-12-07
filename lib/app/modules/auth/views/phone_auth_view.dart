@@ -1,13 +1,12 @@
 import 'package:custom_utils/spacing_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pin_put/pin_put.dart';
+import 'package:shopping_app/app/core/global_widgets/buttons.dart';
 import 'package:shopping_app/app/core/global_widgets/input_fields.dart';
 import 'package:shopping_app/app/core/global_widgets/responsive.dart';
-import 'package:shopping_app/app/core/global_widgets/widgets.dart';
 import 'package:shopping_app/app/core/theme/sizing_theme.dart';
 import 'package:shopping_app/app/core/utils/helper.dart';
 import 'package:shopping_app/app/core/utils/mixins.dart';
-import 'package:shopping_app/app/core/values/values.dart';
 import 'package:shopping_app/app/modules/auth/controllers/phone_auth_controller.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:get/get.dart';
@@ -32,8 +31,9 @@ class PhoneAuthView extends StatelessWidget with Validators {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              HeaderImage(),
-              AdaptiveHide(hideOn: ScreenSize.lg, child: verSpacing30),
+              HeaderImage(
+                viewInsets: context.mq.viewInsets.bottom,
+              ),
               verSpacing30,
               Column(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -75,6 +75,20 @@ class PhoneAuthView extends StatelessWidget with Validators {
                     builder: (_) {
                       if (controller.isOtpSent) {
                         return PinPut(
+                          selectedFieldDecoration: BoxDecoration(
+                            borderRadius: Sizing.borderRadius,
+                            border: Border.all(
+                              width: 1.5,
+                              color: primaryColor(context),
+                            ),
+                          ),
+                          followingFieldDecoration: BoxDecoration(
+                            borderRadius: Sizing.borderRadius,
+                            border: Border.all(
+                              width: 1,
+                              color: primaryColor(context).withOpacity(0.7),
+                            ),
+                          ),
                           key: ValueKey("2"),
                           cursorColor: primaryColor(context),
                           validator: otpCodeValidator,
@@ -130,18 +144,12 @@ class _Button extends GetView<PhoneAuthController> {
         builder: (PhoneAuthController controller) {
           final isOtpSent = controller.isOtpSent;
           final text = isOtpSent ? "Verify Otp" : "Send Otp";
-          return TextButton(
-            style: TextButton.styleFrom(
-              backgroundColor: primaryColor(context),
-              padding: const EdgeInsets.all(18),
-              shape: Sizing.cardShape,
-            ),
-            onPressed: controller.isOtpSent
+          return AppTextButton(
+            isLoading: controller.isButtonLoading,
+            onTap: controller.isOtpSent
                 ? controller.onVerifyOtp
                 : controller.onSendOtp,
-            child: controller.isButtonLoading
-                ? CenterLoading(size: 18)
-                : text.text.size(18).make(),
+            child: text.text.size(18).make(),
           );
         },
       ),

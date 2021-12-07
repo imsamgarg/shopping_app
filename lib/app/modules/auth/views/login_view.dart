@@ -5,11 +5,8 @@ import 'package:get/get.dart';
 import 'package:shopping_app/app/core/global_widgets/buttons.dart';
 import 'package:shopping_app/app/core/global_widgets/input_fields.dart';
 import 'package:shopping_app/app/core/global_widgets/responsive.dart';
-import 'package:shopping_app/app/core/global_widgets/widgets.dart';
 import 'package:shopping_app/app/core/theme/sizing_theme.dart';
-import 'package:shopping_app/app/core/utils/helper.dart';
 import 'package:shopping_app/app/core/utils/mixins.dart';
-import 'package:shopping_app/app/core/values/values.dart';
 import 'package:velocity_x/velocity_x.dart';
 import '../controllers/login_controller.dart';
 
@@ -23,76 +20,72 @@ class LoginView extends GetView<LoginController> with Validators {
     final isSmallScreen = _height - _bottomInsets < 550;
 
     return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: 30,
-          vertical: isSmallScreen ? 0 : 30,
-        ),
-        child: Form(
-          key: controller.formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              HeaderImage(),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Hero(
-                    tag: "heading",
-                    child: Material(
-                      color: Colors.transparent,
-                      child: loginHeading,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Form(
+            key: controller.formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                HeaderImage(
+                  viewInsets: context.mq.viewInsets.bottom,
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    isSmallScreen ? verSpacing10 : verSpacing30,
+                    Hero(
+                      tag: "heading",
+                      child: Material(
+                        color: Colors.transparent,
+                        child: loginHeading,
+                      ),
                     ),
-                  ),
-                  isSmallScreen ? verSpacing10 : verSpacing20,
-                  CustomInputField(
-                    icon: Icons.alternate_email_outlined,
-                    validator: emailValidator,
-                    controller: controller.emailController,
-                    hintText: "Email ID",
-                    textInputType: TextInputType.emailAddress,
-                  ),
-                  isSmallScreen ? verSpacing10 : verSpacing20,
-                  CustomInputField(
-                    icon: Icons.lock_rounded,
-                    isPass: true,
-                    hintText: "Password",
-                    validator: passValidator,
-                    controller: controller.passController,
-                    textInputType: TextInputType.visiblePassword,
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    child: TextButton(
-                      onPressed: controller.onForgotPasswordTap,
-                      child: "Forgot?".text.make(),
+                    isSmallScreen ? verSpacing10 : verSpacing20,
+                    CustomInputField(
+                      icon: Icons.alternate_email_outlined,
+                      validator: emailValidator,
+                      controller: controller.emailController,
+                      hintText: "Email ID",
+                      textInputType: TextInputType.emailAddress,
                     ),
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  LoginButton(),
-                  isSmallScreen ? verSpacing10 : verSpacing20,
-                  Hero(
-                    tag: "or",
-                    child: Material(
-                      color: Colors.transparent,
-                      child: AdaptiveHide(
-                        hideOn: ScreenSize.lg,
+                    isSmallScreen ? verSpacing10 : verSpacing20,
+                    CustomInputField(
+                      icon: Icons.lock_rounded,
+                      isPass: true,
+                      hintText: "Password",
+                      validator: passValidator,
+                      controller: controller.passController,
+                      textInputType: TextInputType.visiblePassword,
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      child: AppTextButton(
+                        onTap: controller.onForgotPasswordTap,
+                        child: "Forgot?".text.make(),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    LoginButton(),
+                    isSmallScreen ? verSpacing10 : verSpacing20,
+                    Hero(
+                      tag: "or",
+                      child: Material(
+                        color: Colors.transparent,
                         child: Center(
                           child: "Or Use".text.make(),
                         ),
                       ),
                     ),
-                  ),
-                  AdaptiveHide(
-                    hideOn: ScreenSize.md,
-                    child: Row(
+                    isSmallScreen ? verSpacing10 : verSpacing20,
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         GoogleButton(onTap: controller.onGoogleTap),
@@ -100,11 +93,12 @@ class LoginView extends GetView<LoginController> with Validators {
                         CallButton(onTap: controller.onCallTap),
                       ],
                     ),
-                  ),
-                ],
-              ),
-            ],
-          ),
+                    isSmallScreen ? verSpacing10 : verSpacing20,
+                  ],
+                ),
+              ],
+            ),
+          ).px20(),
         ),
       ),
     );
@@ -124,19 +118,10 @@ class LoginButton extends GetView<LoginController> {
       builder: (LoginController controller) {
         return Hero(
           tag: "button",
-          child: IgnorePointer(
-            ignoring: controller.isButtonLoading,
-            child: TextButton(
-              style: TextButton.styleFrom(
-                backgroundColor: primaryColor(context),
-                padding: const EdgeInsets.all(18),
-                shape: Sizing.cardShape,
-              ),
-              onPressed: controller.onLoginTap,
-              child: controller.isButtonLoading
-                  ? CenterLoading(size: 18)
-                  : "Login".text.bold.size(18).makeCentered(),
-            ),
+          child: AppTextButton(
+            onTap: controller.onLoginTap,
+            isLoading: controller.isButtonLoading,
+            child: "Login".text.make(),
           ),
         );
       },
@@ -154,7 +139,7 @@ class EmailButton extends GetView<LoginController> {
     return OutlinedButton(
       style: OutlinedButton.styleFrom(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(radius),
+          borderRadius: Sizing.borderRadiusXl,
         ),
       ),
       onPressed: controller.onRegisterTap,
