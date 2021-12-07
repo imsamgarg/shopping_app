@@ -87,6 +87,21 @@ class ProductModel {
     }
     return data;
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (other.runtimeType != runtimeType) {
+      return false;
+    }
+
+    return other is ProductModel && hashCode == other.hashCode;
+  }
+
+  @override
+  int get hashCode => Object.hash(id, price);
 }
 
 class Options {
