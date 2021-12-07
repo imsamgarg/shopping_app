@@ -71,7 +71,7 @@ mixin _Address implements _Parent {
   }
 }
 
-mixin _Favourite on _Parent {
+mixin _Favourite implements _Parent {
   bool isProductFavourite(String id) {
     return user.favourites.containsKey(id);
   }
