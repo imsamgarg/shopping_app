@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:shopping_app/app/core/global_widgets/widgets.dart';
+import 'package:shopping_app/app/core/theme/sizing_theme.dart';
 import 'package:shopping_app/app/core/values/assets.dart';
-import 'package:shopping_app/app/core/values/values.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class GoogleButton extends StatelessWidget {
   final VoidCallback? onTap;
@@ -17,7 +19,7 @@ class GoogleButton extends StatelessWidget {
       child: OutlinedButton(
         style: OutlinedButton.styleFrom(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(radius),
+            borderRadius: Sizing.borderRadiusXl,
           ),
         ),
         onPressed: onTap,
@@ -50,7 +52,7 @@ class CallButton extends StatelessWidget {
       child: OutlinedButton(
         style: OutlinedButton.styleFrom(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(radius),
+            borderRadius: Sizing.borderRadiusXl,
           ),
         ),
         onPressed: onTap,
@@ -61,6 +63,48 @@ class CallButton extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class AppTextButton extends StatelessWidget {
+  final bool isLoading;
+  final Color? color;
+  final Widget child;
+  final VoidCallback onTap;
+
+  const AppTextButton({
+    Key? key,
+    this.isLoading = false,
+    required this.onTap,
+    this.color,
+    required this.child,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      style: color != null
+          ? ButtonStyle(
+              backgroundColor: MaterialStateColor.resolveWith(
+                (states) {
+                  if (states.contains(MaterialState.pressed)) {
+                    return color!.withOpacity(0.7);
+                  }
+                  return color!;
+                },
+              ),
+              foregroundColor: MaterialStateColor.resolveWith(
+                (states) => Vx.white,
+              ),
+            )
+          : TextButton.styleFrom(
+              // primary: Vx.white,
+              padding: const EdgeInsets.all(18),
+              shape: Sizing.roundShape,
+            ),
+      onPressed: isLoading ? () {} : onTap,
+      child: isLoading ? CenterLoading(size: 16) : child,
     );
   }
 }
