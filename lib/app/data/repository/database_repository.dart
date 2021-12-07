@@ -19,6 +19,11 @@ class FirebaseDbRepository {
     return (await _firestore.collection(collection).doc(id).get()).data();
   }
 
+  Stream<DocumentSnapshot<Map<String, dynamic>>> subscribeToDocument(
+      String docId, String collection) {
+    return _firestore.collection(collection).doc(docId).snapshots();
+  }
+
   Future getDocumentFromRealtimeDb(String id, String path) async {
     return (await _database.reference().child(path).child(id).get()).value;
   }
