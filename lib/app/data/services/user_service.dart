@@ -76,9 +76,16 @@ mixin _Favourite on _Parent {
     return user.favourites?.containsKey(id) ?? false;
   }
 
-  Future<List<ProductModel>> getFavouriteProducts() async {
+  Future<List<ProductModel>> getFavouriteProducts(int start, int end) async {
+    late int _end;
+    int l = user.savedList!.length;
+    if (end > l) {
+      _end = l;
+    } else {
+      _end = end;
+    }
     final docs = await _dbRepo.getDocsFromRealtimeDb(
-      user.savedList!,
+      user.savedList!.sublist(start, _end),
       Db.productCol,
     );
     return docs.map((e) => ProductModel.fromJson(e)).toList();
