@@ -45,29 +45,48 @@ class FirebaseDbRepository {
     int? count,
     DocumentSnapshot? startAfter,
     bool? isPopular,
+    int? minPrice,
+    int? maxPrice,
+    String? size,
+    String? color,
     SortBy sortBy = SortBy.popularity,
   }) async {
+    CollectionReference<Map<String, dynamic>> col =
+        _firestore.collection(Db.productCol);
+
     Query<Map<String, dynamic>> query;
+
     switch (sortBy) {
       case SortBy.popularity:
-        query =
-            _firestore.collection(Db.productCol).orderBy(Db.popularityField);
+        query = col.orderBy(Db.popularityField);
         break;
       case SortBy.priceLTH:
-        query = _firestore.collection(Db.productCol).orderBy(Db.priceField);
+        query = col.orderBy(Db.priceField);
         break;
       case SortBy.priceHTL:
-        query = _firestore.collection(Db.productCol).orderBy(
-              Db.priceField,
-              descending: true,
-            );
+        query = col.orderBy(Db.priceField, descending: true);
         break;
     }
+
+    query = query.where(Db.stockField, isEqualTo: true);
+
     if (isPopular ?? false) {
       query = query.where(Db.isPopularField, isEqualTo: true);
     }
+    if (minPrice != null) {
+      query = query.where(Db.priceField, isGreaterThanOrEqualTo: minPrice);
+    }
+    if (maxPrice != null) {
+      query = query.where(Db.priceField, isLessThanOrEqualTo: minPrice);
+    }
     if (startAfter != null) {
       query = query.startAfterDocument(startAfter);
+    }
+    if (size != null) {
+      query = query.where("${Db.sizeField}.$size", isNull: false);
+    }
+    if (color != null) {
+      query = query.where("${Db.colorField}.$color", isNull: false);
     }
     if (count != null) {
       query = query.limit(count);

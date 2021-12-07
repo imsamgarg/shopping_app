@@ -23,6 +23,10 @@ abstract class Db {
   static const String stockField = "inStock";
   static const String isPopularField = "isPopular";
 
+  static const String sizeField = "size";
+
+  static const String colorField = "color";
+
   // static const String catField = "fields";
   // static const String keyField = "key";
   // static const String likesCountField = "likes_count";
