@@ -11,6 +11,7 @@ import 'package:shopping_app/app/modules/checkout/views/checkout_view.dart';
 import 'package:shopping_app/app/modules/home/bindings/home_binding.dart';
 import 'package:shopping_app/app/modules/home/views/home_view.dart';
 import 'package:shopping_app/app/modules/orders/bindings/orders_binding.dart';
+import 'package:shopping_app/app/modules/orders/views/order_list_view.dart';
 import 'package:shopping_app/app/modules/orders/views/orders_view.dart';
 import 'package:shopping_app/app/modules/product/bindings/product_binding.dart';
 import 'package:shopping_app/app/modules/product/views/product_view.dart';
@@ -52,7 +53,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.ORDERS,
-      page: () => OrdersView(),
+      page: () => OrderListView(),
       binding: OrdersBinding(),
     ),
     GetPage(
