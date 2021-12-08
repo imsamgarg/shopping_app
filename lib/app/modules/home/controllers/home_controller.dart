@@ -27,7 +27,6 @@ class HomeController extends GetxController with ServicesMixin {
   @override
   void onInit() {
     pagingController = PagingController<int, ProductSnapshot>(firstPageKey: 0);
-    pagingController.addPageRequestListener(_getPopularProducts);
     super.onInit();
   }
 
@@ -41,6 +40,8 @@ class HomeController extends GetxController with ServicesMixin {
     await userService.initUser();
     await configService.init();
     data = configService.data;
+    pagingController.addPageRequestListener(_getPopularProducts);
+    1.delay().then((_) => linkService.handleLink());
     return;
   }
 

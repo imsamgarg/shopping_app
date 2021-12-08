@@ -14,6 +14,7 @@ enum ScreenSize {
 }
 
 enum SortBy { popularity, priceLTH, priceHTL }
+enum DynamicLinkType { product, subCategory, order, offer }
 
 const double sm = 400;
 const double md = 500;

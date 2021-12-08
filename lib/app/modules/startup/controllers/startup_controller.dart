@@ -1,10 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
-import 'package:shopping_app/app/data/services/user_service.dart';
+import 'package:shopping_app/app/core/utils/mixins.dart';
 import 'package:shopping_app/app/modules/startup/views/welcome_view.dart';
 import 'package:shopping_app/app/routes/app_pages.dart';
 
-class StartupController extends GetxController {
+class StartupController extends GetxController with ServicesMixin {
   @override
   void onReady() {
     super.onReady();
@@ -13,8 +13,8 @@ class StartupController extends GetxController {
 
   void checkForUser() async {
     await Firebase.initializeApp();
-    final service = Get.find<UserService>();
-    if (await service.isUserSignedIn()) {
+    await linkService.saveInitialLink();
+    if (await userService.isUserSignedIn()) {
       Get.offAllNamed(Routes.HOME);
     } else {
       Get.to(() => WelcomeView(), routeName: "Welcome Screen");

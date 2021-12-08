@@ -6,23 +6,29 @@ import 'package:shopping_app/app/modules/home/views/sub_category_view.dart';
 import 'package:shopping_app/app/routes/app_pages.dart';
 
 class TapController extends GetxController {
+  static TapController to = Get.find<TapController>();
+
   void onProductTap(ProductModel product) {
     Get.toNamed(Routes.PRODUCT, arguments: product);
   }
 
+  void onProductTapWithId(String? id) {
+    Get.toNamed(Routes.PRODUCT, arguments: id);
+  }
+
   void onOfferTap(Offer offer) {
     if (offer.isProduct ?? false) {
-      Get.toNamed(Routes.PRODUCT, arguments: offer.id);
+      onProductTapWithId(offer.id);
     } else {
       _gotoProductsList(offer.id!);
     }
   }
 
-  void _gotoProductsList(String id) {
+  void _gotoProductsList(String? id) {
     Get.toNamed(Routes.PRODUCT_LIST, arguments: id);
   }
 
-  void onSubCategoryTap(String name) {
+  void onSubCategoryTap(String? name) {
     _gotoProductsList(name);
   }
 
