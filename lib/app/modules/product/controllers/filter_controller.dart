@@ -1,20 +1,27 @@
 import 'package:get/get.dart';
+import 'package:shopping_app/app/core/utils/mixins.dart';
+import 'package:shopping_app/app/data/models/filter_map_model.dart';
+import 'package:shopping_app/app/modules/product/controllers/products_list_controller.dart';
 
-class FilterController extends GetxController {
-  //TODO: Implement FilterController
+class FilterController extends GetxController with ServicesMixin {
+  late final FilterMap filters;
+  late final _productsController = Get.find<ProductsListController>();
+  late Future<void> instance = _getFilterMap();
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+  final size = RxnString();
+  final color = RxnString();
+  final minPrice = RxnInt();
+  final maxPrice = RxnInt();
+
+  void onSaveTap() {
+    _productsController.resetPaging();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
+  void onFilterTap() {}
 
-  @override
-  void onClose() {}
-  void increment() => count.value++;
+  Future<void> _getFilterMap() async {
+    String name = _productsController.id;
+    filters = await productsService.getFilter(name);
+    return;
+  }
 }
