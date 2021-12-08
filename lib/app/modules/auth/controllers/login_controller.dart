@@ -1,10 +1,14 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:shopping_app/app/core/utils/helper.dart';
-import 'package:shopping_app/app/core/utils/mixins.dart';
+import 'package:shopping_app/app/core/utils/mixins/error_handling_mixin.dart';
+import 'package:shopping_app/app/core/utils/mixins/routes_mixin.dart';
+import 'package:shopping_app/app/core/utils/mixins/services_mixin.dart';
+import 'package:shopping_app/app/core/utils/mixins/validator_mixin.dart';
 import 'package:shopping_app/app/routes/app_pages.dart';
 
-class LoginController extends GetxController with AuthMixin {
+class LoginController extends GetxController
+    with ServicesMixin, ErrorHandlingMixin, RoutesMixin, ValidatorMixin {
   late final GlobalKey<FormState> formKey = GlobalKey();
   late final emailController = TextEditingController();
   late final passController = TextEditingController();
@@ -29,7 +33,7 @@ class LoginController extends GetxController with AuthMixin {
     toggleLoading(true);
     final email = emailController.text;
     final pass = passController.text;
-    await service.signInWithEmail(email, pass);
+    await authService.signInWithEmail(email, pass);
     Get.offAllNamed(Routes.HOME);
     successSnackbar("Welcome !!");
   }
@@ -44,7 +48,7 @@ class LoginController extends GetxController with AuthMixin {
 
   Future _sendResetMail() async {
     final email = emailController.text;
-    await service.sendPassResetEmail(email);
+    await authService.sendPassResetEmail(email);
     successSnackbar("Password Reset Email Sent!!");
   }
 

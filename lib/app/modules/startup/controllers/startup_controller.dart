@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
-import 'package:shopping_app/app/core/utils/mixins.dart';
+import 'package:shopping_app/app/core/utils/mixins/services_mixin.dart';
 import 'package:shopping_app/app/modules/startup/views/welcome_view.dart';
 import 'package:shopping_app/app/routes/app_pages.dart';
 

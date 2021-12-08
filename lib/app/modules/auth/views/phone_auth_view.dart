@@ -6,12 +6,11 @@ import 'package:shopping_app/app/core/global_widgets/input_fields.dart';
 import 'package:shopping_app/app/core/global_widgets/responsive.dart';
 import 'package:shopping_app/app/core/theme/sizing_theme.dart';
 import 'package:shopping_app/app/core/utils/helper.dart';
-import 'package:shopping_app/app/core/utils/mixins.dart';
 import 'package:shopping_app/app/modules/auth/controllers/phone_auth_controller.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:get/get.dart';
 
-class PhoneAuthView extends StatelessWidget with Validators {
+class PhoneAuthView extends StatelessWidget {
   final bool link;
 
   PhoneAuthView({Key? key, this.link = false}) : super(key: key);
@@ -57,7 +56,7 @@ class PhoneAuthView extends StatelessWidget with Validators {
                           key: ValueKey("1"),
                           icon: Icons.call,
                           hintText: "Mobile Number +91",
-                          validator: phoneNumberValidator,
+                          validator: controller.phoneNumberValidator,
                           controller: controller.phoneController,
                           textInputType: TextInputType.numberWithOptions(
                             decimal: false,
@@ -91,7 +90,7 @@ class PhoneAuthView extends StatelessWidget with Validators {
                           ),
                           key: ValueKey("2"),
                           cursorColor: primaryColor(context),
-                          validator: otpCodeValidator,
+                          validator: controller.otpCodeValidator,
                           controller: controller.otpController,
                           fieldsCount: 6,
                         );

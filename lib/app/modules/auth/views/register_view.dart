@@ -3,12 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:shopping_app/app/core/global_widgets/buttons.dart';
 import 'package:shopping_app/app/core/global_widgets/input_fields.dart';
 import 'package:shopping_app/app/core/global_widgets/responsive.dart';
-import 'package:shopping_app/app/core/utils/mixins.dart';
 import 'package:shopping_app/app/modules/auth/controllers/register_controller.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:get/get.dart';
 
-class RegisterView extends StatelessWidget with Validators {
+class RegisterView extends StatelessWidget {
   final registerHeading =
       "Register".text.size(35).fontWeight(FontWeight.bold).make();
 
@@ -46,7 +45,7 @@ class RegisterView extends StatelessWidget with Validators {
                     ),
                     isSmallScreen ? verSpacing10 : verSpacing20,
                     CustomInputField(
-                      validator: nameValidator,
+                      validator: controller.nameValidator,
                       controller: controller.nameController,
                       icon: Icons.person,
                       hintText: "Enter Name",
@@ -56,7 +55,7 @@ class RegisterView extends StatelessWidget with Validators {
                     CustomInputField(
                       icon: Icons.alternate_email_outlined,
                       hintText: "Email ID",
-                      validator: emailValidator,
+                      validator: controller.emailValidator,
                       controller: controller.emailController,
                       textInputType: TextInputType.emailAddress,
                     ),
@@ -65,7 +64,7 @@ class RegisterView extends StatelessWidget with Validators {
                       icon: Icons.lock_rounded,
                       isPass: true,
                       hintText: "Password",
-                      validator: passValidator,
+                      validator: controller.passValidator,
                       controller: controller.passController,
                       textInputType: TextInputType.visiblePassword,
                     ),

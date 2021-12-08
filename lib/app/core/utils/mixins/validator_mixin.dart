@@ -1,18 +1,7 @@
 import 'package:custom_utils/log_utils.dart';
-import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/utils.dart';
-import 'package:shopping_app/app/data/services/auth_service.dart';
-import 'package:shopping_app/app/data/services/cart_service.dart';
-import 'package:shopping_app/app/data/services/config_service.dart';
-import 'package:shopping_app/app/data/services/dynamic_link_service.dart';
-import 'package:shopping_app/app/data/services/orders_service.dart';
-import 'package:shopping_app/app/data/services/products_service.dart';
-import 'package:shopping_app/app/data/services/user_service.dart';
-import 'package:shopping_app/app/modules/auth/views/google_auth_view.dart';
-import 'package:shopping_app/app/modules/auth/views/register_view.dart';
-import 'package:shopping_app/app/modules/auth/views/phone_auth_view.dart';
 
-mixin Validators {
+class ValidatorMixin {
   String? phoneNumberValidator(String? value, [int minLen = 10]) {
     value ??= "";
     value.removeAllWhitespace;
@@ -71,24 +60,4 @@ mixin Validators {
       return "Max $maxLen Characters Allowed";
     }
   }
-}
-
-mixin AuthMixin {
-  late final AuthService service = AuthService.service();
-
-  void onRegisterTap() => Get.to(() => RegisterView());
-
-  void onGoogleTap() => Get.to(() => GoogleAuthView());
-
-  void onCallTap() => Get.to(() => PhoneAuthView());
-}
-
-mixin ServicesMixin {
-  late final AuthService authService = AuthService.service();
-  late final UserService userService = UserService.service();
-  late final CartService cartService = CartService.service();
-  late final ConfigService configService = ConfigService.service();
-  late final OrdersService ordersService = OrdersService.service();
-  late final ProductsService productsService = ProductsService.service();
-  late final DynamicLinkService linkService = DynamicLinkService.service();
 }

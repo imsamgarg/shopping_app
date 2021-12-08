@@ -4,10 +4,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shopping_app/app/core/utils/helper.dart';
-import 'package:shopping_app/app/core/utils/mixins.dart';
+import 'package:shopping_app/app/core/utils/mixins/error_handling_mixin.dart';
+import 'package:shopping_app/app/core/utils/mixins/routes_mixin.dart';
+import 'package:shopping_app/app/core/utils/mixins/services_mixin.dart';
+import 'package:shopping_app/app/core/utils/mixins/validator_mixin.dart';
 import 'package:shopping_app/app/routes/app_pages.dart';
 
-class PhoneAuthController extends GetxController with AuthMixin {
+class PhoneAuthController extends GetxController
+    with ServicesMixin, ErrorHandlingMixin, RoutesMixin, ValidatorMixin {
   late String _verificationId;
 
   PhoneAuthController(this.link);
@@ -36,13 +40,13 @@ class PhoneAuthController extends GetxController with AuthMixin {
 
   Future _verifyOtp(AuthCredential credential) async {
     if (link) {
-      await service.linkWithCreds(credential);
+      await authService.linkWithCreds(credential);
       Get.back();
       successSnackbar("Mobile Successfully Linked", 3);
       return;
     }
 
-    final isNewUser = await service.loginWithPhone(credential);
+    final isNewUser = await authService.loginWithPhone(credential);
     Get.offAllNamed(Routes.HOME);
     if (isNewUser) {
       successSnackbar("Phone Number Authenticated");
@@ -118,7 +122,7 @@ class PhoneAuthController extends GetxController with AuthMixin {
     toggleButtonLoading(true);
     String phone = phoneController.text;
     phone = "+91$phone";
-    service.initPhoneAuth(
+    authService.initPhoneAuth(
       phoneNumber: phone,
       verificationCompleted: _onVerificationCompletion,
       verificationFailed: _onVerificationFailed,

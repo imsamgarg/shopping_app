@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:shopping_app/app/core/utils/mixins.dart';
+import 'package:shopping_app/app/core/utils/mixins/services_mixin.dart';
 import 'package:shopping_app/app/data/models/filter_map_model.dart';
 import 'package:shopping_app/app/modules/product/controllers/products_list_controller.dart';
 

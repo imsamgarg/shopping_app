@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shopping_app/app/core/utils/helper.dart';
-import 'package:shopping_app/app/core/utils/mixins.dart';
+import 'package:shopping_app/app/core/utils/mixins/error_handling_mixin.dart';
+import 'package:shopping_app/app/core/utils/mixins/routes_mixin.dart';
+import 'package:shopping_app/app/core/utils/mixins/services_mixin.dart';
+import 'package:shopping_app/app/core/utils/mixins/validator_mixin.dart';
 import 'package:shopping_app/app/routes/app_pages.dart';
 
-class RegisterController extends GetxController with AuthMixin {
+class RegisterController extends GetxController
+    with RoutesMixin, ServicesMixin, ErrorHandlingMixin, ValidatorMixin {
   late final GlobalKey<FormState> formKey = GlobalKey();
   late final nameController = TextEditingController();
   late final emailController = TextEditingController();
@@ -32,7 +36,7 @@ class RegisterController extends GetxController with AuthMixin {
     final email = emailController.text;
     final pass = passController.text;
     final name = nameController.text;
-    await service.registerWithEmail(email, pass, name: name);
+    await authService.registerWithEmail(email, pass, name: name);
     Get.offAllNamed(Routes.HOME);
     successSnackbar("Account Created Successfully");
   }

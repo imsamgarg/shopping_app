@@ -1,9 +1,10 @@
 import 'package:get/get.dart';
-import 'package:shopping_app/app/core/utils/helper.dart';
-import 'package:shopping_app/app/core/utils/mixins.dart';
+import 'package:shopping_app/app/core/utils/mixins/error_handling_mixin.dart';
+import 'package:shopping_app/app/core/utils/mixins/services_mixin.dart';
 import 'package:shopping_app/app/routes/app_pages.dart';
 
-class GoogleAuthController extends GetxController with AuthMixin {
+class GoogleAuthController extends GetxController
+    with ServicesMixin, ErrorHandlingMixin {
   final String buttonId = "button";
 
   bool isTryAgainButtonVisible = false;
@@ -19,7 +20,7 @@ class GoogleAuthController extends GetxController with AuthMixin {
   }
 
   Future _login() async {
-    await service.signInWithGoogle();
+    await authService.signInWithGoogle();
     Get.offAllNamed(Routes.HOME);
   }
 

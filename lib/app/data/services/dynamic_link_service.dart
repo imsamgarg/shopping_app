@@ -1,11 +1,13 @@
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:shopping_app/app/core/utils/mixins/routes_mixin.dart';
 import 'package:shopping_app/app/core/values/values.dart';
 import 'package:shopping_app/app/data/models/dynamic_link_model.dart';
 import 'package:shopping_app/app/modules/home/controllers/tap_controller.dart';
 
-class DynamicLinkService extends GetxService with WidgetsBindingObserver {
+class DynamicLinkService extends GetxService
+    with WidgetsBindingObserver, RoutesMixin {
   static DynamicLinkService service() => Get.find<DynamicLinkService>();
   late final _instance = FirebaseDynamicLinks.instance;
   DynamicLink? link;
@@ -55,13 +57,12 @@ class DynamicLinkService extends GetxService with WidgetsBindingObserver {
   void handleLink() {
     if (link == null) return;
     final id = link?.id;
-    final con = TapController.to;
     switch (link?.linkType) {
       case DynamicLinkType.product:
-        con.onProductTapWithId(id);
+        onProductTapWithId(id);
         break;
       case DynamicLinkType.subCategory:
-        con.onSubCategoryTap(id);
+        onSubCategoryTap(id);
         break;
       case DynamicLinkType.order:
         //Hje Implement ni Kita

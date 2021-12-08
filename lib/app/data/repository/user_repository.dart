@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shopping_app/app/core/interfaces.dart';
-import 'package:shopping_app/app/core/utils/helper.dart';
+import 'package:shopping_app/app/core/utils/mixins/error_handling_mixin.dart';
 
-class FirebaseUserRepository extends UserInterface {
+class FirebaseUserRepository extends UserInterface with ErrorHandlingMixin {
   static final FirebaseUserRepository instance = FirebaseUserRepository._();
 
   factory FirebaseUserRepository() {

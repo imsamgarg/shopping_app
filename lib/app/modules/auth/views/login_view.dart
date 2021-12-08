@@ -6,11 +6,10 @@ import 'package:shopping_app/app/core/global_widgets/buttons.dart';
 import 'package:shopping_app/app/core/global_widgets/input_fields.dart';
 import 'package:shopping_app/app/core/global_widgets/responsive.dart';
 import 'package:shopping_app/app/core/theme/sizing_theme.dart';
-import 'package:shopping_app/app/core/utils/mixins.dart';
 import 'package:velocity_x/velocity_x.dart';
 import '../controllers/login_controller.dart';
 
-class LoginView extends GetView<LoginController> with Validators {
+class LoginView extends GetView<LoginController> {
   final loginHeading = "Login".text.size(35).fontWeight(FontWeight.bold).make();
 
   @override
@@ -46,7 +45,7 @@ class LoginView extends GetView<LoginController> with Validators {
                     isSmallScreen ? verSpacing10 : verSpacing20,
                     CustomInputField(
                       icon: Icons.alternate_email_outlined,
-                      validator: emailValidator,
+                      validator: controller.emailValidator,
                       controller: controller.emailController,
                       hintText: "Email ID",
                       textInputType: TextInputType.emailAddress,
@@ -56,7 +55,7 @@ class LoginView extends GetView<LoginController> with Validators {
                       icon: Icons.lock_rounded,
                       isPass: true,
                       hintText: "Password",
-                      validator: passValidator,
+                      validator: controller.passValidator,
                       controller: controller.passController,
                       textInputType: TextInputType.visiblePassword,
                     ),
