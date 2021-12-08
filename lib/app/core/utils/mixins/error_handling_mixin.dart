@@ -83,7 +83,7 @@ mixin ErrorHandlingMixin {
   }
 
   Future digestError(
-    Future Function() callback, {
+    dynamic Function() callback, {
     VoidCallback? onFinally,
   }) async {
     try {
