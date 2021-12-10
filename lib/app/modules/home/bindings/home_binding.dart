@@ -5,7 +5,6 @@ import 'package:shopping_app/app/data/services/config_service.dart';
 import 'package:shopping_app/app/data/services/user_service.dart';
 import 'package:shopping_app/app/modules/home/controllers/favourite_controller.dart';
 import 'package:shopping_app/app/modules/home/controllers/profile_controller.dart';
-import 'package:shopping_app/app/modules/home/controllers/tap_controller.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -21,6 +20,5 @@ class HomeBinding extends Bindings {
     Get.lazyPut<HomeController>(() => HomeController());
     Get.lazyPut<FavouriteController>(() => FavouriteController());
     Get.lazyPut<ProfileController>(() => ProfileController());
-    Get.lazyPut<TapController>(() => TapController());
   }
 }

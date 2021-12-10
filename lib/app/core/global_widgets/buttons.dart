@@ -70,6 +70,7 @@ class CallButton extends StatelessWidget {
 class AppTextButton extends StatelessWidget {
   final bool isLoading;
   final Color? color;
+  final Color? foregroundColor;
   final Widget child;
   final VoidCallback onTap;
 
@@ -79,6 +80,7 @@ class AppTextButton extends StatelessWidget {
     required this.onTap,
     this.color,
     required this.child,
+    this.foregroundColor,
   }) : super(key: key);
 
   @override
@@ -95,7 +97,7 @@ class AppTextButton extends StatelessWidget {
                 },
               ),
               foregroundColor: MaterialStateColor.resolveWith(
-                (states) => Vx.white,
+                (states) => foregroundColor ?? Vx.white,
               ),
             )
           : TextButton.styleFrom(
@@ -104,7 +106,12 @@ class AppTextButton extends StatelessWidget {
               shape: Sizing.roundShape,
             ),
       onPressed: isLoading ? () {} : onTap,
-      child: isLoading ? CenterLoading(size: 16) : child,
+      child: isLoading
+          ? CenterLoading(
+              size: 18,
+              color: foregroundColor,
+            )
+          : child,
     );
   }
 }

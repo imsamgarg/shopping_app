@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:get/get.dart';
-import 'package:shopping_app/app/modules/home/controllers/tap_controller.dart';
-
-class CategoriesView extends GetView<TapController> {
+class CategoriesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

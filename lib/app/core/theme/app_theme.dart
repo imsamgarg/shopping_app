@@ -7,7 +7,7 @@ import 'color_theme.dart';
 
 class AppTheme {
   static final lightTheme = ThemeData(
-    textTheme: GoogleFonts.latoTextTheme(),
+    textTheme: GoogleFonts.nunitoSansTextTheme(),
     scaffoldBackgroundColor: ColorTheme.whiteColor,
     backgroundColor: ColorTheme.whiteColor,
     primarySwatch: ColorTheme.primarySwatch,

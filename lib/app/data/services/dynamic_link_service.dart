@@ -47,7 +47,7 @@ class DynamicLinkService extends GetxService
     return false;
   }
 
-  void _handleLink() => _instance.onLink(onSuccess: _extractLink);
+  void _handleLink() => _instance.onLink.listen(_extractLink);
 
   Future<dynamic> _extractLink(PendingDynamicLinkData? linkData) async {
     if (!_shouldCheckForLink()) return;

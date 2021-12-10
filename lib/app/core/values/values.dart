@@ -1,4 +1,4 @@
-const double radius = 5;
+const double radius = 15;
 
 ///24
 const double fontSizeXL = 24;

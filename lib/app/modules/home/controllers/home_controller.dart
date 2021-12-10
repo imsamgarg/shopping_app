@@ -16,9 +16,12 @@ class HomeController extends GetxController with ServicesMixin, RoutesMixin {
   AppModel? data;
   List<Offer> get offers => data?.offers ?? [];
 
-  late final instance = _getData();
+  late final Future<bool> instance = _getData();
 
   late final PagingController<int, ProductSnapshot> pagingController;
+
+  late final cats = data?.categories.map((e) => e.name ?? "").toList() ?? [];
+  late final subCats = _getSubCatList();
 
   void onIndexChange(int p1) {
     if (data == null) return;
@@ -37,13 +40,13 @@ class HomeController extends GetxController with ServicesMixin, RoutesMixin {
     super.onClose();
   }
 
-  Future<void> _getData() async {
+  Future<bool> _getData() async {
     await userService.initUser();
     await configService.init();
     data = configService.data;
     pagingController.addPageRequestListener(_getPopularProducts);
     1.delay().then((_) => linkService.handleLink());
-    return;
+    return true;
   }
 
   Future<void> _getPopularProducts(int pageKey) async {
@@ -59,5 +62,21 @@ class HomeController extends GetxController with ServicesMixin, RoutesMixin {
     } else {
       pagingController.appendPage(docs, pageKey + docs.length);
     }
+  }
+
+  void logout() async {
+    (await userService.logout());
+  }
+
+  void onCartTap() {}
+
+  List<String?> _getSubCatList() {
+    final list = <String?>[];
+    for (final cat in data!.categories) {
+      for (var subCat in cat.subCats!) {
+        list.add(subCat.name);
+      }
+    }
+    return list;
   }
 }

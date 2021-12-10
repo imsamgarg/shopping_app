@@ -6,6 +6,7 @@ import 'package:shopping_app/app/core/global_widgets/buttons.dart';
 import 'package:shopping_app/app/core/global_widgets/input_fields.dart';
 import 'package:shopping_app/app/core/global_widgets/responsive.dart';
 import 'package:shopping_app/app/core/theme/sizing_theme.dart';
+import 'package:shopping_app/app/core/utils/helper.dart';
 import 'package:velocity_x/velocity_x.dart';
 import '../controllers/login_controller.dart';
 
@@ -66,7 +67,9 @@ class LoginView extends GetView<LoginController> {
                       alignment: Alignment.centerLeft,
                       child: AppTextButton(
                         onTap: controller.onForgotPasswordTap,
-                        child: "Forgot?".text.make(),
+                        child: "Forgot?".text.size(15).make(),
+                        foregroundColor: primaryColor(context),
+                        color: Vx.white,
                       ),
                     ),
                     SizedBox(
@@ -120,7 +123,7 @@ class LoginButton extends GetView<LoginController> {
           child: AppTextButton(
             onTap: controller.onLoginTap,
             isLoading: controller.isButtonLoading,
-            child: "Login".text.make(),
+            child: "Login".text.size(20).make(),
           ),
         );
       },

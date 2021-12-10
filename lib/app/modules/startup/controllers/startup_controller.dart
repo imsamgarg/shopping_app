@@ -1,3 +1,4 @@
+import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
 import 'package:shopping_app/app/core/utils/mixins/services_mixin.dart';
@@ -13,6 +14,7 @@ class StartupController extends GetxController with ServicesMixin {
 
   void checkForUser() async {
     await Firebase.initializeApp();
+    await FirebaseAppCheck.instance.activate();
     await linkService.saveInitialLink();
     if (await userService.isUserSignedIn()) {
       Get.offAllNamed(Routes.HOME);

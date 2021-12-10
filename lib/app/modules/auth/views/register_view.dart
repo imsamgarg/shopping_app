@@ -126,7 +126,7 @@ class RegisterButton extends GetView<RegisterController> {
           child: AppTextButton(
             isLoading: controller.isButtonLoading,
             onTap: controller.onRegisterTap,
-            child: "Register".text.bold.size(18).makeCentered(),
+            child: "Register".text.size(18).makeCentered(),
           ),
         );
       },

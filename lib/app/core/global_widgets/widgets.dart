@@ -5,15 +5,17 @@ class CenterLoading extends StatelessWidget {
   const CenterLoading({
     Key? key,
     this.size = 50.0,
+    this.color,
   }) : super(key: key);
 
   final double size;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: SpinKitThreeBounce(
-        color: Theme.of(context).colorScheme.primary,
+        color: color ?? Theme.of(context).colorScheme.primary,
         size: size,
       ),
     );

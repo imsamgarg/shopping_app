@@ -116,4 +116,8 @@ class FirebaseUserRepository extends UserInterface with ErrorHandlingMixin {
       await _auth.sendPasswordResetEmail(email: email);
     });
   }
+
+  Future<void> logout() {
+    return _auth.signOut();
+  }
 }

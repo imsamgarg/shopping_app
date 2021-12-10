@@ -20,6 +20,8 @@ class DynamicLink {
       return;
     }
 
+    // if (type == linkType.) {}
+    // DynamicLinkType.values.byName(name)
     if (type == _product) {
       linkType = DynamicLinkType.product;
     } else if (type == _offer) {

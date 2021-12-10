@@ -4,6 +4,8 @@ class UserModel {
   late Map<String, DateTime> favourites;
   late Map<String, CartModel> cartItems;
   List<Address>? address;
+  List<String>? orders;
+  int? ordersCount;
   List<String>? savedList;
 
   UserModel({required this.favourites, required this.cartItems, this.address});
@@ -24,7 +26,10 @@ class UserModel {
           )
         : {};
     savedList = favourites.entries.map((e) => e.key).toList();
-
+    ordersCount = json['ordersCount'];
+    if (json['orders'] != null) {
+      orders = (json['orders'] as List).cast<String>();
+    }
     address = json['address'] != null
         ? (json['address'] as List).map((e) => Address.fromJson(e)).toList()
         : <Address>[];

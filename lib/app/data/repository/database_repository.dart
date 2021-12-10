@@ -25,7 +25,7 @@ class FirebaseDbRepository {
   }
 
   Future getDocumentFromRealtimeDb(String id, String path) async {
-    return (await _database.reference().child(path).child(id).get()).value;
+    return (await _database.ref().child(path).child(id).get()).value;
   }
 
   Future<List> getDocsFromRealtimeDb(List<String> ids, String path) async {
