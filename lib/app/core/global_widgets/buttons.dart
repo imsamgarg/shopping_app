@@ -19,7 +19,7 @@ class GoogleButton extends StatelessWidget {
       child: OutlinedButton(
         style: OutlinedButton.styleFrom(
           shape: RoundedRectangleBorder(
-            borderRadius: Sizing.borderRadiusXl,
+            borderRadius: Sizing.borderRadiusXLL,
           ),
         ),
         onPressed: onTap,
@@ -52,7 +52,7 @@ class CallButton extends StatelessWidget {
       child: OutlinedButton(
         style: OutlinedButton.styleFrom(
           shape: RoundedRectangleBorder(
-            borderRadius: Sizing.borderRadiusXl,
+            borderRadius: Sizing.borderRadiusXLL,
           ),
         ),
         onPressed: onTap,
