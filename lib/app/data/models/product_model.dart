@@ -69,9 +69,9 @@ class ProductModel {
     sizechart = json['sizechart'];
     isPopular = json['isPopular'];
     isReturnable = json['isReturnable'];
-    img = json['img'].cast<String>();
-    tags = json['tags'].cast<String>();
-    features = json['features'].cast<String>();
+    img = json['img']?.cast<String>();
+    tags = json['tags']?.cast<String>();
+    features = json['features']?.cast<String>();
     isSizeRequired = json['isSizeRequired'];
     isColorRequired = json['isColorRequired'];
     selectedSize = json['selectedSize'];

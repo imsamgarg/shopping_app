@@ -32,19 +32,3 @@ class CartModel {
     return data;
   }
 }
-
-class Product {
-  String? fu;
-
-  Product({this.fu});
-
-  Product.fromJson(Map<String, dynamic> json) {
-    fu = json['fu'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data['fu'] = fu;
-    return data;
-  }
-}
