@@ -1,3 +1,5 @@
+import 'package:shopping_app/app/data/models/dynamic_link_model.dart';
+
 class AppModel {
   Config? config;
   late List<AppBanner> banners;
@@ -116,22 +118,29 @@ class Config {
 class AppBanner {
   String? id;
   String? img;
-  bool? isProduct;
-
-  AppBanner({this.id, this.img, this.isProduct});
+  String? type;
+  AppBanner({this.id, this.img, this.type});
 
   AppBanner.fromJson(dynamic json) {
     id = json['id'];
     img = json['img'];
-    isProduct = json['isProduct'];
+    type = json['linkType'];
   }
 
   dynamic toJson() {
     final data = <String, dynamic>{};
     data['id'] = id;
     data['img'] = img;
-    data['isProduct'] = isProduct;
+    data['linkType'] = type;
+
     return data;
+  }
+
+  DynamicLink toDynamicLink() {
+    return DynamicLink.fromJson({
+      "id": id,
+      "linkType": type,
+    });
   }
 }
 

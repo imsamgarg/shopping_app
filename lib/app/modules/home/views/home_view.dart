@@ -232,7 +232,7 @@ class _Banners extends GetView<HomeController> {
         enableInfiniteScroll: false,
         enlargeCenterPage: true,
         itemBuilder: (context, index) {
-          return _Banner(offer: controller.data!.banners[index]).px(2);
+          return _Banner(banner: controller.data!.banners[index]).px(2);
         },
       ),
     );
@@ -240,12 +240,14 @@ class _Banners extends GetView<HomeController> {
 }
 
 class _Banner extends GetView<HomeController> {
-  final AppBanner offer;
+  final AppBanner banner;
 
-  const _Banner({Key? key, required this.offer}) : super(key: key);
+  const _Banner({Key? key, required this.banner}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return CachedImage(url: offer.img!);
+    return CachedImage(url: banner.img!).onTap(
+      () => controller.handleBannerLink(banner.toDynamicLink()),
+    );
   }
 }
 
