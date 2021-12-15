@@ -11,7 +11,7 @@ class HomeController extends GetxController with ServicesMixin, RoutesMixin {
 
   //
   AppModel? data;
-  List<Offer> get offers => data?.offers ?? [];
+  List<AppBanner> get offers => data?.banners ?? [];
 
   late final Future<bool> instance = _getData();
 
@@ -27,7 +27,7 @@ class HomeController extends GetxController with ServicesMixin, RoutesMixin {
     await userService.initUser();
     await configService.init();
     data = configService.data;
-    1.delay().then((_) => linkService.handleLink());
+    1.delay().then((_) => linkService.handleDynamicLink());
     return true;
   }
 

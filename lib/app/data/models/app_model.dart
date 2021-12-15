@@ -1,16 +1,16 @@
 class AppModel {
   Config? config;
-  late List<Offer> offers;
+  late List<AppBanner> banners;
   late List<Category> categories;
 
-  AppModel({this.config, required this.offers, required this.categories});
+  AppModel({this.config, required this.banners, required this.categories});
 
   AppModel.fromJson(json) {
     config = json['config'] != null ? Config?.fromJson(json['config']) : null;
     if (json['offers'] != null) {
-      offers = <Offer>[];
+      banners = <AppBanner>[];
       json['offers']?.forEach((v) {
-        offers.add(Offer.fromJson(v));
+        banners.add(AppBanner.fromJson(v));
       });
     }
     if (json['categories'] != null) {
@@ -26,7 +26,7 @@ class AppModel {
     if (config != null) {
       data['config'] = config?.toJson();
     }
-    data['offers'] = offers.map((v) => v.toJson()).toList();
+    data['offers'] = banners.map((v) => v.toJson()).toList();
     data['categories'] = categories.map((v) => v.toJson()).toList();
     return data;
   }
@@ -113,14 +113,14 @@ class Config {
   }
 }
 
-class Offer {
+class AppBanner {
   String? id;
   String? img;
   bool? isProduct;
 
-  Offer({this.id, this.img, this.isProduct});
+  AppBanner({this.id, this.img, this.isProduct});
 
-  Offer.fromJson(dynamic json) {
+  AppBanner.fromJson(dynamic json) {
     id = json['id'];
     img = json['img'];
     isProduct = json['isProduct'];

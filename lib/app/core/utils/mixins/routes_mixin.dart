@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
+import 'package:shopping_app/app/core/values/values.dart';
 import 'package:shopping_app/app/data/models/app_model.dart';
+import 'package:shopping_app/app/data/models/dynamic_link_model.dart';
 import 'package:shopping_app/app/data/models/product_model.dart';
 import 'package:shopping_app/app/modules/auth/views/google_auth_view.dart';
 import 'package:shopping_app/app/modules/auth/views/phone_auth_view.dart';
@@ -23,7 +25,7 @@ mixin RoutesMixin {
     Get.toNamed(Routes.PRODUCT, arguments: id);
   }
 
-  void onOfferTap(Offer offer) {
+  void onOfferTap(AppBanner offer) {
     if (offer.isProduct ?? false) {
       onProductTapWithId(offer.id);
     } else {
@@ -45,5 +47,26 @@ mixin RoutesMixin {
 
   void onAllCategoriesTap() {
     Get.to(() => CategoriesView());
+  }
+
+  void handleBannerLink(DynamicLink? link) {
+    if (link == null) return;
+    final id = link.id;
+    switch (link.linkType) {
+      case DynamicLinkType.product:
+        onProductTapWithId(id);
+        break;
+      case DynamicLinkType.subCategory:
+        onSubCategoryTap(id);
+        break;
+      case DynamicLinkType.order:
+        //Hje Implement ni Kita
+        break;
+      case DynamicLinkType.offer:
+        //Hje Implenent ni Kita.
+        break;
+      default:
+        break;
+    }
   }
 }

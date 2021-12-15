@@ -55,7 +55,7 @@ class _HomeView extends GetView<HomeController> {
         slivers: [
           _AppBar(),
           // _Heading(),
-          if (controller.data?.offers.isNotEmpty ?? false) ...[
+          if (controller.data?.banners.isNotEmpty ?? false) ...[
             verSliverSpacing16,
             _Banners(),
             verSliverSpacing16,
@@ -232,7 +232,7 @@ class _Banners extends GetView<HomeController> {
         enableInfiniteScroll: false,
         enlargeCenterPage: true,
         itemBuilder: (context, index) {
-          return _Banner(offer: controller.data!.offers[index]).px(2);
+          return _Banner(offer: controller.data!.banners[index]).px(2);
         },
       ),
     );
@@ -240,7 +240,7 @@ class _Banners extends GetView<HomeController> {
 }
 
 class _Banner extends GetView<HomeController> {
-  final Offer offer;
+  final AppBanner offer;
 
   const _Banner({Key? key, required this.offer}) : super(key: key);
   @override
