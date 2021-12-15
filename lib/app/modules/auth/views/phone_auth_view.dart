@@ -75,14 +75,14 @@ class PhoneAuthView extends StatelessWidget {
                       if (controller.isOtpSent) {
                         return PinPut(
                           selectedFieldDecoration: BoxDecoration(
-                            borderRadius: Sizing.borderRadius,
+                            borderRadius: Sizing.borderRadiusS,
                             border: Border.all(
                               width: 1.5,
                               color: primaryColor(context),
                             ),
                           ),
                           followingFieldDecoration: BoxDecoration(
-                            borderRadius: Sizing.borderRadius,
+                            borderRadius: Sizing.borderRadiusS,
                             border: Border.all(
                               width: 1,
                               color: primaryColor(context).withOpacity(0.7),

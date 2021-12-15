@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:shopping_app/app/core/values/values.dart';
 
 class Sizing {
-  static const borderRadius = BorderRadius.all(Radius.circular(5));
-  static const borderRadiusXl = BorderRadius.all(Radius.circular(25));
+  static const borderRadiusS = BorderRadius.all(Radius.circular(radiusS));
+  static const borderRadiusM = BorderRadius.all(Radius.circular(radiusM));
+  static const borderRadiusL = BorderRadius.all(Radius.circular(radiusL));
+  static const borderRadiusXL = BorderRadius.all(Radius.circular(radiusXL));
+  static const borderRadiusXLL = BorderRadius.all(Radius.circular(25));
 
   ///Ver:-8 Hor:-20
   static const sidePadding = EdgeInsets.symmetric(vertical: 8, horizontal: 20);
@@ -14,7 +17,10 @@ class Sizing {
   static final cardShape =
       RoundedRectangleBorder(borderRadius: BorderRadius.circular(radius));
   static final roundShape =
-      RoundedRectangleBorder(borderRadius: borderRadiusXl);
+      RoundedRectangleBorder(borderRadius: borderRadiusXLL);
 
   static const radiusS = 8.0;
+  static const radiusM = 12.0;
+  static const radiusL = 15.0;
+  static const radiusXL = 20.0;
 }

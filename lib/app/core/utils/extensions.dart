@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
+import 'package:velocity_x/velocity_x.dart';
 import 'package:path/path.dart' as p;
 
 extension ColorExtension on BuildContext {
@@ -8,6 +9,21 @@ extension ColorExtension on BuildContext {
 }
 
 extension StringExtensions on String {
+  String trimText(int length) {
+    String text = "";
+    if (this.length > length) {
+      text = substring(0, length - 1);
+      text = text.insert("...", length - 1);
+    } else {
+      text = this;
+    }
+    return text;
+  }
+
+  String splitName() {
+    return split(" ")[0];
+  }
+
   String get shortImageName {
     final ext = p.extension(this);
     final image = p.basenameWithoutExtension(this);

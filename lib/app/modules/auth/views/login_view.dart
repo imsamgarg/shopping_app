@@ -141,7 +141,7 @@ class EmailButton extends GetView<LoginController> {
     return OutlinedButton(
       style: OutlinedButton.styleFrom(
         shape: RoundedRectangleBorder(
-          borderRadius: Sizing.borderRadiusXl,
+          borderRadius: Sizing.borderRadiusXLL,
         ),
       ),
       onPressed: controller.onRegisterTap,
