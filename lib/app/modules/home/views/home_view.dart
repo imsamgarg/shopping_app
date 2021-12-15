@@ -3,12 +3,17 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:shopping_app/app/core/global_widgets/buttons.dart';
+import 'package:shopping_app/app/core/global_widgets/cached_image.dart';
 import 'package:shopping_app/app/core/global_widgets/future_builder.dart';
 import 'package:shopping_app/app/core/global_widgets/navbar.dart';
-import 'package:shopping_app/app/core/theme/color_theme.dart';
+import 'package:shopping_app/app/core/global_widgets/product.dart';
 import 'package:shopping_app/app/core/utils/helper.dart';
 import 'package:shopping_app/app/core/values/values.dart';
+import 'package:shopping_app/app/data/models/app_model.dart';
+import 'package:shopping_app/app/data/models/product_model.dart' as p;
+import 'package:shopping_app/app/modules/home/controllers/popular_products_controller.dart';
 import 'package:shopping_app/app/modules/home/views/favourite_view.dart';
 import 'package:shopping_app/app/modules/home/views/profile_view.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -40,7 +45,7 @@ class HomeView extends GetView<HomeController> {
   }
 }
 
-class _HomeView extends StatelessWidget {
+class _HomeView extends GetView<HomeController> {
   const _HomeView({Key? key}) : super(key: key);
 
   @override
@@ -50,18 +55,46 @@ class _HomeView extends StatelessWidget {
         slivers: [
           _AppBar(),
           // _Heading(),
-          verSliverSpacing16,
-          _Offers(),
-          verSliverSpacing16,
+          if (controller.data?.offers.isNotEmpty ?? false) ...[
+            verSliverSpacing16,
+            _Banners(),
+            verSliverSpacing16,
+          ],
           // _Categories(),
           // verSliverSpacing8,
           _SubHeading(
             heading: 'Categories',
+            onTap: controller.onAllCategoriesTap,
           ),
           _SubCategories(),
           verSliverSpacing8,
+          _SubHeading(
+            heading: 'Popular Products',
+            onTap: () => controller.onSubCategoryTap('popular'),
+          ),
+          _PopularProduct(),
         ],
       ).px16(),
+    );
+  }
+}
+
+class _PopularProduct extends GetView<PopularProductsController> {
+  @override
+  Widget build(BuildContext context) {
+    return PagedSliverGrid<int, p.ProductSnapshot>(
+      pagingController: controller.pagingController,
+      builderDelegate: PagedChildBuilderDelegate(
+        itemBuilder: (_, item, i) {
+          return ProductCard(product: item.product);
+        },
+      ),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        mainAxisSpacing: 10,
+        mainAxisExtent: 250,
+        crossAxisSpacing: 10,
+      ),
     );
   }
 }
@@ -132,7 +165,6 @@ class _SubCategories extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return _CatList(
       children: getCards(),
-      onAllTap: () {},
     );
   }
 }
@@ -166,10 +198,8 @@ class _CatList extends StatelessWidget {
   const _CatList({
     Key? key,
     required this.children,
-    required this.onAllTap,
   }) : super(key: key);
   final List<Widget> children;
-  final VoidCallback onAllTap;
 
   @override
   Widget build(BuildContext context) {
@@ -188,8 +218,8 @@ class _CatList extends StatelessWidget {
   }
 }
 
-class _Offers extends StatelessWidget {
-  const _Offers({Key? key}) : super(key: key);
+class _Banners extends GetView<HomeController> {
+  const _Banners({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -202,27 +232,20 @@ class _Offers extends StatelessWidget {
         enableInfiniteScroll: false,
         enlargeCenterPage: true,
         itemBuilder: (context, index) {
-          return DummyContainer(index: index).px(2);
+          return _Banner(offer: controller.data!.offers[index]).px(2);
         },
       ),
     );
   }
 }
 
-class DummyContainer extends StatelessWidget {
-  final int index;
+class _Banner extends GetView<HomeController> {
+  final Offer offer;
 
-  const DummyContainer({Key? key, required this.index}) : super(key: key);
+  const _Banner({Key? key, required this.offer}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      child: Center(child: "$index".text.make()),
-    )
-        .box
-        .width(context.width - 32)
-        .withRounded(value: radius)
-        .coolGray500
-        .make();
+    return CachedImage(url: offer.img!);
   }
 }
 
