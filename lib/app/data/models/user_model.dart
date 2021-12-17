@@ -62,13 +62,13 @@ class Address {
 
   Address({
     this.alternativeNumber,
-    required this.city,
-    required this.houseStreet,
-    required this.locality,
-    required this.mobileNumber,
-    required this.name,
-    required this.pinCode,
-    required this.state,
+    this.city,
+    this.houseStreet,
+    this.locality,
+    this.mobileNumber,
+    this.name,
+    this.pinCode,
+    this.state,
   });
 
   Address.fromJson(Map<String, dynamic> json) {
