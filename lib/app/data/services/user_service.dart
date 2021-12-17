@@ -10,7 +10,15 @@ class UserService extends GetxService with _Address, _Favourite, _Parent {
   String get userName => _userRepo.userName;
   String get phoneNumber => _userRepo.phoneNumber;
   String? get profileUrl => _userRepo.profileUrl;
+  bool get hasGoogleProvider => _userRepo.hasGoogleProvider;
+  bool get hasMailProvider => _userRepo.hasMailProvider;
+  bool get hasPhoneProvider => _userRepo.hasPhoneProvider;
+
   Future<String>? get token => _userRepo.token;
+
+  String get mailAddress => _userRepo.mailAddress;
+  String get googleMailAddress => _userRepo.googleEmail;
+
   static UserService service() => Get.find<UserService>();
 
   Future<bool> isUserSignedIn() => _userRepo.isUserLogged();

@@ -1,3 +1,4 @@
+import 'package:custom_utils/log_utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shopping_app/app/core/interfaces.dart';
@@ -15,7 +16,7 @@ class FirebaseUserRepository extends UserInterface with ErrorHandlingMixin {
   late final _user = _auth.currentUser;
 
   @override
-  String get phoneNumber => _user?.phoneNumber ?? "Not Provided";
+  String get phoneNumber => _user?.phoneNumber ?? "Tap To Add";
 
   @override
   String? get profileUrl => _user?.photoURL;
@@ -27,7 +28,7 @@ class FirebaseUserRepository extends UserInterface with ErrorHandlingMixin {
   String get uid => _user?.uid ?? "";
 
   @override
-  String get userName => _user?.displayName ?? "";
+  String get userName => _user?.displayName ?? "Fashion 24x7 User";
 
   Future<void> loginWithPhoneNumber({
     required String phoneNumber,
@@ -115,6 +116,44 @@ class FirebaseUserRepository extends UserInterface with ErrorHandlingMixin {
     return await handleFirebaseAuthError(() async {
       await _auth.sendPasswordResetEmail(email: email);
     });
+  }
+
+  bool get hasGoogleProvider {
+    return _user!.providerData
+        .where((element) {
+          return element.providerId.contains("google");
+        })
+        .toList()
+        .isNotEmpty;
+  }
+
+  bool get hasMailProvider {
+    return _user!.providerData
+        .where((element) {
+          return element.providerId.contains("password");
+        })
+        .toList()
+        .isNotEmpty;
+  }
+
+  String get googleEmail {
+    final list = _user!.providerData.where((element) {
+      return element.providerId.contains("password");
+    }).toList();
+    if (list.isEmpty) return "Tap To Add Email";
+    return list.first.email!;
+  }
+
+  String get mailAddress {
+    final list = _user!.providerData.where((element) {
+      return element.providerId.contains("google");
+    }).toList();
+    if (list.isEmpty) return "Tap To Connect";
+    return list.first.email!;
+  }
+
+  bool get hasPhoneProvider {
+    return _user!.phoneNumber != null && _user!.phoneNumber!.isNotEmpty;
   }
 
   Future<void> logout() {
