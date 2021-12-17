@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_app/app/core/global_widgets/widgets.dart';
 import 'package:shopping_app/app/core/theme/sizing_theme.dart';
+import 'package:shopping_app/app/core/utils/helper.dart';
 import 'package:shopping_app/app/core/values/assets.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -69,21 +70,22 @@ class CallButton extends StatelessWidget {
 
 class AppTextButton extends StatelessWidget {
   final bool isLoading;
-  final Color color;
+  final Color? color;
   final Color? foregroundColor;
   final Widget child;
   final VoidCallback onTap;
-
+  final BorderRadius? borderRadius;
   final EdgeInsets? padding;
 
   const AppTextButton({
     Key? key,
     this.isLoading = false,
     required this.onTap,
-    this.color = Vx.white,
+    this.color,
     required this.child,
     this.foregroundColor,
     this.padding,
+    this.borderRadius,
   }) : super(key: key);
 
   @override
@@ -93,9 +95,20 @@ class AppTextButton extends StatelessWidget {
         backgroundColor: MaterialStateColor.resolveWith(
           (states) {
             if (states.contains(MaterialState.pressed)) {
-              return color.withOpacity(0.7);
+              if (foregroundColor != null) {
+                return foregroundColor!.withOpacity(0.2);
+              }
+              return primaryColor(context).withOpacity(0.7);
             }
-            return color;
+            return color ?? primaryColor(context);
+          },
+        ),
+        overlayColor: MaterialStateColor.resolveWith(
+          (states) {
+            if (foregroundColor != null) {
+              return foregroundColor!.withOpacity(0.2);
+            }
+            return primaryColor(context).withOpacity(0.7);
           },
         ),
         foregroundColor: MaterialStateColor.resolveWith(
@@ -107,7 +120,9 @@ class AppTextButton extends StatelessWidget {
           },
         ),
         shape: MaterialStateProperty.resolveWith((states) {
-          return Sizing.roundShape;
+          return RoundedRectangleBorder(
+            borderRadius: borderRadius ?? Sizing.borderRadiusXL,
+          );
         }),
       ),
       onPressed: isLoading ? () {} : onTap,
@@ -143,10 +158,11 @@ class DialogButton extends StatelessWidget {
       width: 80,
       height: 40,
       child: AppTextButton(
-        child: heading.text.color(textColor).make(),
+        child: heading.text.make(),
         padding: const EdgeInsets.all(0),
         color: color ?? Vx.white,
         isLoading: isLoading,
+        foregroundColor: textColor,
         onTap: onTap,
       ),
     );
