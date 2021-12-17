@@ -25,4 +25,6 @@ class ColorTheme {
   static const Color errorColor = Vx.red500;
 
   static const Color primaryColor = Color(0xFFFF7079);
+
+  static const Color textColor = Color(0xff878787);
 }
