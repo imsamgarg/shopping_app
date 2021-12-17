@@ -73,6 +73,7 @@ class AppTextButton extends StatelessWidget {
   final Color? color;
   final Color? foregroundColor;
   final Widget child;
+  final double loadingSize;
   final VoidCallback onTap;
   final BorderRadius? borderRadius;
   final EdgeInsets? padding;
@@ -86,6 +87,7 @@ class AppTextButton extends StatelessWidget {
     this.foregroundColor,
     this.padding,
     this.borderRadius,
+    this.loadingSize = 18,
   }) : super(key: key);
 
   @override
@@ -96,9 +98,9 @@ class AppTextButton extends StatelessWidget {
           (states) {
             if (states.contains(MaterialState.pressed)) {
               if (foregroundColor != null) {
-                return foregroundColor!.withOpacity(0.2);
+                return foregroundColor!.withOpacity(0.5);
               }
-              return primaryColor(context).withOpacity(0.7);
+              return primaryColor(context).withOpacity(0.5);
             }
             return color ?? primaryColor(context);
           },
@@ -128,8 +130,80 @@ class AppTextButton extends StatelessWidget {
       onPressed: isLoading ? () {} : onTap,
       child: isLoading
           ? CenterLoading(
+              size: loadingSize,
+              color: foregroundColor ?? Vx.white,
+            )
+          : child,
+    );
+  }
+}
+
+class AppOutlinedButton extends StatelessWidget {
+  final bool isLoading;
+  final Color? color;
+  final Color? foregroundColor;
+  final Widget child;
+  final double loadingSize;
+  final VoidCallback onTap;
+  final BorderRadius? borderRadius;
+  final EdgeInsets? padding;
+
+  const AppOutlinedButton({
+    Key? key,
+    this.isLoading = false,
+    required this.onTap,
+    this.color,
+    required this.child,
+    this.foregroundColor,
+    this.padding,
+    this.borderRadius,
+    this.loadingSize = 18,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return OutlinedButton(
+      style: ButtonStyle(
+          backgroundColor: MaterialStateColor.resolveWith(
+            (states) {
+              if (states.contains(MaterialState.pressed)) {
+                if (foregroundColor != null) {
+                  return foregroundColor!.withOpacity(0.2);
+                }
+                return primaryColor(context).withOpacity(0.2);
+              }
+              return color ?? Vx.white;
+            },
+          ),
+          overlayColor: MaterialStateColor.resolveWith(
+            (states) {
+              if (foregroundColor != null) {
+                return foregroundColor!.withOpacity(0.05);
+              }
+              return primaryColor(context).withOpacity(0.05);
+            },
+          ),
+          foregroundColor: MaterialStateColor.resolveWith(
+            (states) => foregroundColor ?? primaryColor(context),
+          ),
+          padding: MaterialStateProperty.resolveWith(
+            (states) {
+              return padding ?? const EdgeInsets.all(18);
+            },
+          ),
+          shape: MaterialStateProperty.resolveWith((states) {
+            return RoundedRectangleBorder(
+              borderRadius: borderRadius ?? Sizing.borderRadiusXL,
+            );
+          }),
+          side: MaterialStateProperty.resolveWith((states) {
+            return BorderSide(color: foregroundColor ?? primaryColor(context));
+          })),
+      onPressed: isLoading ? () {} : onTap,
+      child: isLoading
+          ? CenterLoading(
               size: 18,
-              color: foregroundColor,
+              color: foregroundColor ?? primaryColor(context),
             )
           : child,
     );
@@ -162,6 +236,7 @@ class DialogButton extends StatelessWidget {
         padding: const EdgeInsets.all(0),
         color: color ?? Vx.white,
         isLoading: isLoading,
+        loadingSize: 14,
         foregroundColor: textColor,
         onTap: onTap,
       ),
