@@ -31,10 +31,6 @@ class HomeController extends GetxController with ServicesMixin, RoutesMixin {
     return true;
   }
 
-  void logout() async {
-    (await userService.logout());
-  }
-
   void onCartTap() {}
 
   List<String?> _getSubCatList() {

@@ -8,6 +8,8 @@ class ProfileAuthController extends GetxController
   String get emailAddress => userService.mailAddress;
   String get googleMailAddress => userService.googleMailAddress;
 
+  bool get hasMail => userService.hasMailProvider;
+
   final String googleId = "google";
   final String mailId = "mail";
   final String phoneId = "phone";
@@ -21,6 +23,9 @@ class ProfileAuthController extends GetxController
     updateWidget(phoneId);
   }
 
-  void addGoogle() async {}
-  void addEmail() async {}
+  void addGoogle() async {
+    await authService.linkWithGoogle();
+    updateWidget(googleId);
+    updateWidget(mailId);
+  }
 }
