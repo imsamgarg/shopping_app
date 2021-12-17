@@ -9,6 +9,8 @@ class ProfileAuthController extends GetxController
   String get googleMailAddress => userService.googleMailAddress;
 
   bool get hasMail => userService.hasMailProvider;
+  bool get hasGoogle => userService.hasGoogleProvider;
+  bool get hasPhone => userService.hasPhoneProvider;
 
   final String googleId = "google";
   final String mailId = "mail";
@@ -19,11 +21,13 @@ class ProfileAuthController extends GetxController
   }
 
   void addPhoneNumber() async {
+    if (hasPhone) return;
     await onCallTap(true);
     updateWidget(phoneId);
   }
 
   void addGoogle() async {
+    if (hasGoogle) return;
     await authService.linkWithGoogle();
     updateWidget(googleId);
     updateWidget(mailId);

@@ -45,6 +45,7 @@ class ProfileController extends GetxController with RoutesMixin, ServicesMixin {
   }
 
   void unfocus() {
+    editingEnabled = false;
     focusNode.unfocus();
   }
 
