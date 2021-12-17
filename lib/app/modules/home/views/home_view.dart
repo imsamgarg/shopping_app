@@ -246,7 +246,7 @@ class _Banner extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return CachedImage(url: banner.img!).onTap(
-      () => controller.handleBannerLink(banner.toDynamicLink()),
+      () => controller.handleLink(banner.toDynamicLink()),
     );
   }
 }

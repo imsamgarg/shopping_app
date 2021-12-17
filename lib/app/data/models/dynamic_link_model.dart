@@ -2,7 +2,7 @@ import 'package:shopping_app/app/core/values/values.dart';
 
 class DynamicLink {
   static const _product = "product";
-  static const _offer = "ofer";
+  static const _offer = "offer";
   static const _order = "order";
   static const _category = "category";
 

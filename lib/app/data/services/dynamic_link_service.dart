@@ -53,12 +53,12 @@ class DynamicLinkService extends GetxService
     if (linkData != null) {
       final _link = DynamicLink.fromJson(linkData.link.queryParameters);
       link = _link;
-      handleBannerLink(link);
+      handleLink(link);
     }
   }
 
   void handleDynamicLink() {
-    handleBannerLink(link);
+    handleLink(link);
   }
 
   // void handleLink() {

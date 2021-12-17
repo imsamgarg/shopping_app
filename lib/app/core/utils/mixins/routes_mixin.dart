@@ -25,14 +25,6 @@ mixin RoutesMixin {
     Get.toNamed(Routes.PRODUCT, arguments: id);
   }
 
-  void onOfferTap(AppBanner offer) {
-    if (offer.isProduct ?? false) {
-      onProductTapWithId(offer.id);
-    } else {
-      _gotoProductsList(offer.id!);
-    }
-  }
-
   void _gotoProductsList(String? id) {
     Get.toNamed(Routes.PRODUCT_LIST, arguments: id);
   }
@@ -49,7 +41,7 @@ mixin RoutesMixin {
     Get.to(() => CategoriesView());
   }
 
-  void handleBannerLink(DynamicLink? link) {
+  void handleLink(DynamicLink? link) {
     if (link == null) return;
     final id = link.id;
     switch (link.linkType) {
