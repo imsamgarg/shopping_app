@@ -31,10 +31,6 @@ class UserService extends GetxService with _Address, _Favourite, _Parent {
   Future updateUsername(String name) async {
     return await _userRepo.updateName(name);
   }
-
-  Future<void> logout() async {
-    return _userRepo.logout();
-  }
 }
 
 mixin _Parent {
