@@ -15,7 +15,13 @@ mixin RoutesMixin {
 
   void onGoogleTap() => Get.to(() => GoogleAuthView());
 
-  void onCallTap() => Get.to(() => PhoneAuthView());
+  Future? onCallTap([bool? link]) {
+    return Get.to(() => PhoneAuthView(link: link ?? false));
+  }
+
+  void onAddressTap() => Get.toNamed(Routes.ADDRESS);
+
+  void onOrderTap() => Get.toNamed(Routes.ORDERS);
 
   void onProductTap(ProductModel product) {
     Get.toNamed(Routes.PRODUCT, arguments: product);
