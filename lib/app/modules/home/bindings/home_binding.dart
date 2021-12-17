@@ -6,6 +6,7 @@ import 'package:shopping_app/app/data/services/products_service.dart';
 import 'package:shopping_app/app/data/services/user_service.dart';
 import 'package:shopping_app/app/modules/home/controllers/favourite_controller.dart';
 import 'package:shopping_app/app/modules/home/controllers/popular_products_controller.dart';
+import 'package:shopping_app/app/modules/home/controllers/profile_auth_controller.dart';
 import 'package:shopping_app/app/modules/home/controllers/profile_controller.dart';
 
 import '../controllers/home_controller.dart';
@@ -13,6 +14,9 @@ import '../controllers/home_controller.dart';
 class HomeBinding extends Bindings {
   @override
   void dependencies() {
+    Get.lazyPut<ProfileAuthController>(
+      () => ProfileAuthController(),
+    );
     Get.lazyPut<PopularProductsController>(
       () => PopularProductsController(),
     );
