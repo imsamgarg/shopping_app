@@ -114,9 +114,9 @@ class _SubHeading extends StatelessWidget {
           heading.text.semiBold.color(Color(0xff14284a)).size(18).make(),
           AppTextButton(
             onTap: onTap ?? () {},
-            child: "See All".text.color(primaryColor(context)).bold.make(),
+            child: "See All".text.bold.make(),
             color: Vx.white,
-            foregroundColor: Vx.gray900,
+            foregroundColor: primaryColor(context),
           )
         ],
       ).py8(),
