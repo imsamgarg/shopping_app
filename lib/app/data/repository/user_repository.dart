@@ -88,6 +88,23 @@ class FirebaseUserRepository extends UserInterface with ErrorHandlingMixin {
     });
   }
 
+  Future<void> linkWithGoogle() async {
+    return await handleFirebaseAuthError(() async {
+      final user = await GoogleSignIn(
+        clientId:
+            "280884416298-nllg2aj0vht32fq6vboepi0h4f7lb7e2.apps.googleusercontent.com",
+      ).signIn();
+      final googleAuth = await user!.authentication;
+      final cred = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      await _user!.linkWithCredential(cred);
+      return;
+    });
+  }
+
   @override
   Future<void> signUpWithEmail(String email, String password,
       {String? name}) async {
