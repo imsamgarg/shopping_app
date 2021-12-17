@@ -9,6 +9,9 @@ class AppTheme {
   static final lightTheme = ThemeData(
     textTheme: GoogleFonts.nunitoSansTextTheme(),
     scaffoldBackgroundColor: ColorTheme.whiteColor,
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: ColorTheme.primaryColor,
+    ),
     backgroundColor: ColorTheme.whiteColor,
     primarySwatch: ColorTheme.primarySwatch,
     brightness: Brightness.light,
