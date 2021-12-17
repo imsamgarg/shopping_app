@@ -3,6 +3,7 @@ import 'package:shopping_app/app/core/values/values.dart';
 import 'package:shopping_app/app/data/models/app_model.dart';
 import 'package:shopping_app/app/data/models/dynamic_link_model.dart';
 import 'package:shopping_app/app/data/models/product_model.dart';
+import 'package:shopping_app/app/modules/address/views/address_view.dart';
 import 'package:shopping_app/app/modules/auth/views/google_auth_view.dart';
 import 'package:shopping_app/app/modules/auth/views/phone_auth_view.dart';
 import 'package:shopping_app/app/modules/auth/views/register_view.dart';
@@ -19,7 +20,9 @@ mixin RoutesMixin {
     return Get.to(() => PhoneAuthView(link: link ?? false));
   }
 
-  void onAddressTap() => Get.toNamed(Routes.ADDRESS);
+  void onAddressListTap() => Get.toNamed(Routes.ADDRESS);
+
+  void onAddAddressTap() => Get.to(() => AddressView());
 
   void onOrderTap() => Get.toNamed(Routes.ORDERS);
 
