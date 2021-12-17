@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 
 import 'package:shopping_app/app/modules/address/bindings/address_binding.dart';
+import 'package:shopping_app/app/modules/address/views/address_list_view.dart';
 import 'package:shopping_app/app/modules/address/views/address_view.dart';
 import 'package:shopping_app/app/modules/auth/bindings/auth_binding.dart';
 import 'package:shopping_app/app/modules/auth/views/login_view.dart';
@@ -54,7 +55,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.ADDRESS,
-      page: () => AddressView(),
+      page: () => AddressListView(),
       binding: AddressBinding(),
     ),
     GetPage(

@@ -22,6 +22,7 @@ dependencies:
   google_sign_in: 5.2.1
   firebase_database: ^9.0.2
   firebase_app_check: 0.0.6+2
+  flutter_slidable: 1.1.0
   firebase_image: 
     path: ../firebase_image
   custom_utils: 
