@@ -11,12 +11,22 @@ class FirebaseUserRepository extends UserInterface with ErrorHandlingMixin {
     return instance;
   }
 
-  FirebaseUserRepository._();
+  FirebaseUserRepository._() {
+    _auth.authStateChanges().listen((event) {
+      _user = event;
+    });
+  }
   final _auth = FirebaseAuth.instance;
-  late final _user = _auth.currentUser;
+  User? _user;
 
   @override
-  String get phoneNumber => _user?.phoneNumber ?? "Tap To Add";
+  String get phoneNumber {
+    customLog(_user!.phoneNumber);
+    if (_user?.phoneNumber != null && _user!.phoneNumber!.isNotEmpty) {
+      return _user!.phoneNumber!;
+    }
+    return "Tap To Add";
+  }
 
   @override
   String? get profileUrl => _user?.photoURL;
@@ -59,7 +69,7 @@ class FirebaseUserRepository extends UserInterface with ErrorHandlingMixin {
 
   Future<void> linkWithCreds(AuthCredential credential) async {
     return await handleFirebaseAuthError(() async {
-      await _user!.linkWithCredential(credential);
+      _user = (await _user!.linkWithCredential(credential)).user;
     });
   }
 
@@ -82,7 +92,6 @@ class FirebaseUserRepository extends UserInterface with ErrorHandlingMixin {
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
-
       final userCreds = await _auth.signInWithCredential(cred);
       return userCreds.additionalUserInfo!.isNewUser ? true : false;
     });
@@ -100,7 +109,8 @@ class FirebaseUserRepository extends UserInterface with ErrorHandlingMixin {
         idToken: googleAuth.idToken,
       );
 
-      await _user!.linkWithCredential(cred);
+      _user = (await _user!.linkWithCredential(cred)).user;
+
       return;
     });
   }
@@ -145,6 +155,8 @@ class FirebaseUserRepository extends UserInterface with ErrorHandlingMixin {
   }
 
   bool get hasMailProvider {
+    customLog(_user!.providerData);
+
     return _user!.providerData
         .where((element) {
           return element.providerId.contains("password");
@@ -155,15 +167,15 @@ class FirebaseUserRepository extends UserInterface with ErrorHandlingMixin {
 
   String get googleEmail {
     final list = _user!.providerData.where((element) {
-      return element.providerId.contains("password");
+      return element.providerId.contains("google");
     }).toList();
-    if (list.isEmpty) return "Tap To Add Email";
+    if (list.isEmpty) return "Tap To Connect";
     return list.first.email!;
   }
 
   String get mailAddress {
     final list = _user!.providerData.where((element) {
-      return element.providerId.contains("google");
+      return element.providerId.contains("password");
     }).toList();
     if (list.isEmpty) return "Tap To Connect";
     return list.first.email!;
