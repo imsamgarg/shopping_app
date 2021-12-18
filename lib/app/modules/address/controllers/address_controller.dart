@@ -46,7 +46,7 @@ class AddressController extends GetxController
       text: address.pinCode?.toString(),
     );
     cityController = TextEditingController(text: address.city);
-    state = address.state;
+    if (address.state != null) state = address.state;
     super.onInit();
   }
 

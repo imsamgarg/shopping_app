@@ -20,8 +20,6 @@ class AddressView extends StatelessWidget {
         slivers: [
           SliverAppBar(
             title: Text(index == null ? "Add Address" : "Edit Address"),
-            centerTitle: true,
-            // elevation: 0,
           ),
           SliverToBoxAdapter(
             child: _Form(
@@ -172,7 +170,6 @@ class _Form extends StatelessWidget {
               onChanged: controller.stateChanged,
               validator: controller.requiredValidator,
               value: controller.state,
-              autovalidateMode: AutovalidateMode.always,
               decoration: textDecoration(context,
                   hint: "State", icon: Icons.location_pin),
               items: _stateList

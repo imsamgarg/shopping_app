@@ -28,13 +28,11 @@ class AddressListView extends GetView<AddressListController> {
             slivers: [
               SliverAppBar(
                 title: Text("Address List"),
-                centerTitle: true,
-                // elevation: 0,
               ),
               if (addressCount != 0) ...[
                 verSliverSpacing10,
                 SliverToBoxAdapter(
-                  child: "Swipe To Edit Or Edit"
+                  child: "Swipe To Edit Or Delete"
                       .text
                       .color(ColorTheme.textColor)
                       .makeCentered(),
