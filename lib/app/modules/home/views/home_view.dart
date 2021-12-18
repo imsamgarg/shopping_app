@@ -245,7 +245,7 @@ class _Banner extends GetView<HomeController> {
   const _Banner({Key? key, required this.banner}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return CachedImage(url: banner.img!).onTap(
+    return CachedFirebaseImage(url: banner.img!).onTap(
       () => controller.handleLink(banner.toDynamicLink()),
     );
   }

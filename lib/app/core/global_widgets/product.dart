@@ -25,7 +25,7 @@ class ProductCard extends StatelessWidget with RoutesMixin {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Expanded(flex: 5, child: CachedImage(url: product.img![0])),
+        Expanded(flex: 5, child: CachedFirebaseImage(url: product.img![0])),
         verSpacing10,
         Expanded(
           flex: 2,
