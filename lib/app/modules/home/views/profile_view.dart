@@ -198,7 +198,7 @@ class ProfileImage extends GetView<ProfileController> {
                       .bold
                       .makeCentered(),
                 )
-              : CachedFirebaseImage(url: controller.image!),
+              : CachedImage(url: controller.image!),
         ),
       ),
     );
