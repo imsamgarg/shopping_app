@@ -29,7 +29,18 @@ class FirebaseUserRepository extends UserInterface with ErrorHandlingMixin {
   }
 
   @override
-  String? get profileUrl => _user?.photoURL;
+  String? get profileUrl {
+    final _googleProvider = _user!.providerData.where((element) {
+      return element.providerId.contains("google");
+    }).toList(growable: false);
+    if (_user?.photoURL != null) {
+      return _user!.photoURL;
+    }
+    if (_googleProvider.isNotEmpty) {
+      return _googleProvider[0].photoURL;
+    }
+    return null;
+  }
 
   @override
   Future<String>? get token => _auth.currentUser?.getIdToken();
