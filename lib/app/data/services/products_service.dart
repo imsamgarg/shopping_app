@@ -28,6 +28,7 @@ class ProductsService extends GetxService {
     return await _repo.getProducts(
       count: count,
       startAfter: startAfter,
+      //Not Used
       isPopular: true,
       sortBy: SortBy.popularity,
     );
@@ -35,12 +36,14 @@ class ProductsService extends GetxService {
 
   Future<List<ProductSnapshot>> getProducts({
     int count = 10,
-    DocumentSnapshot? startAfter,
     bool? isPopular,
     int? minPrice,
     int? maxPrice,
     String? size,
     String? color,
+    String? category,
+    String? subCategory,
+    DocumentSnapshot? startAfter,
     SortBy sortBy = SortBy.popularity,
   }) async {
     return await _repo.getProducts(
@@ -49,6 +52,8 @@ class ProductsService extends GetxService {
       sortBy: sortBy,
       startAfter: startAfter,
       color: color,
+      category: category,
+      subCategory: subCategory,
       maxPrice: maxPrice,
       minPrice: minPrice,
       size: size,

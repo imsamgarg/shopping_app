@@ -27,6 +27,10 @@ abstract class Db {
 
   static const String colorField = "color";
 
+  static const String categoryField = "category";
+
+  static const String subCategoryField = "subCategory";
+
   // static const String catField = "fields";
   // static const String keyField = "key";
   // static const String likesCountField = "likes_count";

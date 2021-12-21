@@ -43,54 +43,75 @@ class FirebaseDbRepository {
 
   Future<List<ProductSnapshot>> getProducts({
     int? count,
-    DocumentSnapshot? startAfter,
     bool? isPopular,
     int? minPrice,
     int? maxPrice,
     String? size,
+    String? category,
+    String? subCategory,
     String? color,
+    DocumentSnapshot? startAfter,
     SortBy sortBy = SortBy.popularity,
   }) async {
-    CollectionReference<Map<String, dynamic>> col =
-        _firestore.collection(Db.productCol);
+    final col = _firestore.collection(Db.productCol);
 
     Query<Map<String, dynamic>> query;
 
-    switch (sortBy) {
-      case SortBy.popularity:
-        query = col.orderBy(Db.popularityField);
-        break;
-      case SortBy.priceLTH:
-        query = col.orderBy(Db.priceField);
-        break;
-      case SortBy.priceHTL:
-        query = col.orderBy(Db.priceField, descending: true);
-        break;
+//Only Get Products Which Are In Stock
+    query = col.where(Db.stockField, isEqualTo: true);
+
+    ///No Longer Used
+    ///
+    // if (isPopular ?? false) {
+    // query = query.where(Db.isPopularField, isEqualTo: true);
+    // }
+    //
+
+    //Equal Queries
+    if (category != null) {
+      query = query.where(Db.categoryField, isEqualTo: category);
+    }
+    if (subCategory != null) {
+      query = query.where(Db.subCategoryField, isEqualTo: subCategory);
     }
 
-    query = query.where(Db.stockField, isEqualTo: true);
-
-    if (isPopular ?? false) {
-      query = query.where(Db.isPopularField, isEqualTo: true);
-    }
+    //Sorting Queries
     if (minPrice != null) {
       query = query.where(Db.priceField, isGreaterThanOrEqualTo: minPrice);
     }
     if (maxPrice != null) {
       query = query.where(Db.priceField, isLessThanOrEqualTo: minPrice);
     }
-    if (startAfter != null) {
-      query = query.startAfterDocument(startAfter);
-    }
+
+    ///Filter Queries
     if (size != null) {
       query = query.where("${Db.sizeField}.$size", isNull: false);
     }
     if (color != null) {
       query = query.where("${Db.colorField}.$color", isNull: false);
     }
+
+    ///Sorting Queries
+    switch (sortBy) {
+      case SortBy.popularity:
+        query = query.orderBy(Db.popularityField);
+        break;
+      case SortBy.priceLTH:
+        query = query.orderBy(Db.priceField);
+        break;
+      case SortBy.priceHTL:
+        query = query.orderBy(Db.priceField, descending: true);
+        break;
+    }
+
+    if (startAfter != null) {
+      query = query.startAfterDocument(startAfter);
+    }
+
     if (count != null) {
       query = query.limit(count);
     }
+
     final List<ProductSnapshot> list = [];
     final docs = await query.get();
     for (final doc in docs.docs) {
