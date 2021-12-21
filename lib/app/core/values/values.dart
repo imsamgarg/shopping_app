@@ -20,3 +20,6 @@ const double sm = 400;
 const double md = 500;
 const double lg = 600;
 const double xl = 700;
+
+const double productHeight = 250;
+const double productWidth = 200;

@@ -89,10 +89,10 @@ class _PopularProduct extends GetView<PopularProductsController> {
           return ProductCard(product: item.product);
         },
       ),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
+      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+        maxCrossAxisExtent: productWidth,
         mainAxisSpacing: 10,
-        mainAxisExtent: 250,
+        mainAxisExtent: productHeight,
         crossAxisSpacing: 10,
       ),
     );
