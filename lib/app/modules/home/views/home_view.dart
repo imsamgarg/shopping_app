@@ -70,7 +70,7 @@ class _HomeView extends GetView<HomeController> {
           verSliverSpacing8,
           _SubHeading(
             heading: 'Popular Products',
-            onTap: () => controller.onSubCategoryTap('popular'),
+            onTap: () => controller.onSubCategoryTap(isPopular: true),
           ),
           _PopularProduct(),
         ],
@@ -150,13 +150,22 @@ class _SubCategories extends GetView<HomeController> {
   // final colors = Colors.accents.sublist(0, 5);
   List<Widget> getCards() {
     final list = <Widget>[];
-    for (var x = 0; x < controller.subCats.length; ++x) {
-      final color = x < colors.length
-          ? colors[x]
-          : colors[x - (x ~/ colors.length) * colors.length];
-      final item = controller.subCats[x];
-      final card = _CategoryCard(text: item!, color: color);
-      list.add(card);
+    // final list = <String?>[];
+    for (final cat in controller.data!.categories) {
+      for (var x = 0; x < cat.subCats!.length; ++x) {
+        final color = x < colors.length
+            ? colors[x]
+            : colors[x - (x ~/ colors.length) * colors.length];
+        final item = controller.subCats[x];
+        final card = _CategoryCard(
+          text: item!,
+          color: color,
+          onTap: () {
+            controller.onSubCategoryTap(subCategory: item, category: cat.name);
+          },
+        );
+        list.add(card);
+      }
     }
     return list;
   }
@@ -190,7 +199,8 @@ class _CategoryCard extends StatelessWidget {
         .color(_color.withOpacity(0.07))
         .withRounded(value: radius)
         .make()
-        .pOnly(right: 8);
+        .pOnly(right: 8)
+        .onTap(() => onTap?.call());
   }
 }
 
