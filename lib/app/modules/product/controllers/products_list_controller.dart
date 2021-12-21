@@ -8,7 +8,13 @@ import 'package:shopping_app/app/modules/product/controllers/filter_controller.d
 class ProductsListController extends GetxController with ServicesMixin {
   late final PagingController<int, ProductSnapshot> pagingController;
   late final filterController = Get.find<FilterController>();
-  late final id = Get.arguments;
+  late final model = Get.arguments as ProductQueryModel;
+
+  String get title {
+    return model.isPopular ?? false
+        ? "Popular Products"
+        : model.subCategory ?? "Error";
+  }
 
   @override
   void onInit() {
@@ -18,20 +24,25 @@ class ProductsListController extends GetxController with ServicesMixin {
   }
 
   Future<void> _getPopularProducts(int pageKey) async {
-    final size = filterController.size.value;
-    final color = filterController.color.value;
-    final maxPrice = filterController.maxPrice.value;
-    final minPrice = filterController.minPrice.value;
-
     QueryDocumentSnapshot<Map<String, dynamic>>? snapshots;
     if (pageKey != 0) {
       snapshots = pagingController.value.itemList?.last.snapshot;
     }
+
+    final size = filterController.size.value;
+    final color = filterController.color.value;
+    final maxPrice = filterController.maxPrice.value;
+    final minPrice = filterController.minPrice.value;
+    final sortBy = filterController.sortBy.value;
+
     final docs = await productsService.getProducts(
       startAfter: snapshots,
       size: size,
       color: color,
+      category: model.category,
+      subCategory: model.subCategory,
       maxPrice: maxPrice,
+      sortBy: sortBy,
       minPrice: minPrice,
     );
     if (docs.length < pageKey) {
