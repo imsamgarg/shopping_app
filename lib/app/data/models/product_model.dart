@@ -169,3 +169,11 @@ class Color {
     return toJson().toString();
   }
 }
+
+class ProductQueryModel {
+  final String? category;
+  final String? subCategory;
+  final bool? isPopular;
+
+  ProductQueryModel({this.category, this.subCategory, this.isPopular});
+}

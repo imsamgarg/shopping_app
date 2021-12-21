@@ -7,15 +7,24 @@ class DynamicLink {
   static const _category = "category";
 
   String? id;
+  String? category;
+  String? subCategory;
   String? type;
   DynamicLinkType? linkType;
 
-  DynamicLink({this.id, this.linkType, this.type});
+  DynamicLink({
+    this.id,
+    this.linkType,
+    this.type,
+    this.category,
+    this.subCategory,
+  });
 
   DynamicLink.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     type = json['linkType'];
-
+    category = json['category'];
+    subCategory = json['subCategory'];
     if (type == null) {
       return;
     }
@@ -37,6 +46,8 @@ class DynamicLink {
     final data = <String, dynamic>{};
     data['id'] = id;
     data['linkType'] = linkType;
+    data['category'] = category;
+    data['subCategory'] = subCategory;
     return data;
   }
 }

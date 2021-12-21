@@ -34,12 +34,29 @@ mixin RoutesMixin {
     Get.toNamed(Routes.PRODUCT, arguments: id);
   }
 
-  void _gotoProductsList(String? id) {
-    Get.toNamed(Routes.PRODUCT_LIST, arguments: id);
+  void _gotoProductsList({
+    String? category,
+    String? subCategory,
+    bool? isPopular,
+  }) {
+    final model = ProductQueryModel(
+      category: category,
+      subCategory: subCategory,
+      isPopular: isPopular,
+    );
+    Get.toNamed(Routes.PRODUCT_LIST, arguments: model);
   }
 
-  void onSubCategoryTap(String? name) {
-    _gotoProductsList(name);
+  void onSubCategoryTap({
+    String? category,
+    String? subCategory,
+    bool? isPopular,
+  }) {
+    _gotoProductsList(
+      category: category,
+      subCategory: subCategory,
+      isPopular: isPopular,
+    );
   }
 
   void onCategoryTap(Category cat) {
@@ -58,8 +75,12 @@ mixin RoutesMixin {
         onProductTapWithId(id);
         break;
       case DynamicLinkType.subCategory:
-        onSubCategoryTap(id);
-        break;
+        {
+          final category = link.category;
+          final subCategory = link.subCategory;
+          onSubCategoryTap(category: category, subCategory: subCategory);
+          break;
+        }
       case DynamicLinkType.order:
         //Hje Implement ni Kita
         break;
