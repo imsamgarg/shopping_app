@@ -17,7 +17,6 @@ class ProductModel {
   int? discount;
   int? popularity;
   int? returnDays;
-  int? sizechart;
   bool? inStock;
   bool? isPopular;
   bool? isReturnable;
@@ -26,6 +25,7 @@ class ProductModel {
   List<String>? features;
   bool? isSizeRequired;
   bool? isColorRequired;
+  String? sizechart;
   String? selectedSize;
   String? selectedColor;
   Map<String, int>? size;
