@@ -12,6 +12,12 @@ class AppTheme {
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: ColorTheme.primaryColor,
     ),
+    appBarTheme: AppBarTheme(
+      backgroundColor: Colors.white,
+      foregroundColor: ColorTheme.primaryColor,
+      centerTitle: true,
+      elevation: 0,
+    ),
     backgroundColor: ColorTheme.whiteColor,
     primarySwatch: ColorTheme.primarySwatch,
     brightness: Brightness.light,
