@@ -9,8 +9,8 @@ class FilterMap {
   FilterMap.fromJson(Map<String, dynamic> json) {
     minPrice = json['minPrice'];
     maxPrice = json['maxPrice'];
-    size = json['size'].cast<String>();
-    color = json['color'].cast<String>();
+    size = json['size']?.cast<String>();
+    color = json['color']?.cast<String>();
   }
 
   Map<String, dynamic> toJson() {

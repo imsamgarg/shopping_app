@@ -18,6 +18,7 @@ class ProductModel {
   int? popularity;
   int? returnDays;
   int? sizechart;
+  bool? inStock;
   bool? isPopular;
   bool? isReturnable;
   List<String>? img;
@@ -42,6 +43,7 @@ class ProductModel {
     this.popularity,
     this.returnDays,
     this.sizechart,
+    this.inStock,
     this.isPopular,
     this.isReturnable,
     this.img,
@@ -62,6 +64,7 @@ class ProductModel {
     subCategory = json['subCategory'];
     description = json['description'];
     link = json['link'];
+    inStock = json['inStock'];
     price = json['price'];
     discount = json['discount'];
     popularity = json['popularity'];
@@ -92,6 +95,7 @@ class ProductModel {
     data['subCategory'] = subCategory;
     data['description'] = description;
     data['link'] = link;
+    data['inStock'] = inStock;
     data['price'] = price;
     data['discount'] = discount;
     data['popularity'] = popularity;
