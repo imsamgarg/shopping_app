@@ -31,6 +31,8 @@ abstract class Db {
 
   static const String subCategoryField = "subCategory";
 
+  static const String filtersField = "filters";
+
   // static const String catField = "fields";
   // static const String keyField = "key";
   // static const String likesCountField = "likes_count";

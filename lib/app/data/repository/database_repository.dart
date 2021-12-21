@@ -80,15 +80,29 @@ class FirebaseDbRepository {
       query = query.where(Db.priceField, isGreaterThanOrEqualTo: minPrice);
     }
     if (maxPrice != null) {
-      query = query.where(Db.priceField, isLessThanOrEqualTo: minPrice);
+      query = query.where(Db.priceField, isLessThanOrEqualTo: maxPrice);
     }
 
     ///Filter Queries
-    if (size != null) {
-      query = query.where("${Db.sizeField}.$size", isNull: false);
-    }
+    // if (size != null) {
+    //   query = query.where("${Db.sizeField}.$size", isNotEqualTo: null);
+    // }
+    // if (color != null) {
+    //   query = query.where("${Db.colorField}.$color", isNotEqualTo: null);
+    // }
+
+    ///Filtering
+    ///
+    final filterList = [];
+
     if (color != null) {
-      query = query.where("${Db.colorField}.$color", isNull: false);
+      filterList.add(color);
+    }
+    if (size != null) {
+      filterList.add(size);
+    }
+    if (filterList.isNotEmpty) {
+      query = query.where(Db.filtersField, arrayContainsAny: filterList);
     }
 
     ///Sorting Queries
