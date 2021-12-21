@@ -8,18 +8,18 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:280884416298:android:4ae13d0b460b1aaf0d5853",
+        "mobilesdk_app_id": "1:280884416298:android:5402501924011e740d5853",
         "android_client_info": {
-          "package_name": "com.imsmilegarg.fashion24x7_admin"
+          "package_name": "com.imsamgarg.fashion24x7"
         }
       },
       "oauth_client": [
         {
-          "client_id": "280884416298-3415vdord6iiaeie6283228kv868g8he.apps.googleusercontent.com",
+          "client_id": "280884416298-3fl8gc8ob884luhlhlvrb6e4h90gr48u.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.imsmilegarg.fashion24x7_admin",
-            "certificate_hash": "e7fe631d992ed1281d084b949d42e558d44351d2"
+            "package_name": "com.imsamgarg.fashion24x7",
+            "certificate_hash": "d937c8f7e984614531c32c6f767e7d90bd70fa3d"
           }
         },
         {
@@ -45,17 +45,25 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:280884416298:android:2293e9b2bacd9a720d5853",
+        "mobilesdk_app_id": "1:280884416298:android:4ae13d0b460b1aaf0d5853",
         "android_client_info": {
-          "package_name": "com.samgarg.fashion24x7"
+          "package_name": "com.imsmilegarg.fashion24x7_admin"
         }
       },
       "oauth_client": [
         {
-          "client_id": "280884416298-vaftipiu9u8ck20cus6ksjco1r2nsve8.apps.googleusercontent.com",
+          "client_id": "280884416298-3415vdord6iiaeie6283228kv868g8he.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.samgarg.fashion24x7",
+            "package_name": "com.imsmilegarg.fashion24x7_admin",
+            "certificate_hash": "e7fe631d992ed1281d084b949d42e558d44351d2"
+          }
+        },
+        {
+          "client_id": "280884416298-usfemp2cct2jicggco2k3l5d8p5l1dq0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.imsmilegarg.fashion24x7_admin",
             "certificate_hash": "d937c8f7e984614531c32c6f767e7d90bd70fa3d"
           }
         },
