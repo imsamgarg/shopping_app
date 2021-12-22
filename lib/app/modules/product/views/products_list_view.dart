@@ -60,7 +60,10 @@ class _FilterFloatingButton extends GetView<FilterController> {
       },
       loading: FloatingActionButton(
         onPressed: null,
-        child: CenterLoading(color: Vx.white),
+        child: CircularProgressIndicator(
+          color: Vx.white,
+          strokeWidth: 3,
+        ).scale75(),
       ),
       errorBuilder: (error) {
         return SizedBox.shrink();

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:shopping_app/app/core/utils/mixins/services_mixin.dart';
+import 'package:shopping_app/app/core/values/values.dart';
 import 'package:shopping_app/app/data/models/product_model.dart';
 import 'package:shopping_app/app/modules/product/controllers/filter_controller.dart';
 
@@ -13,7 +14,7 @@ class ProductsListController extends GetxController with ServicesMixin {
   String get title {
     return model.isPopular ?? false
         ? "Popular Products"
-        : model.subCategory ?? "Error";
+        : model.subCategory?.capitalize ?? "";
   }
 
   @override
@@ -29,11 +30,11 @@ class ProductsListController extends GetxController with ServicesMixin {
       snapshots = pagingController.value.itemList?.last.snapshot;
     }
 
-    final size = filterController.size.value;
-    final color = filterController.color.value;
-    final maxPrice = filterController.maxPrice.value;
-    final minPrice = filterController.minPrice.value;
-    final sortBy = filterController.sortBy.value;
+    final size = filterController.filters?.size;
+    final color = filterController.filters?.color;
+    final maxPrice = filterController.filters?.maxPrice?.toInt();
+    final minPrice = filterController.filters?.minPrice?.toInt();
+    final sortBy = filterController.filters?.sortBy;
 
     final docs = await productsService.getProducts(
       startAfter: snapshots,
@@ -42,7 +43,7 @@ class ProductsListController extends GetxController with ServicesMixin {
       category: model.category,
       subCategory: model.subCategory,
       maxPrice: maxPrice,
-      sortBy: sortBy,
+      sortBy: sortBy ?? SortBy.popularity,
       minPrice: minPrice,
     );
     if (docs.length < pageKey) {
