@@ -27,4 +27,6 @@ class ColorTheme {
   static const Color primaryColor = Color(0xFFFF7079);
 
   static const Color textColor = Color(0xff878787);
+
+  static const Color headerColor = Color(0xff14284a);
 }
