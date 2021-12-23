@@ -12,28 +12,19 @@ class StorageRepository {
     return instance;
   }
 
-  Future<File> saveFileToCache(Uint8List data, String fileName) async {
-    final cacheDir = await _getCacheDirectory();
-    final filePath = path.join(cacheDir.path, fileName);
-    return (await File(filePath).writeAsBytes(data));
+  Future<File> saveFileToCache(Uint8List data, String filePath) async {
+    final cacheDir = await getCacheDirectory();
+    final fullFilePath = path.join(cacheDir.path, filePath);
+    return (await File(fullFilePath).writeAsBytes(data));
   }
 
-  Future<bool> isFileExistInCache(String fileName) async {
-    final cacheDir = await _getCacheDirectory();
-    final filePath = path.join(cacheDir.path, fileName);
-    return (await File(filePath).exists());
-  }
-
-  Future<String?> getCacheFilePathIfExists(String fileName) async {
-    final isExist = await isFileExistInCache(fileName);
-    if (!isExist) return null;
-
-    final cacheDir = await _getCacheDirectory();
-    final filePath = path.join(cacheDir.path, fileName);
-    return filePath;
-  }
-
-  Future<Directory> _getCacheDirectory() {
+  Future<Directory> getCacheDirectory() {
     return path_provider.getApplicationDocumentsDirectory();
+  }
+
+  Future<Directory> createSubCacheDirectory(String folderName) async {
+    final cacheDir = await getCacheDirectory();
+    final folderPath = path.join(cacheDir.path, folderName);
+    return await Directory(folderPath).create(recursive: true);
   }
 }
