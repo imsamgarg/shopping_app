@@ -1,16 +1,36 @@
-// import 'package:shopping_app/app/core/interfaces.dart';
+import 'dart:io';
+import 'dart:typed_data';
 
-// class CloudStorageRepository extends StorageInterface {
-//   const CloudStorageRepository();
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:shopping_app/app/core/interfaces.dart';
+import 'package:path/path.dart' as p;
 
-//   FirebaseS
-//   Future<String> saveProfileImage(String path, String uid) async {
-//     final ext = p.extension(path);
-//     final ref = storage.child(profileRef).child("$uid$ext");
-//     final res = await ref.putFile(File(path));
-//     return await res.ref.getDownloadURL();
-//   }
+class FirebaseStorageRepository extends CloudStorageInterface {
+  FirebaseStorageRepository._();
 
-//   @override
-//   Future<String> saveImage(String imageUrl) {}
-// }
+  static final instance = FirebaseStorageRepository._();
+
+  factory FirebaseStorageRepository() {
+    return instance;
+  }
+
+  late final _storage = FirebaseStorage.instance;
+  late final _rootRef = _storage.ref();
+
+  @override
+  Future<String> uploadFile({
+    required String path,
+    required String fileName,
+    required String folderName,
+  }) async {
+    final extension = p.extension(path);
+    final ref = _rootRef.child(folderName).child("$fileName$extension");
+    return (await ref.putFile(File(path))).ref.fullPath;
+  }
+
+  @override
+  Future<Uint8List?> downloadFile(String path) async {
+    final ref = _rootRef.child(path);
+    return ref.getData();
+  }
+}
