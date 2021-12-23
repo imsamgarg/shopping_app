@@ -12,7 +12,10 @@ class ProductsService extends GetxService {
   late final _repo = FirebaseDbRepository();
 
   Future<ProductModel> getProduct(String id) async {
-    final doc = await _repo.getDocumentFromFirestore(id, Db.productCol);
+    //just comment and uncomment to change
+
+    // final doc = await _repo.getDocumentFromFirestore(id, Db.productCol);
+    final doc = await _repo.getDocumentFromRealtimeDb(id, Db.productCol);
     return ProductModel.fromJson(doc);
   }
 
