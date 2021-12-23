@@ -23,6 +23,8 @@ dependencies:
   firebase_database: ^9.0.2
   firebase_app_check: 0.0.6+2
   flutter_slidable: 1.1.0
+  share_plus: 3.0.4
+  firebase_storage: 10.2.4
   firebase_image: 
     path: ../firebase_image
   custom_utils: 
