@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 abstract class DatabaseInterface {}
 
 abstract class UserInterface {
@@ -23,4 +25,13 @@ class AuthException implements Exception {
   String toString() {
     return "Error Msg: $errorMsg";
   }
+}
+
+abstract class CloudStorageInterface {
+  Future<String> uploadFile({
+    required String path,
+    required String fileName,
+    required String folderName,
+  });
+  Future<Uint8List?> downloadFile(String path);
 }
