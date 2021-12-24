@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 
 import 'package:shopping_app/app/modules/address/bindings/address_binding.dart';
 import 'package:shopping_app/app/modules/address/views/address_list_view.dart';
-import 'package:shopping_app/app/modules/address/views/address_view.dart';
 import 'package:shopping_app/app/modules/auth/bindings/auth_binding.dart';
 import 'package:shopping_app/app/modules/auth/views/login_view.dart';
 import 'package:shopping_app/app/modules/cart/bindings/cart_binding.dart';
@@ -14,9 +13,9 @@ import 'package:shopping_app/app/modules/home/views/home_view.dart';
 import 'package:shopping_app/app/modules/orders/bindings/orders_binding.dart';
 import 'package:shopping_app/app/modules/orders/views/order_list_view.dart';
 import 'package:shopping_app/app/modules/product/bindings/product_binding.dart';
-import 'package:shopping_app/app/modules/product/bindings/products_list_binding.dart';
 import 'package:shopping_app/app/modules/product/views/product_view.dart';
-import 'package:shopping_app/app/modules/product/views/products_list_view.dart';
+import 'package:shopping_app/app/modules/product_list/bindings/product_list_binding.dart';
+import 'package:shopping_app/app/modules/product_list/views/products_list_view.dart';
 import 'package:shopping_app/app/modules/startup/bindings/startup_binding.dart';
 import 'package:shopping_app/app/modules/startup/views/startup_view.dart';
 
@@ -46,7 +45,7 @@ class AppPages {
     GetPage(
       name: _Paths.PRODUCT_LIST,
       page: () => ProductsListView(),
-      binding: ProductsListBinding(),
+      binding: ProductListBinding(),
     ),
     GetPage(
       name: _Paths.PRODUCT,

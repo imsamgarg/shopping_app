@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shopping_app/app/core/values/values.dart';
-import 'package:shopping_app/app/modules/product/controllers/filter_controller.dart';
+
+import 'filter_controller.dart';
 
 class FiltersSheetController extends GetxController {
   final Filters filters;

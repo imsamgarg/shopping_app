@@ -2,8 +2,8 @@ import 'package:get/get.dart';
 import 'package:shopping_app/app/core/utils/mixins/services_mixin.dart';
 import 'package:shopping_app/app/core/values/values.dart';
 import 'package:shopping_app/app/data/models/filter_map_model.dart';
-import 'package:shopping_app/app/modules/product/controllers/products_list_controller.dart';
-import 'package:shopping_app/app/modules/product/views/filter_view.dart';
+import 'package:shopping_app/app/modules/product_list/controllers/products_list_controller.dart';
+import 'package:shopping_app/app/modules/product_list/views/filter_view.dart';
 
 class Filters {
   final String? color;
