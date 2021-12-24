@@ -1,20 +1,36 @@
 import 'package:get/get.dart';
+import 'package:shopping_app/app/core/utils/mixins/services_mixin.dart';
+import 'package:shopping_app/app/data/models/product_model.dart';
 
-class ProductController extends GetxController {
-  //TODO: Implement ProductController
+class ProductController extends GetxController with ServicesMixin {
+  late final instance = _getData();
+  late final ProductModel product;
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+  String? get productImage {}
+  List<String>? get images {}
+
+  String get id => product.id!;
+
+  Map<String, Color>? get colorOptions => product.color;
+  Map<String, int>? get sizeOptions => product.size;
+
+  String get name => product.name ?? "Error In Name";
+  String get shareableLink => product.link ?? "";
+
+  Future<bool> _getData() async {
+    final argument = Get.arguments;
+    if (argument is ProductModel) {
+      product = argument;
+      return true;
+    }
+    if (argument is String) {
+      await _fetchFromDatabase(argument);
+      return true;
+    }
+    throw Exception("No Product Found");
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  Future _fetchFromDatabase(String id) async {
+    product = await productsService.getProduct(id);
   }
-
-  @override
-  void onClose() {}
-  void increment() => count.value++;
 }

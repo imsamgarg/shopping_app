@@ -1,20 +1,26 @@
 import 'package:get/get.dart';
 
+import 'product_controller.dart';
+
 class OptionsController extends GetxController {
-  //TODO: Implement OptionsController
+  late final productController = Get.find<ProductController>();
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+  late final colorOptions = productController.colorOptions;
+  late final sizeOptions = productController.sizeOptions;
+
+  final _color = RxnString();
+  get color => _color.value;
+  set color(value) => _color.value = value;
+
+  final _size = RxnString();
+  get size => _size.value;
+  set size(value) => _size.value = value;
+
+  void changeColor(String? _color) {
+    color = _color;
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  void changeSize(String? _size) {
+    size = _size;
   }
-
-  @override
-  void onClose() {}
-  void increment() => count.value++;
 }

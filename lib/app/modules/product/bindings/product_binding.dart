@@ -9,8 +9,8 @@ import '../controllers/product_controller.dart';
 class ProductBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<ImageController>(
-      () => ImageController(),
+    Get.lazyPut<ProductImageController>(
+      () => ProductImageController(),
     );
     Get.lazyPut<OptionsController>(
       () => OptionsController(),

@@ -1,20 +1,39 @@
 import 'package:get/get.dart';
+import 'package:shopping_app/app/core/utils/mixins/services_mixin.dart';
+import 'package:shopping_app/app/core/utils/mixins/share_mixin.dart';
+import 'package:shopping_app/app/modules/product/controllers/product_controller.dart';
 
-class ShareController extends GetxController {
-  //TODO: Implement ShareController
+class ShareController extends GetxController with ServicesMixin, ShareMixin {
+  bool isButtonLoading = false;
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+  Future shareProduct() async {
+    final controller = Get.find<ProductController>();
+    final id = controller.id;
+    final productImage = controller.productImage;
+    final productName = controller.name;
+    final productLink = controller.shareableLink;
+
+    final shareContent =
+        "Check Out $productName Only on Fashion24x7 \n link:-$productLink";
+
+    toggleButtonLoading(true);
+    try {
+      final imagePath = await storageService.getImage(id, productImage!);
+      //
+      if (imagePath != null) {
+        shareFile(imagePath, content: shareContent, subject: productName);
+      } else {
+        shareText(shareContent, subject: productName);
+      }
+      //
+    } catch (e) {
+      rethrow;
+    } finally {
+      toggleButtonLoading(false);
+    }
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  void toggleButtonLoading(bool value) {
+    update();
   }
-
-  @override
-  void onClose() {}
-  void increment() => count.value++;
 }
