@@ -9,7 +9,7 @@ import 'package:shopping_app/app/data/repository/database_repository.dart';
 class CartService extends GetxService with ServicesMixin {
   late final UserModel _user = userService.user;
   late final _repo = FirebaseDbRepository();
-  late final _cart = _user.cartItems;
+  late final cartItems = _user.cartItems;
   bool isInit = false;
 
   static CartService service() => Get.find<CartService>();
@@ -28,16 +28,16 @@ class CartService extends GetxService with ServicesMixin {
   }
 
   Future _getCartProducts() async {
-    final ids = _cart.keys.toList();
+    final ids = cartItems.keys.toList();
     final docs = await _repo.getDocsFromRealtimeDb(ids, Db.productCol);
     final products = docs.map((e) => ProductModel.fromJson(e));
     for (var element in products) {
-      _cart[element.id!]!.product = element;
+      cartItems[element.id!]!.product = element;
     }
   }
 
   bool isInCart(String id) {
-    return _cart.containsKey(id);
+    return cartItems.containsKey(id);
   }
 
   Future addToCart(CartModel cartModel) async {
@@ -53,27 +53,37 @@ class CartService extends GetxService with ServicesMixin {
         Db.cartField: {id: data}
       },
     );
-    _cart.putIfAbsent(id, () => cartModel);
+    cartItems.putIfAbsent(id, () => cartModel);
     cartLength += 1;
   }
 
   Future removeFromCart(CartModel cartModel) async {
     final id = cartModel.product!.id!;
-    _cart.remove(id);
-    final data = _cart.map((key, value) => MapEntry(key, value.toJson()));
+    final data = cartItems.map((key, value) => MapEntry(key, value.toJson()));
     await _repo.updateFirebaseDocument(
       Db.usersCol,
       userService.uid,
       data: {Db.cartField: data},
     );
+    //remove locally only after successfully removed from database
+    cartItems.remove(id);
     cartLength -= 1;
   }
 
   int _getCartLength() {
     var count = 0;
-    for (final _ in _cart.entries) {
+    for (final _ in cartItems.entries) {
       count += 1;
     }
     return count;
+  }
+
+  //so state can be mantained globally
+  void incrementQuantity(String id) {
+    ++cartItems[id]?.quantity;
+  }
+
+  void decrementQuantity(String id) {
+    --cartItems[id]?.quantity;
   }
 }
