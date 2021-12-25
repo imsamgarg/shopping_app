@@ -1,20 +1,60 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:shopping_app/app/core/utils/mixins/services_mixin.dart';
+import 'package:shopping_app/app/data/models/cart_model.dart';
 
-class CartController extends GetxController {
-  //TODO: Implement CartController
+class CartController extends GetxController with ServicesMixin {
+  late final instance = _getCartProducts();
+  late final List<CartModel> cartItems = [];
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+  Future<bool> _getCartProducts() async {
+    await cartService.init();
+    convertCartMapToList();
+    return true;
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  int get totalPrice {
+    var price = 0;
+    for (var item in cartItems) {
+      price += item.fullPrice! * item.quantity;
+    }
+    return price;
   }
 
-  @override
-  void onClose() {}
-  void increment() => count.value++;
+  void removeFromCart(BuildContext context, int index, Widget child) async {
+    //remove from server
+    await cartService.removeFromCart(cartItems[index]);
+    //remove from list
+    cartItems.removeAt(index);
+    AnimatedList.of(context).removeItem(
+      index,
+      (_, animation) => SizeTransition(sizeFactor: animation, child: child),
+    );
+  }
+
+  void convertCartMapToList() {
+    for (var cartItem in cartService.cartItems.entries) {
+      cartItems.add(cartItem.value);
+    }
+  }
+
+  void decrementQuantity(int index) {
+    //local to cart screen
+    final item = cartItems[index];
+    --item.quantity;
+
+    //globally
+    final id = item.product!.id!;
+    cartService.decrementQuantity(id);
+  }
+
+  void incrementQuantity(int index) {
+    //local to cart screen
+    final item = cartItems[index];
+    ++item.quantity;
+
+    //globally
+    final id = item.product!.id!;
+    cartService.incrementQuantity(id);
+  }
 }
