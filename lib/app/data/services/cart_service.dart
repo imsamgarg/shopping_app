@@ -86,4 +86,8 @@ class CartService extends GetxService with ServicesMixin {
   void decrementQuantity(String id) {
     --cartItems[id]?.quantity;
   }
+
+  void changeQuantity(String id, int quantity) {
+    cartItems[id]?.quantity = quantity;
+  }
 }
