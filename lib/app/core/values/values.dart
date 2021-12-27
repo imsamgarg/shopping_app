@@ -25,6 +25,9 @@ enum ProductAvailability {
   notAvailable,
   colorNotAvailable,
   sizeNotAvailable,
+
+  //* if product removed from database
+  productDeleted,
 }
 const double sm = 400;
 const double md = 500;
