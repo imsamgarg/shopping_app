@@ -2,10 +2,17 @@ import 'package:shopping_app/app/data/models/product_model.dart';
 
 class CartModel {
   int? fullPrice;
-  late int quantity;
-  ProductModel? product;
-  String? color;
   String? size;
+  String? color;
+
+  //no change in database
+  late int quantity;
+
+  //for frontend
+  bool? inStock;
+  bool? isColorInStock;
+  bool? isSizeInStock;
+  ProductModel? product;
 
   CartModel({
     this.fullPrice,
@@ -13,6 +20,9 @@ class CartModel {
     this.product,
     this.color,
     this.size,
+    this.inStock,
+    this.isColorInStock,
+    this.isSizeInStock,
   });
 
   CartModel.fromJson(Map<String, dynamic> json) {
@@ -27,11 +37,11 @@ class CartModel {
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
-    data['fullPrice'] = fullPrice;
+    // data['fullPrice'] = fullPrice;
     data['quantity'] = quantity;
-    if (product != null) {
-      data['product'] = product?.toJson();
-    }
+    // if (product != null) {
+    //   data['product'] = product?.toJson();
+    // }
     data['color'] = color;
     data['size'] = size;
     return data;

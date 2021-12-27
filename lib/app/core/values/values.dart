@@ -13,13 +13,27 @@ enum ScreenSize {
   xl,
 }
 
+//* for productlist view filterings
 enum SortBy { popularity, priceLTH, priceHTL }
+
+//* dynamic links
 enum DynamicLinkType { product, subCategory, order, offer }
 
+//*for cart view
+enum ProductAvailability {
+  available,
+  notAvailable,
+  colorNotAvailable,
+  sizeNotAvailable,
+
+  //* if product removed from database
+  productDeleted,
+}
 const double sm = 400;
 const double md = 500;
 const double lg = 600;
 const double xl = 700;
 
+//*product cart sizes
 const double productHeight = 250;
 const double productWidth = 200;

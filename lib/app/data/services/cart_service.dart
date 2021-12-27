@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:shopping_app/app/core/utils/mixins/services_mixin.dart';
 import 'package:shopping_app/app/core/values/db_strings.dart';
@@ -31,21 +32,81 @@ class CartService extends GetxService with ServicesMixin {
     final ids = cartItems.keys.toList();
     final docs = await _repo.getDocsFromRealtimeDb(ids, Db.productCol);
     final products = docs.map((e) => ProductModel.fromJson(e));
-    for (var element in products) {
-      cartItems[element.id!]!.product = element;
+    for (final product in products) {
+      final cartItem = cartItems[product.id!]!;
+      populateCartProductField(cartItem, product);
     }
   }
 
-  bool isInCart(String id) {
+  CartModel populateCartProductField(CartModel cartItem, ProductModel product) {
+    //populate Fields
+    // final cartItem = cartItems[product.id!]!;
+    cartItem.product = product;
+
+    //if product is in stock
+    cartItem.inStock = product.inStock ?? false;
+
+    int price = product.price!;
+    final color = cartItem.color;
+    if (color != null) {
+      cartItem.isColorInStock = _isColorInStock(product, color);
+      price += _getColorPrice(product, color);
+    }
+
+    final size = cartItem.size;
+    if (size != null) {
+      cartItem.isSizeInStock = _isSizeInStock(product, size);
+      price += _getSizePrice(product, size);
+    }
+
+    //populate the price
+    cartItem.fullPrice = price;
+
+    return cartItem;
+  }
+
+  //* check if options are available
+  bool _isColorInStock(ProductModel product, String color) {
+    return product.color?.containsKey(color) ?? false;
+  }
+
+  bool _isSizeInStock(ProductModel product, String size) {
+    return product.size?.containsKey(size) ?? false;
+  }
+
+  //* calculate price
+  int _getColorPrice(ProductModel product, String color) {
+    return product.color![color]!.priceDifferce!;
+  }
+
+  int _getSizePrice(ProductModel product, String size) {
+    return product.size![size]!;
+  }
+
+  ////////////////
+
+  bool isProductInCart(String id) {
     return cartItems.containsKey(id);
   }
 
-  Future addToCart(CartModel cartModel) async {
+  Future<bool> addToCart(CartModel cartModel) async {
     final id = cartModel.product!.id!;
-    if (isInCart(id)) {
-      return;
+    if (isProductInCart(id)) {
+      return false;
     }
+
+    final product = cartModel.product!;
+    populateCartProductField(cartModel, product);
+
     final data = cartModel.toJson();
+    await uploadToDatabase(id, data);
+    cartItems.putIfAbsent(id, () => cartModel);
+    cartLength += 1;
+
+    return true;
+  }
+
+  Future<void> uploadToDatabase(String id, Map<String, dynamic> data) async {
     await _repo.updateFirebaseDocument(
       Db.usersCol,
       userService.uid,
@@ -53,21 +114,27 @@ class CartService extends GetxService with ServicesMixin {
         Db.cartField: {id: data}
       },
     );
-    cartItems.putIfAbsent(id, () => cartModel);
-    cartLength += 1;
   }
 
   Future removeFromCart(CartModel cartModel) async {
     final id = cartModel.product!.id!;
-    final data = cartItems.map((key, value) => MapEntry(key, value.toJson()));
-    await _repo.updateFirebaseDocument(
-      Db.usersCol,
-      userService.uid,
-      data: {Db.cartField: data},
-    );
+    // final data = cartItems.map((key, value) => MapEntry(key, value.toJson()));
+    await deleteFromDatabase(id);
     //remove locally only after successfully removed from database
     cartItems.remove(id);
     cartLength -= 1;
+  }
+
+  Future<void> deleteFromDatabase(String id) async {
+    await _repo.updateFirebaseDocument(
+      Db.usersCol,
+      userService.uid,
+      data: {
+        Db.cartField: {
+          id: FieldValue.delete(),
+        }
+      },
+    );
   }
 
   int _getCartLength() {
@@ -78,12 +145,17 @@ class CartService extends GetxService with ServicesMixin {
     return count;
   }
 
-  //so state can be mantained globally
-  void incrementQuantity(String id) {
-    ++cartItems[id]?.quantity;
-  }
+  ////* No Longer Used
+  // void incrementQuantity(String id) {
+  //   ++cartItems[id]?.quantity;
+  // }
 
-  void decrementQuantity(String id) {
-    --cartItems[id]?.quantity;
+  // void decrementQuantity(String id) {
+  //   --cartItems[id]?.quantity;
+  // }
+
+  //so state can be mantained globally
+  void changeQuantity(String id, int quantity) {
+    cartItems[id]?.quantity = quantity;
   }
 }
