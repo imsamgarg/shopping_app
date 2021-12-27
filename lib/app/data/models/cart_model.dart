@@ -9,6 +9,7 @@ class CartModel {
   late int quantity;
 
   //for frontend
+  bool? inStock;
   bool? isColorInStock;
   bool? isSizeInStock;
   ProductModel? product;
@@ -19,6 +20,7 @@ class CartModel {
     this.product,
     this.color,
     this.size,
+    this.inStock,
     this.isColorInStock,
     this.isSizeInStock,
   });
