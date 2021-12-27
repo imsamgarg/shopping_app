@@ -27,8 +27,8 @@ class CachedFirebaseImage extends StatelessWidget {
   }
 }
 
-class CachedImage extends StatelessWidget {
-  const CachedImage({
+class CachedHTTPImage extends StatelessWidget {
+  const CachedHTTPImage({
     Key? key,
     required this.url,
     this.borderRadius,
@@ -45,6 +45,35 @@ class CachedImage extends StatelessWidget {
         imageUrl: url,
         fit: boxFit ?? BoxFit.cover,
       ),
+    );
+  }
+}
+
+class CachedImage extends StatelessWidget {
+  const CachedImage({
+    Key? key,
+    required this.url,
+    this.borderRadius,
+    this.boxFit,
+  }) : super(key: key);
+  final String url;
+  final BorderRadius? borderRadius;
+  final BoxFit? boxFit;
+  @override
+  Widget build(BuildContext context) {
+    //if it starts with gs then it will use firebase image
+    if (url.startsWith(RegExp("gs", caseSensitive: false))) {
+      return CachedFirebaseImage(
+        url: url,
+        borderRadius: borderRadius,
+        boxFit: boxFit,
+      );
+    }
+    // else use cachednetwork image
+    return CachedHTTPImage(
+      url: url,
+      borderRadius: borderRadius,
+      boxFit: boxFit,
     );
   }
 }

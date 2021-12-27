@@ -1,4 +1,3 @@
-import 'package:custom_utils/log_utils.dart';
 import 'package:custom_utils/spacing_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:shopping_app/app/core/global_widgets/cached_image.dart';
@@ -21,11 +20,10 @@ class ProductCard extends StatelessWidget with RoutesMixin {
   final VoidCallback? onTap;
   @override
   Widget build(BuildContext context) {
-    customLog(product.toJson());
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Expanded(flex: 5, child: CachedFirebaseImage(url: product.img![0])),
+        Expanded(flex: 5, child: CachedImage(url: product.img![0])),
         verSpacing10,
         Expanded(
           flex: 2,
