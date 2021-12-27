@@ -7,8 +7,8 @@ class CartController extends GetxController with ServicesMixin {
   late final instance = _getCartProducts();
   late final List<CartModel> cartItems = [];
 
-  late final _finalPrice = calculateTotalPrice().obs;
-  get finalPrice => _finalPrice.value;
+  late final RxInt _finalPrice = calculateTotalPrice().obs;
+  int get finalPrice => _finalPrice.value;
   set finalPrice(value) => _finalPrice.value = value;
 
   Future<bool> _getCartProducts() async {
