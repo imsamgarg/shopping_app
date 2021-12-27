@@ -60,20 +60,21 @@ class ProductController extends GetxController with ServicesMixin {
 
   CartModel createModel() {
     final color = optionsController.color;
-    final colorPrice = colorOptions?[color]?.priceDifferce;
+    // final colorPrice = colorOptions?[color]?.priceDifferce;
     final size = optionsController.size;
-    final sizePrice = sizeOptions?[size];
-    int finalPrice = product.price!;
-    if (colorPrice != null) {
-      finalPrice += colorPrice;
-    }
-    if (sizePrice != null) {
-      finalPrice += sizePrice;
-    }
+    // final sizePrice = sizeOptions?[size];
+    // int price = product.price!;
+    // if (colorPrice != null) {
+    //   price += colorPrice;
+    // }
+    // if (sizePrice != null) {
+    //   price += sizePrice;
+    // }
     return CartModel(
       color: color,
       size: size,
-      fullPrice: finalPrice,
+      // fullPrice: price,
+      product: product,
     );
   }
 }

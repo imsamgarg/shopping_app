@@ -33,13 +33,14 @@ class CartService extends GetxService with ServicesMixin {
     final docs = await _repo.getDocsFromRealtimeDb(ids, Db.productCol);
     final products = docs.map((e) => ProductModel.fromJson(e));
     for (final product in products) {
-      populateCartsProductField(product);
+      final cartItem = cartItems[product.id!]!;
+      populateCartProductField(cartItem, product);
     }
   }
 
-  void populateCartsProductField(ProductModel product) {
+  CartModel populateCartProductField(CartModel cartItem, ProductModel product) {
     //populate Fields
-    final cartItem = cartItems[product.id!]!;
+    // final cartItem = cartItems[product.id!]!;
     cartItem.product = product;
 
     //if product is in stock
@@ -60,6 +61,8 @@ class CartService extends GetxService with ServicesMixin {
 
     //populate the price
     cartItem.fullPrice = price;
+
+    return cartItem;
   }
 
   //* check if options are available
@@ -86,15 +89,21 @@ class CartService extends GetxService with ServicesMixin {
     return cartItems.containsKey(id);
   }
 
-  Future addToCart(CartModel cartModel) async {
+  Future<bool> addToCart(CartModel cartModel) async {
     final id = cartModel.product!.id!;
     if (isProductInCart(id)) {
-      return;
+      return false;
     }
+
+    final product = cartModel.product!;
+    populateCartProductField(cartModel, product);
+
     final data = cartModel.toJson();
     await uploadToDatabase(id, data);
     cartItems.putIfAbsent(id, () => cartModel);
     cartLength += 1;
+
+    return true;
   }
 
   Future<void> uploadToDatabase(String id, Map<String, dynamic> data) async {
