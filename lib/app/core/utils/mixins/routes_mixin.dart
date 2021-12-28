@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:shopping_app/app/core/values/values.dart';
 import 'package:shopping_app/app/data/models/app_model.dart';
+import 'package:shopping_app/app/data/models/cart_model.dart';
 import 'package:shopping_app/app/data/models/dynamic_link_model.dart';
 import 'package:shopping_app/app/data/models/product_model.dart';
 import 'package:shopping_app/app/modules/address/views/address_view.dart';
@@ -90,5 +91,9 @@ mixin RoutesMixin {
       default:
         break;
     }
+  }
+
+  void onCheckoutTap(CheckoutModel checkoutModel) {
+    Get.toNamed(Routes.CHECKOUT, arguments: checkoutModel);
   }
 }
