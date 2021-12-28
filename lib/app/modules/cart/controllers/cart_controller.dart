@@ -60,7 +60,10 @@ class CartController extends GetxController with ServicesMixin, RoutesMixin {
     //dont do anything if cart is not valid
     if (!isValid) return errorSnackbar(invalidCartMessage);
 
-    final checkoutModel = cartService.createCheckoutModel(cartItems);
+    final checkoutModel = cartService.createCheckoutModel(
+      cartItems,
+      shouldCalculatePrice: false,
+    );
 
     //goto checkout view
     onCheckoutTap(checkoutModel);
