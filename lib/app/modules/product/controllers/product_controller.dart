@@ -1,10 +1,11 @@
 import 'package:get/get.dart';
+import 'package:shopping_app/app/core/utils/mixins/routes_mixin.dart';
 import 'package:shopping_app/app/core/utils/mixins/services_mixin.dart';
 import 'package:shopping_app/app/data/models/cart_model.dart';
 import 'package:shopping_app/app/data/models/product_model.dart';
 import 'package:shopping_app/app/modules/product/controllers/options_controller.dart';
 
-class ProductController extends GetxController with ServicesMixin {
+class ProductController extends GetxController with ServicesMixin, RoutesMixin {
   late final optionsController = Get.find<OptionsController>();
 
   late final instance = _getData();
@@ -56,7 +57,13 @@ class ProductController extends GetxController with ServicesMixin {
   }
 
   //* Done!!
-  void onBuyNow() {}
+  void onBuyNow() {
+    final cartModel = createModel();
+
+    final checkoutModel = cartService.createCheckoutModel([cartModel]);
+
+    onCheckoutTap(checkoutModel);
+  }
 
   CartModel createModel() {
     final color = optionsController.color;
