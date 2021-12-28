@@ -31,6 +31,7 @@ dependencies:
     git: https://github.com/imsamgarg/custom_utils.git
   flutter: 
     sdk: flutter
+  razorpay_flutter: ^1.2.7
 
 dev_dependencies: 
   flutter_lints: ^1.0.0
