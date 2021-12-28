@@ -1,5 +1,12 @@
 import 'package:shopping_app/app/data/models/product_model.dart';
 
+class CheckoutModel {
+  final List<CartModel> cartItems;
+  final int totalPrice;
+
+  CheckoutModel({required this.cartItems, required this.totalPrice});
+}
+
 class CartModel {
   int? fullPrice;
   String? size;
