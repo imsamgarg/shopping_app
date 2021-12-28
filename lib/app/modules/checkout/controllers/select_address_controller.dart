@@ -19,7 +19,7 @@ class SelectAddressController extends GetxController with ServicesMixin {
     selectedAddress = index;
   }
 
-  void addAddress() async {
+  void onAddAddress() async {
     await Get.to(() => AddressView());
     //update the ui
     update();
