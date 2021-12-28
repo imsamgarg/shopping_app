@@ -158,4 +158,22 @@ class CartService extends GetxService with ServicesMixin {
   void changeQuantity(String id, int quantity) {
     cartItems[id]?.quantity = quantity;
   }
+
+  CheckoutModel createCheckoutModel(
+    List<CartModel> _cartItems, {
+    bool shouldCalculatePrice = true,
+  }) {
+    int totalPrice = 0;
+    for (var cartItem in _cartItems) {
+      final product = cartItem.product!;
+
+      //ignore calculations if already calculated
+      if (shouldCalculatePrice) populateCartProductField(cartItem, product);
+
+      final price = cartItem.fullPrice! * cartItem.quantity;
+      totalPrice += price;
+    }
+
+    return CheckoutModel(cartItems: _cartItems, totalPrice: totalPrice);
+  }
 }
