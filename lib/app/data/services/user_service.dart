@@ -41,6 +41,8 @@ mixin _Parent {
 }
 
 mixin _Address implements _Parent {
+  List<Address> get addreesList => user.address ?? [];
+
   Future addAddress(Address address) async {
     final data = address.toJson();
     await _dbRepo.updateFirebaseDocument(
