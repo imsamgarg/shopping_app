@@ -1,20 +1,28 @@
 import 'package:get/get.dart';
+import 'package:shopping_app/app/core/values/values.dart';
+import 'package:shopping_app/app/data/models/user_model.dart';
 
 class CheckoutController extends GetxController {
-  //TODO: Implement CheckoutController
+  static CheckoutController get to => Get.find<CheckoutController>();
 
-  final count = 0.obs;
+  PaymentMethod? _paymentMethod;
+  late int totalPrice;
+  late Address address;
+
   @override
   void onInit() {
     super.onInit();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  void updatePaymentMethod(paymentMethod) {
+    _paymentMethod = paymentMethod;
   }
 
-  @override
-  void onClose() {}
-  void increment() => count.value++;
+  void updateTotalPrice(int finalPrice) {
+    totalPrice = finalPrice;
+  }
+
+  void updateAddress(Address _address) {
+    address = _address;
+  }
 }
