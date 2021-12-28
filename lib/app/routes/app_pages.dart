@@ -7,7 +7,7 @@ import 'package:shopping_app/app/modules/auth/views/login_view.dart';
 import 'package:shopping_app/app/modules/cart/bindings/cart_binding.dart';
 import 'package:shopping_app/app/modules/cart/views/cart_view.dart';
 import 'package:shopping_app/app/modules/checkout/bindings/checkout_binding.dart';
-import 'package:shopping_app/app/modules/checkout/views/checkout_view.dart';
+import 'package:shopping_app/app/modules/checkout/views/select_payment_method_view.dart';
 import 'package:shopping_app/app/modules/home/bindings/home_binding.dart';
 import 'package:shopping_app/app/modules/home/views/home_view.dart';
 import 'package:shopping_app/app/modules/orders/bindings/orders_binding.dart';
@@ -64,7 +64,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.CHECKOUT,
-      page: () => CheckoutView(),
+      page: () => SelectPaymentMethodView(),
       binding: CheckoutBinding(),
     ),
     GetPage(
