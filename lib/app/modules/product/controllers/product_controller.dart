@@ -41,7 +41,7 @@ class ProductController extends GetxController with ServicesMixin {
     product = await productsService.getProduct(id);
   }
 
-  void addToCart() async {
+  void onAddToCart() async {
     final cartModel = createModel();
     toggleCartButtonLoading(true);
 
@@ -55,8 +55,8 @@ class ProductController extends GetxController with ServicesMixin {
     update([addToCartButtonId]);
   }
 
-  //TODO: implement
-  void buyNow() {}
+  //* Done!!
+  void onBuyNow() {}
 
   CartModel createModel() {
     final color = optionsController.color;
