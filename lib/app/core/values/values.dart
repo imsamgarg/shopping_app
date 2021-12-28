@@ -29,6 +29,12 @@ enum ProductAvailability {
   //* if product removed from database
   productDeleted,
 }
+
+//for payment method
+enum PaymentMethod {
+  cashOnDelivery,
+  prepaid,
+}
 const double sm = 400;
 const double md = 500;
 const double lg = 600;
