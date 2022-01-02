@@ -1,3 +1,4 @@
+import 'package:custom_utils/log_utils.dart';
 import 'package:custom_utils/spacing_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:shopping_app/app/core/global_widgets/cached_image.dart';
@@ -97,9 +98,10 @@ class _ProductName extends StatelessWidget {
   Widget build(BuildContext context) {
     return Flexible(
       child: pName!
+          .trim()
+          .allWordsCapitilize()
           .trimText(15)
           .text
-          .capitalize
           .fontWeight(FontWeight.w500)
           .size(19)
           .make(),
