@@ -57,6 +57,11 @@ class _Filters extends GetView<FiltersSheetController> {
           onTap: controller.onSaveFilterTap,
           child: ("Save Filter").text.size(16).bold.make(),
         ),
+        verSpacing16,
+        AppOutlinedButton(
+          onTap: controller.onClearFilters,
+          child: ("Clear Filter").text.size(16).bold.make(),
+        ),
       ],
     );
   }
