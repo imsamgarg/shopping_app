@@ -6,11 +6,11 @@ import 'package:shopping_app/app/modules/product_list/controllers/products_list_
 import 'package:shopping_app/app/modules/product_list/views/filter_view.dart';
 
 class Filters {
-  final String? color;
-  final String? size;
-  final double? minPrice;
-  final double? maxPrice;
-  final SortBy sortBy;
+  String? color;
+  String? size;
+  double? minPrice;
+  double? maxPrice;
+  SortBy sortBy;
 
   Filters({
     this.color,
@@ -38,14 +38,19 @@ class FilterController extends GetxController with ServicesMixin {
       maxPrice: filterMap.maxPrice?.toDouble(),
     );
 
-    Filters? result = await Get.bottomSheet(
+    final result = await Get.bottomSheet(
       FilterBar(filters: filters!),
       isScrollControlled: true,
     );
 
-    if (result != null) {
+    if (result is bool && result == false) {
+      filters = null;
+      return resetPaging();
+    }
+
+    if (result != null && result is Filters) {
       filters = result;
-      resetPaging();
+      return resetPaging();
     }
   }
 
