@@ -35,12 +35,12 @@ class ProductCard extends StatelessWidget with RoutesMixin {
         ),
       ],
     )
-        .onTap(onTap ?? () => onProductTap(product))
         .p8()
         .box
         .color(Vx.gray50)
         .withRounded(value: Sizing.radiusL)
-        .make();
+        .make()
+        .onTap(onTap ?? () => onProductTap(product));
   }
 }
 
