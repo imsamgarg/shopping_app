@@ -5,6 +5,7 @@ import 'package:shopping_app/app/core/global_widgets/buttons.dart';
 import 'package:shopping_app/app/core/theme/color_theme.dart';
 import 'package:shopping_app/app/core/utils/helper.dart';
 import 'package:shopping_app/app/core/values/strings.dart';
+import 'package:shopping_app/app/core/values/values.dart';
 import 'package:shopping_app/app/modules/product_list/controllers/filter_controller.dart';
 import 'package:shopping_app/app/modules/product_list/controllers/filters_sheet_controller.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -47,12 +48,16 @@ class _Filters extends GetView<FiltersSheetController> {
             .color(ColorTheme.headerColor)
             .textStyle(GoogleFonts.varelaRound())
             .makeCentered(),
-        verSpacing20,
+        verSpacing4,
         if (controller.filters.minPrice != controller.filters.maxPrice)
           ...priceWidgets,
+        //size filters
         if (controller.sizeList.isNotEmpty) ...sizeWidgets,
+        //color filters
         if (controller.colorList.isNotEmpty) ...colorWidgets,
-        verSpacing16,
+        //sort By
+        ...sortWidgets,
+        verSpacing20,
         AppTextButton(
           onTap: controller.onSaveFilterTap,
           child: ("Save Filter").text.size(16).bold.make(),
@@ -66,22 +71,35 @@ class _Filters extends GetView<FiltersSheetController> {
     );
   }
 
-  List<Widget> get colorWidgets {
+  List<Widget> widgetGroups(String heading, Widget child) {
     return [
       verSpacing16,
-      _subHeading("Color"),
+      _subHeading(heading),
       verSpacing8,
-      _ColorGroup(),
+      child,
     ];
   }
 
-  List<Widget> get sizeWidgets {
-    return [
-      _subHeading("Size"),
-      verSpacing8,
-      _SizeGroup(),
-    ];
-  }
+  List<Widget> get sortWidgets => widgetGroups("Sort By", _SortGroup());
+  List<Widget> get colorWidgets => widgetGroups("Color", _ColorGroup());
+  List<Widget> get sizeWidgets => widgetGroups("Size", _SizeGroup());
+
+  // List<Widget> get colorWidgets {
+  //   return [
+  //     verSpacing16,
+  //     _subHeading("Color"),
+  //     verSpacing8,
+  //     _ColorGroup(),
+  //   ];
+  // }
+
+  // List<Widget> get sizeWidgets {
+  //   return [
+  //     _subHeading("Size"),
+  //     verSpacing8,
+  //     _SizeGroup(),
+  //   ];
+  // }
 
   List<Widget> get priceWidgets {
     return [
@@ -95,6 +113,25 @@ class _Filters extends GetView<FiltersSheetController> {
 
   Widget _subHeading(String label) {
     return label.text.size(18).color(ColorTheme.headerColor).make();
+  }
+}
+
+class _SortGroup extends GetView<FiltersSheetController> {
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() {
+      return Row(
+        children: [
+          if (controller.showPopularity.value)
+            SortByChip(SortBy.popularity, "Popularity"),
+          if (controller.showPopularity.value) horSpacing10,
+          SortByChip(SortBy.priceLTH, "Price Low To High"),
+          horSpacing10,
+          SortByChip(SortBy.priceHTL, "Price High To Low"),
+          horSpacing10,
+        ],
+      ).scrollHorizontal();
+    });
   }
 }
 
@@ -205,19 +242,19 @@ class CustomChip extends StatelessWidget {
   }
 }
 
-// class CustomChip extends GetView<FiltersSheetController> {
-//   final SortBy sortBy;
-//   final String label;
-//   CustomChip(this.sortBy, this.label);
+class SortByChip extends GetView<FiltersSheetController> {
+  final SortBy sortBy;
+  final String label;
+  SortByChip(this.sortBy, this.label);
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Obx(
-//       () => ChoiceChip(
-//         onSelected: (v) => controller.changeSorting(sortBy),
-//         label: label.text.make(),
-//         selected: controller.sortBy.value == sortBy,
-//       ),
-//     );
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return Obx(
+      () => CustomChip(
+        onSelected: (v) => controller.changeSorting(sortBy),
+        label: label,
+        isSelected: controller.sortBy.value == sortBy,
+      ),
+    );
+  }
+}
