@@ -16,7 +16,7 @@ class FiltersSheetController extends GetxController {
   late final maxPrice = RxnDouble(filters.maxPrice);
   late final sortBy = SortBy.popularity.obs;
 
-  Rx<RangeValues>? priceRange;
+  late final priceRange = RangeValues(filters.minPrice!, filters.maxPrice!).obs;
 
   List<String> get sizeList => controller.filterMap.size ?? <String>[];
   List<String> get colorList => controller.filterMap.color ?? <String>[];
@@ -36,7 +36,7 @@ class FiltersSheetController extends GetxController {
   void onPriceChange(RangeValues value) {
     minPrice.value = value.start;
     maxPrice.value = value.end;
-    priceRange!.value = value;
+    priceRange.value = value;
   }
 
   void onSaveFilterTap() {
