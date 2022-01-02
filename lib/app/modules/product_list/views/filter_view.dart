@@ -48,39 +48,10 @@ class _Filters extends GetView<FiltersSheetController> {
             .textStyle(GoogleFonts.varelaRound())
             .makeCentered(),
         verSpacing20,
-        _subHeading("Price"),
-        verSpacing8,
-        Obx(
-          () => RangeSlider(
-            min: controller.filters.minPrice!,
-            max: controller.filters.maxPrice!,
-            values: controller.priceRange!.value,
-            onChanged: controller.onPriceChange,
-          ),
-        ),
-        Obx(() {
-          var _minPrice = controller.minPrice.value;
-          var _maxPrice = controller.maxPrice.value;
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              "$rsSign$_minPrice".text.size(16).bold.make(),
-              "$rsSign$_maxPrice".text.size(16).bold.make(),
-            ],
-          ).px16();
-        }),
-        verSpacing16,
-        if (controller.sizeList.isNotEmpty) ...[
-          _subHeading("Size"),
-          verSpacing8,
-          _SizeGroup()
-        ],
-        if (controller.colorList.isNotEmpty) ...[
-          verSpacing16,
-          _subHeading("Color"),
-          verSpacing8,
-          _ColorGroup()
-        ],
+        if (controller.filters.minPrice != controller.filters.maxPrice)
+          ...priceWidgets,
+        if (controller.sizeList.isNotEmpty) ...sizeWidgets,
+        if (controller.colorList.isNotEmpty) ...colorWidgets,
         verSpacing16,
         AppTextButton(
           onTap: controller.onSaveFilterTap,
@@ -90,8 +61,66 @@ class _Filters extends GetView<FiltersSheetController> {
     );
   }
 
+  List<Widget> get colorWidgets {
+    return [
+      verSpacing16,
+      _subHeading("Color"),
+      verSpacing8,
+      _ColorGroup(),
+    ];
+  }
+
+  List<Widget> get sizeWidgets {
+    return [
+      _subHeading("Size"),
+      verSpacing8,
+      _SizeGroup(),
+    ];
+  }
+
+  List<Widget> get priceWidgets {
+    return [
+      _subHeading("Price"),
+      verSpacing8,
+      _PriceRangeSlider(),
+      _MinMaxPrice(),
+      verSpacing16,
+    ];
+  }
+
   Widget _subHeading(String label) {
     return label.text.size(18).color(ColorTheme.headerColor).make();
+  }
+}
+
+class _MinMaxPrice extends GetView<FiltersSheetController> {
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() {
+      var _minPrice = controller.minPrice.value;
+      var _maxPrice = controller.maxPrice.value;
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          "$rsSign$_minPrice".text.size(16).bold.make(),
+          "$rsSign$_maxPrice".text.size(16).bold.make(),
+        ],
+      ).px16();
+    });
+  }
+}
+
+class _PriceRangeSlider extends GetView<FiltersSheetController> {
+  @override
+  Widget build(BuildContext context) {
+    return Obx(
+      () => RangeSlider(
+        min: controller.filters.minPrice!,
+        max: controller.filters.maxPrice!,
+        values: controller.priceRange.value,
+        onChanged: controller.onPriceChange,
+      ),
+    );
   }
 }
 
