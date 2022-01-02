@@ -34,12 +34,31 @@ class FiltersSheetController extends GetxController {
   }
 
   void onPriceChange(RangeValues value) {
-    minPrice.value = value.start;
-    maxPrice.value = value.end;
+    minPrice.value = value.start.round().toDouble();
+    maxPrice.value = value.end.round().toDouble();
     priceRange.value = value;
   }
 
   void onSaveFilterTap() {
+    if (filters.minPrice != minPrice.value) {
+      filters.minPrice = minPrice.value;
+    } else {
+      filters.minPrice = null;
+    }
+
+    if (filters.maxPrice != maxPrice.value) {
+      filters.maxPrice = maxPrice.value;
+    } else {
+      filters.maxPrice = null;
+    }
+
+    filters.color = color.value;
+    filters.size = size.value;
+
     Get.back(result: filters);
+  }
+
+  void onClearFilters() {
+    Get.back(result: false);
   }
 }
