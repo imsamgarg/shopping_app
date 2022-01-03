@@ -1,13 +1,15 @@
-import 'package:custom_utils/spacing_utils.dart';
 import 'package:flutter/material.dart';
 
+import 'package:custom_utils/spacing_utils.dart';
 import 'package:get/get.dart';
+import 'package:velocity_x/velocity_x.dart';
+
 import 'package:shopping_app/app/core/global_widgets/buttons.dart';
 import 'package:shopping_app/app/core/global_widgets/input_fields.dart';
 import 'package:shopping_app/app/core/global_widgets/responsive.dart';
 import 'package:shopping_app/app/core/theme/sizing_theme.dart';
 import 'package:shopping_app/app/core/utils/helper.dart';
-import 'package:velocity_x/velocity_x.dart';
+
 import '../controllers/login_controller.dart';
 
 class LoginView extends GetView<LoginController> {
@@ -60,7 +62,7 @@ class LoginView extends GetView<LoginController> {
                       controller: controller.passController,
                       textInputType: TextInputType.visiblePassword,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 8,
                     ),
                     Container(
@@ -72,10 +74,10 @@ class LoginView extends GetView<LoginController> {
                         color: Vx.white,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 8,
                     ),
-                    LoginButton(),
+                    const LoginButton(),
                     isSmallScreen ? verSpacing10 : verSpacing20,
                     Hero(
                       tag: "or",
@@ -91,7 +93,7 @@ class LoginView extends GetView<LoginController> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         GoogleButton(onTap: controller.onGoogleTap),
-                        EmailButton(),
+                        const EmailButton(),
                         CallButton(onTap: controller.onCallTap),
                       ],
                     ),
@@ -140,13 +142,13 @@ class EmailButton extends GetView<LoginController> {
   Widget build(BuildContext context) {
     return OutlinedButton(
       style: OutlinedButton.styleFrom(
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: Sizing.borderRadiusXLL,
         ),
       ),
       onPressed: controller.onRegisterTap,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16.0),
+      child: const Padding(
+        padding: EdgeInsets.symmetric(vertical: 16.0),
         child: Icon(
           Icons.email_rounded,
         ),

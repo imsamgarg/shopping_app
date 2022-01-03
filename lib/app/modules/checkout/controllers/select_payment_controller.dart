@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+
 import 'package:shopping_app/app/core/utils/helper.dart';
 import 'package:shopping_app/app/core/utils/mixins/services_mixin.dart';
 import 'package:shopping_app/app/core/values/values.dart';

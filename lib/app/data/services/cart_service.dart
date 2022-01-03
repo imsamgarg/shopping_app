@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+
 import 'package:shopping_app/app/core/utils/mixins/services_mixin.dart';
 import 'package:shopping_app/app/core/values/db_strings.dart';
 import 'package:shopping_app/app/data/models/cart_model.dart';
@@ -164,7 +165,7 @@ class CartService extends GetxService with ServicesMixin {
     bool shouldCalculatePrice = true,
   }) {
     int totalPrice = 0;
-    for (var cartItem in _cartItems) {
+    for (final cartItem in _cartItems) {
       final product = cartItem.product!;
 
       //ignore calculations if already calculated

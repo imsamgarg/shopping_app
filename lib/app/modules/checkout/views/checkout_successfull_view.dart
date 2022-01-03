@@ -7,10 +7,10 @@ class CheckoutSuccessfullView extends GetView {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('CheckoutSuccessfullView'),
+        title: const Text('CheckoutSuccessfullView'),
         centerTitle: true,
       ),
-      body: Center(
+      body: const Center(
         child: Text(
           'CheckoutSuccessfullView is working',
           style: TextStyle(fontSize: 20),

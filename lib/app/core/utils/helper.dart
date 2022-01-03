@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
+import 'package:velocity_x/velocity_x.dart';
+
 import 'package:shopping_app/app/core/theme/color_theme.dart';
 import 'package:shopping_app/app/core/theme/sizing_theme.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 void goBack() {
   Get.back();
@@ -15,7 +17,7 @@ void successSnackbar(
 ]) {
   return customSnackBar(
     message,
-    Icon(Icons.check, color: Vx.white),
+    const Icon(Icons.check, color: Vx.white),
     ColorTheme.successColor,
     snackPosition: snackPosition,
   );
@@ -28,7 +30,7 @@ void errorSnackbar(
 ]) {
   return customSnackBar(
     message,
-    Icon(Icons.cancel_rounded, color: Vx.white),
+    const Icon(Icons.cancel_rounded, color: Vx.white),
     ColorTheme.errorColor,
     snackPosition: snackPosition,
   );

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
+
 import 'package:shopping_app/app/modules/product/controllers/product_controller.dart';
 
 class ProductImageController extends GetxController {

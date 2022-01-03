@@ -1,6 +1,8 @@
+import 'package:flutter/material.dart';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_image/firebase_image.dart';
-import 'package:flutter/material.dart';
+
 import 'package:shopping_app/app/core/theme/sizing_theme.dart';
 
 class CachedFirebaseImage extends StatelessWidget {

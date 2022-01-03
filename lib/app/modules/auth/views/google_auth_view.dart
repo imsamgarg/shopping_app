@@ -1,7 +1,8 @@
-import 'package:custom_utils/spacing_utils.dart';
 import 'package:flutter/material.dart';
 
+import 'package:custom_utils/spacing_utils.dart';
 import 'package:get/get.dart';
+
 import 'package:shopping_app/app/core/theme/sizing_theme.dart';
 import 'package:shopping_app/app/core/utils/helper.dart';
 import 'package:shopping_app/app/core/values/assets.dart';
@@ -10,13 +11,13 @@ import 'package:shopping_app/app/modules/auth/controllers/google_auth_controller
 class GoogleAuthView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(GoogleAuthController());
+    Get.put(GoogleAuthController());
 
     return Scaffold(
       body: Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+        children: const [
           Flexible(
             child: Center(
               child: GoogleLogo(),
@@ -49,12 +50,12 @@ class TryAgain extends GetView<GoogleAuthController> {
               shape: Sizing.cardShape,
             ),
             onPressed: controller.onLoginWithGoogle,
-            child: Text(
+            child: const Text(
               "Try Again",
             ),
           );
         }
-        return SizedBox.shrink();
+        return const SizedBox.shrink();
       },
     );
   }
@@ -68,7 +69,7 @@ class GoogleLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
-      duration: Duration(microseconds: 600),
+      duration: const Duration(microseconds: 600),
       child: Material(
         child: Hero(
           tag: "google",

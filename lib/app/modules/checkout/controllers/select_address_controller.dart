@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+
 import 'package:shopping_app/app/core/utils/helper.dart';
 import 'package:shopping_app/app/core/utils/mixins/services_mixin.dart';
 import 'package:shopping_app/app/data/models/user_model.dart';
@@ -20,7 +21,7 @@ class SelectAddressController extends GetxController with ServicesMixin {
   }
 
   void onAddAddress() async {
-    await Get.to(() => AddressView());
+    await Get.to(() => const AddressView());
     //update the ui
     update();
   }

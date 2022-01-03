@@ -1,14 +1,16 @@
-import 'package:custom_utils/spacing_utils.dart';
 import 'package:flutter/material.dart';
+
+import 'package:custom_utils/spacing_utils.dart';
+import 'package:get/get.dart';
 import 'package:pinput/pin_put/pin_put.dart';
+import 'package:velocity_x/velocity_x.dart';
+
 import 'package:shopping_app/app/core/global_widgets/buttons.dart';
 import 'package:shopping_app/app/core/global_widgets/input_fields.dart';
 import 'package:shopping_app/app/core/global_widgets/responsive.dart';
 import 'package:shopping_app/app/core/theme/sizing_theme.dart';
 import 'package:shopping_app/app/core/utils/helper.dart';
 import 'package:shopping_app/app/modules/auth/controllers/phone_auth_controller.dart';
-import 'package:velocity_x/velocity_x.dart';
-import 'package:get/get.dart';
 
 class PhoneAuthView extends StatelessWidget {
   final bool link;
@@ -24,7 +26,7 @@ class PhoneAuthView extends StatelessWidget {
     return Scaffold(
       floatingActionButton: Counter(),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
         child: Form(
           key: controller.formKey,
           child: Column(
@@ -53,18 +55,18 @@ class PhoneAuthView extends StatelessWidget {
                     builder: (_) {
                       if (!controller.isOtpSent) {
                         return CustomInputField(
-                          key: ValueKey("1"),
+                          key: const ValueKey("1"),
                           icon: Icons.call,
                           hintText: "Mobile Number +91",
                           validator: controller.phoneNumberValidator,
                           controller: controller.phoneController,
-                          textInputType: TextInputType.numberWithOptions(
+                          textInputType: const TextInputType.numberWithOptions(
                             decimal: false,
                             signed: false,
                           ),
                         );
                       } else {
-                        return SizedBox.shrink();
+                        return const SizedBox.shrink();
                       }
                     },
                   ),
@@ -88,14 +90,14 @@ class PhoneAuthView extends StatelessWidget {
                               color: primaryColor(context).withOpacity(0.7),
                             ),
                           ),
-                          key: ValueKey("2"),
+                          key: const ValueKey("2"),
                           cursorColor: primaryColor(context),
                           validator: controller.otpCodeValidator,
                           controller: controller.otpController,
                           fieldsCount: 6,
                         );
                       } else {
-                        return SizedBox.shrink();
+                        return const SizedBox.shrink();
                       }
                     },
                   ),

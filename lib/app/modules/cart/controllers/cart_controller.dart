@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
+
 import 'package:get/get.dart';
+
 import 'package:shopping_app/app/core/utils/helper.dart';
 import 'package:shopping_app/app/core/utils/mixins/routes_mixin.dart';
 import 'package:shopping_app/app/core/utils/mixins/services_mixin.dart';
@@ -27,7 +29,7 @@ class CartController extends GetxController with ServicesMixin, RoutesMixin {
 
   int calculateTotalPrice() {
     var price = 0;
-    for (var item in cartItems) {
+    for (final item in cartItems) {
       price += item.fullPrice! * item.quantity;
     }
     return price;
@@ -45,7 +47,7 @@ class CartController extends GetxController with ServicesMixin, RoutesMixin {
   }
 
   void convertCartMapToList() {
-    for (var cartItem in cartService.cartItems.entries) {
+    for (final cartItem in cartService.cartItems.entries) {
       cartItems.add(cartItem.value);
     }
   }
@@ -81,24 +83,25 @@ class CartController extends GetxController with ServicesMixin, RoutesMixin {
     return true;
   }
 }
-  ///*No Longer Needed
 
-  // void decrementQuantity(int index) {
-  //   local to cart screen
-  //   final item = cartItems[index];
-  //   --item.quantity;
+///*No Longer Needed
 
-  //   globally
-  //   final id = item.product!.id!;
-  //   cartService.decrementQuantity(id);
-  // }
+// void decrementQuantity(int index) {
+//   local to cart screen
+//   final item = cartItems[index];
+//   --item.quantity;
 
-  // void incrementQuantity(int index) {
-  //   local to cart screen
-  //   final item = cartItems[index];
-  //   ++item.quantity;
+//   globally
+//   final id = item.product!.id!;
+//   cartService.decrementQuantity(id);
+// }
 
-  //   globally
-  //   final id = item.product!.id!;
-  //   cartService.incrementQuantity(id);
-  // }
+// void incrementQuantity(int index) {
+//   local to cart screen
+//   final item = cartItems[index];
+//   ++item.quantity;
+
+//   globally
+//   final id = item.product!.id!;
+//   cartService.incrementQuantity(id);
+// }

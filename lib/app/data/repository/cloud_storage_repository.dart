@@ -2,8 +2,9 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:shopping_app/app/core/interfaces.dart';
 import 'package:path/path.dart' as p;
+
+import 'package:shopping_app/app/core/interfaces.dart';
 
 class FirebaseStorageRepository extends CloudStorageInterface {
   FirebaseStorageRepository._();

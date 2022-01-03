@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
+
 import 'package:shopping_app/app/modules/checkout/controllers/select_payment_controller.dart';
 
 class SelectPaymentMethodView extends GetView<SelectPaymentMethodController> {
@@ -7,10 +9,10 @@ class SelectPaymentMethodView extends GetView<SelectPaymentMethodController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('SelectPaymentMethodView'),
+        title: const Text('SelectPaymentMethodView'),
         centerTitle: true,
       ),
-      body: Center(
+      body: const Center(
         child: Text(
           'SelectPaymentMethodView is working',
           style: TextStyle(fontSize: 20),

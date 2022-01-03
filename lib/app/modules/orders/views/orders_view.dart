@@ -9,10 +9,10 @@ class OrdersView extends GetView<OrdersController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('OrdersView'),
+        title: const Text('OrdersView'),
         centerTitle: true,
       ),
-      body: Center(
+      body: const Center(
         child: Text(
           'OrdersView is working',
           style: TextStyle(fontSize: 20),

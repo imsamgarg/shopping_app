@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:get/get.dart';
+
 import 'package:shopping_app/app/core/utils/helper.dart';
 import 'package:shopping_app/app/core/utils/mixins/routes_mixin.dart';
 import 'package:shopping_app/app/core/utils/mixins/services_mixin.dart';
@@ -30,7 +31,7 @@ class AddressListController extends GetxController
     goBack();
     customSnackBar(
       "Address Deleted",
-      Icon(Icons.delete_rounded),
+      const Icon(Icons.delete_rounded),
       Colors.blueGrey,
     );
     update();

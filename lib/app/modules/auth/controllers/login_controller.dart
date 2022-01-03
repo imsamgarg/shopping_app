@@ -1,5 +1,7 @@
 import 'package:flutter/widgets.dart';
+
 import 'package:get/get.dart';
+
 import 'package:shopping_app/app/core/utils/helper.dart';
 import 'package:shopping_app/app/core/utils/mixins/error_handling_mixin.dart';
 import 'package:shopping_app/app/core/utils/mixins/routes_mixin.dart';

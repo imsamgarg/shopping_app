@@ -1,13 +1,15 @@
-import 'package:custom_utils/log_utils.dart';
-import 'package:custom_utils/spacing_utils.dart';
 import 'package:flutter/material.dart';
+
+import 'package:custom_utils/spacing_utils.dart';
+import 'package:velocity_x/velocity_x.dart';
+
 import 'package:shopping_app/app/core/global_widgets/cached_image.dart';
 import 'package:shopping_app/app/core/theme/sizing_theme.dart';
 import 'package:shopping_app/app/core/utils/helper.dart';
 import 'package:shopping_app/app/core/utils/mixins/routes_mixin.dart';
 import 'package:shopping_app/app/core/values/strings.dart';
 import 'package:shopping_app/app/data/models/product_model.dart';
-import 'package:velocity_x/velocity_x.dart';
+
 import '../../core/utils/extensions.dart';
 
 class ProductCard extends StatelessWidget with RoutesMixin {

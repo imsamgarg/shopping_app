@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+
 import 'package:shopping_app/app/modules/checkout/controllers/select_address_controller.dart';
 
 class SelectAddressView extends StatelessWidget {
@@ -9,10 +10,10 @@ class SelectAddressView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('SelecAddressView'),
+        title: const Text('SelecAddressView'),
         centerTitle: true,
       ),
-      body: Center(
+      body: const Center(
         child: Text(
           'SelecAddressView is working',
           style: TextStyle(fontSize: 20),

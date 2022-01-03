@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:shopping_app/app/core/theme/sizing_theme.dart';
+
 import 'package:velocity_x/velocity_x.dart';
+
+import 'package:shopping_app/app/core/theme/sizing_theme.dart';
 
 class ShimmerContainer extends StatelessWidget {
   const ShimmerContainer({
@@ -15,7 +17,7 @@ class ShimmerContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VxShimmer(
-      child: SizedBox.expand(),
+      child: const SizedBox.expand(),
       primaryColor: color ?? Colors.grey,
     ).box.withRounded(value: borderRadius ?? Sizing.radiusL).make();
   }
@@ -27,9 +29,9 @@ class ShimmerCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (axis == Axis.horizontal) {
-      return _HorShimmerCard();
+      return const _HorShimmerCard();
     } else {
-      return _VerShimmerCard();
+      return const _VerShimmerCard();
     }
   }
 }

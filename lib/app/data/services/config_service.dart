@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+
 import 'package:shopping_app/app/core/values/db_strings.dart';
 import 'package:shopping_app/app/data/models/app_model.dart';
 import 'package:shopping_app/app/data/repository/database_repository.dart';

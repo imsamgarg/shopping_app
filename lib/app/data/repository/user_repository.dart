@@ -1,6 +1,7 @@
 import 'package:custom_utils/log_utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+
 import 'package:shopping_app/app/core/interfaces.dart';
 import 'package:shopping_app/app/core/utils/mixins/error_handling_mixin.dart';
 

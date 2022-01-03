@@ -1,9 +1,12 @@
 import 'package:flutter/widgets.dart';
+
 import 'package:get/get.dart';
+
 import 'package:shopping_app/app/core/utils/helper.dart';
 import 'package:shopping_app/app/core/utils/mixins/routes_mixin.dart';
 import 'package:shopping_app/app/core/utils/mixins/services_mixin.dart';
 import 'package:shopping_app/app/routes/app_pages.dart';
+
 import '../views/logout_confirm_dialog_view.dart';
 
 class ProfileController extends GetxController with RoutesMixin, ServicesMixin {

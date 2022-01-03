@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+
 import 'package:shopping_app/app/core/values/db_strings.dart';
 import 'package:shopping_app/app/data/models/product_model.dart';
 import 'package:shopping_app/app/data/models/user_model.dart';

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart' show GetView;
-import 'package:shopping_app/app/core/global_widgets/buttons.dart';
+import 'package:velocity_x/velocity_x.dart';
+
 import 'package:shopping_app/app/core/global_widgets/custom_painter.dart';
 import 'package:shopping_app/app/core/values/assets.dart';
-import 'package:velocity_x/velocity_x.dart';
 import 'package:shopping_app/app/modules/startup/controllers/startup_controller.dart';
 
 class WelcomeView extends GetView<StartupController> {
@@ -37,7 +38,7 @@ class WelcomeView extends GetView<StartupController> {
                           height: 300,
                           width: 300,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         "Welcome To Fashion 24/7 ".text.size(24).make(),
@@ -50,7 +51,7 @@ class WelcomeView extends GetView<StartupController> {
                       child: TextButton.icon(
                         onPressed: controller.onNextTap,
                         label: "Next".text.size(22).make(),
-                        icon: Icon(Icons.arrow_forward_rounded),
+                        icon: const Icon(Icons.arrow_forward_rounded),
                       ),
                     ),
                   ),

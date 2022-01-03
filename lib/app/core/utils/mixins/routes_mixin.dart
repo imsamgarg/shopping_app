@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+
 import 'package:shopping_app/app/core/values/values.dart';
 import 'package:shopping_app/app/data/models/app_model.dart';
 import 'package:shopping_app/app/data/models/cart_model.dart';
@@ -23,7 +24,7 @@ mixin RoutesMixin {
 
   void onAddressListTap() => Get.toNamed(Routes.ADDRESS);
 
-  void onAddAddressTap() => Get.to(() => AddressView());
+  void onAddAddressTap() => Get.to(() => const AddressView());
 
   void onOrderTap() => Get.toNamed(Routes.ORDERS);
 

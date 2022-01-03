@@ -1,16 +1,18 @@
-import 'package:custom_utils/spacing_utils.dart';
 import 'package:flutter/material.dart';
+
+import 'package:custom_utils/spacing_utils.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:velocity_x/velocity_x.dart';
+
 import 'package:shopping_app/app/core/global_widgets/buttons.dart';
 import 'package:shopping_app/app/core/theme/color_theme.dart';
+import 'package:shopping_app/app/core/theme/sizing_theme.dart';
 import 'package:shopping_app/app/core/utils/helper.dart';
 import 'package:shopping_app/app/core/values/strings.dart';
 import 'package:shopping_app/app/core/values/values.dart';
 import 'package:shopping_app/app/modules/product_list/controllers/filter_controller.dart';
 import 'package:shopping_app/app/modules/product_list/controllers/filters_sheet_controller.dart';
-import 'package:velocity_x/velocity_x.dart';
-import 'package:get/get.dart';
-import 'package:shopping_app/app/core/theme/sizing_theme.dart';
 
 class FilterBar extends StatelessWidget {
   final Filters filters;
@@ -23,7 +25,7 @@ class FilterBar extends StatelessWidget {
     return BottomSheet(
       onClosing: () {},
       enableDrag: false,
-      shape: RoundedRectangleBorder(borderRadius: Sizing.borderRadiusXL),
+      shape: const RoundedRectangleBorder(borderRadius: Sizing.borderRadiusXL),
       builder: (context) {
         return Padding(
           padding: Sizing.sidePadding,

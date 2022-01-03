@@ -1,6 +1,5 @@
-import 'package:custom_utils/log_utils.dart';
 import 'package:get/get.dart';
-import 'package:shopping_app/app/data/models/app_model.dart';
+
 import 'package:shopping_app/app/data/services/auth_service.dart';
 import 'package:shopping_app/app/data/services/cart_service.dart';
 import 'package:shopping_app/app/data/services/config_service.dart';

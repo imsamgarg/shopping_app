@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+
 import 'package:shopping_app/app/core/utils/mixins/routes_mixin.dart';
 import 'package:shopping_app/app/core/utils/mixins/services_mixin.dart';
 import 'package:shopping_app/app/data/models/app_model.dart';
@@ -34,7 +35,7 @@ class HomeController extends GetxController with ServicesMixin, RoutesMixin {
   List<String?> _getSubCatList() {
     final list = <String?>[];
     for (final cat in data!.categories) {
-      for (var subCat in cat.subCats!) {
+      for (final subCat in cat.subCats!) {
         list.add(subCat.name);
       }
     }

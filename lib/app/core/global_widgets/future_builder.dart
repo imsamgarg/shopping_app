@@ -1,5 +1,7 @@
-import 'package:custom_utils/future.dart';
 import 'package:flutter/material.dart';
+
+import 'package:custom_utils/future.dart';
+
 import 'package:shopping_app/app/core/global_widgets/widgets.dart';
 
 class AppFutureBuilder extends StatelessWidget {
@@ -20,7 +22,7 @@ class AppFutureBuilder extends StatelessWidget {
     return CustomFutureBuilder(
       future: future,
       builder: builder,
-      loading: loading ?? CenterLoading(size: 38),
+      loading: loading ?? const CenterLoading(size: 38),
       errorBuilder: errorBuilder,
     );
   }

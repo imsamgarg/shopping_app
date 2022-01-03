@@ -1,11 +1,11 @@
-import 'package:custom_utils/spacing_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 
+import 'package:custom_utils/spacing_utils.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
-import 'package:shopping_app/app/core/theme/color_theme.dart';
-import 'package:shopping_app/app/core/utils/helper.dart';
 import 'package:velocity_x/velocity_x.dart';
+
+import 'package:shopping_app/app/core/theme/color_theme.dart';
 import 'package:shopping_app/app/modules/address/controllers/address_list_controller.dart';
 
 class AddressListView extends GetView<AddressListController> {
@@ -14,7 +14,7 @@ class AddressListView extends GetView<AddressListController> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: controller.onAddAddressTap,
-        child: Icon(
+        child: const Icon(
           Icons.add_rounded,
           color: Vx.white,
           size: 35,
@@ -26,7 +26,7 @@ class AddressListView extends GetView<AddressListController> {
           final addressCount = controller.addresses.length;
           return CustomScrollView(
             slivers: [
-              SliverAppBar(
+              const SliverAppBar(
                 title: Text("Address List"),
               ),
               if (addressCount != 0) ...[

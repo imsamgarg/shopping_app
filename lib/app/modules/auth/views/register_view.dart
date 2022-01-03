@@ -1,11 +1,13 @@
-import 'package:custom_utils/spacing_utils.dart';
 import 'package:flutter/material.dart';
+
+import 'package:custom_utils/spacing_utils.dart';
+import 'package:get/get.dart';
+import 'package:velocity_x/velocity_x.dart';
+
 import 'package:shopping_app/app/core/global_widgets/buttons.dart';
 import 'package:shopping_app/app/core/global_widgets/input_fields.dart';
 import 'package:shopping_app/app/core/global_widgets/responsive.dart';
 import 'package:shopping_app/app/modules/auth/controllers/register_controller.dart';
-import 'package:velocity_x/velocity_x.dart';
-import 'package:get/get.dart';
 
 class RegisterView extends StatelessWidget {
   final registerHeading =
@@ -69,9 +71,9 @@ class RegisterView extends StatelessWidget {
                       textInputType: TextInputType.visiblePassword,
                     ),
                     isSmallScreen ? verSpacing20 : verSpacing30,
-                    RegisterButton(),
+                    const RegisterButton(),
                     isSmallScreen ? verSpacing10 : verSpacing20,
-                    OrTextWidget(),
+                    const OrTextWidget(),
                     verSpacing10,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -98,12 +100,12 @@ class OrTextWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Hero(
+    return const Hero(
       tag: "or",
       child: Material(
         color: Colors.transparent,
         child: Center(
-          child: const Text("Or Use"),
+          child: Text("Or Use"),
         ),
       ),
     );

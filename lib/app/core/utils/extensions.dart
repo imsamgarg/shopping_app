@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/state_manager.dart';
-import 'package:velocity_x/velocity_x.dart';
+
 import 'package:path/path.dart' as p;
+import 'package:velocity_x/velocity_x.dart';
 
 extension ColorExtension on BuildContext {
   get primaryColor => Theme.of(this).primaryColor;

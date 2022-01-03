@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:shopping_app/app/core/values/values.dart';
 
 class Sizing {
@@ -16,7 +17,7 @@ class Sizing {
 
   static final cardShape =
       RoundedRectangleBorder(borderRadius: BorderRadius.circular(radius));
-  static final roundShape =
+  static const roundShape =
       RoundedRectangleBorder(borderRadius: borderRadiusXLL);
 
   static const radiusS = 8.0;

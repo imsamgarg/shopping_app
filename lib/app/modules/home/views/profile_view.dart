@@ -1,7 +1,9 @@
-import 'package:custom_utils/spacing_utils.dart';
 import 'package:flutter/material.dart';
 
+import 'package:custom_utils/spacing_utils.dart';
 import 'package:get/get.dart';
+import 'package:velocity_x/velocity_x.dart';
+
 import 'package:shopping_app/app/core/global_widgets/buttons.dart';
 import 'package:shopping_app/app/core/global_widgets/cached_image.dart';
 import 'package:shopping_app/app/core/theme/color_theme.dart';
@@ -10,7 +12,6 @@ import 'package:shopping_app/app/core/utils/mixins/validator_mixin.dart';
 import 'package:shopping_app/app/core/values/assets.dart';
 import 'package:shopping_app/app/modules/home/controllers/profile_auth_controller.dart';
 import 'package:shopping_app/app/modules/home/controllers/profile_controller.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 class ProfileView extends GetView<ProfileController> {
   @override
@@ -80,7 +81,7 @@ class _PhoneAuth extends GetView<ProfileAuthController> {
       id: controller.phoneId,
       builder: (_) {
         return _AuthButton(
-          icon: Icon(Icons.phone_enabled_rounded),
+          icon: const Icon(Icons.phone_enabled_rounded),
           text: controller.phoneNumber,
           onTap: controller.addPhoneNumber,
         );
@@ -98,7 +99,7 @@ class _MailAuth extends GetView<ProfileAuthController> {
         id: controller.mailId,
         builder: (_) {
           return _AuthButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.email_rounded,
               color: Colors.blueGrey,
             ),
@@ -108,7 +109,7 @@ class _MailAuth extends GetView<ProfileAuthController> {
         },
       );
     }
-    return SizedBox.shrink();
+    return const SizedBox.shrink();
   }
 }
 
@@ -131,7 +132,7 @@ class _CustomButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           title.text.bold.size(16).make(),
-          Icon(
+          const Icon(
             Icons.arrow_forward_ios_rounded,
             size: 20,
           )
@@ -210,15 +211,15 @@ class _NameField extends GetView<ProfileController> with ValidatorMixin {
   Widget build(BuildContext context) {
     return Obx(
       () => TextFormField(
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.bold,
           color: ColorTheme.textColor,
         ),
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.only(left: 20),
-          prefixIcon: Padding(
-            padding: const EdgeInsets.only(right: 12),
+          contentPadding: const EdgeInsets.only(left: 20),
+          prefixIcon: const Padding(
+            padding: EdgeInsets.only(right: 12),
             child: Icon(
               Icons.account_circle_rounded,
               size: 28,
@@ -230,7 +231,7 @@ class _NameField extends GetView<ProfileController> with ValidatorMixin {
               controller.editingEnabled ? Icons.check_rounded : Icons.edit,
             ),
           ),
-          border: OutlineInputBorder(borderSide: BorderSide.none),
+          border: const OutlineInputBorder(borderSide: BorderSide.none),
         ),
         focusNode: controller.focusNode,
         controller: controller.nameController,

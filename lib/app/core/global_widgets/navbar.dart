@@ -1,7 +1,9 @@
-import 'package:custom_utils/spacing_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:shopping_app/app/core/utils/helper.dart';
+
+import 'package:custom_utils/spacing_utils.dart';
 import 'package:velocity_x/velocity_x.dart';
+
+import 'package:shopping_app/app/core/utils/helper.dart';
 
 class AppNavbar extends StatefulWidget {
   const AppNavbar({Key? key, required this.onIndexChange}) : super(key: key);
@@ -89,8 +91,8 @@ class _NavbarItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
-      duration: Duration(milliseconds: 200),
-      reverseDuration: Duration(milliseconds: 200),
+      duration: const Duration(milliseconds: 200),
+      reverseDuration: const Duration(milliseconds: 200),
       transitionBuilder: (child, Animation<double> animation) {
         return ScaleTransition(
           scale: animation,

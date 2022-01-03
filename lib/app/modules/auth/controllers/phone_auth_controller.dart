@@ -1,8 +1,10 @@
 import 'dart:async';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+
 import 'package:shopping_app/app/core/utils/helper.dart';
 import 'package:shopping_app/app/core/utils/mixins/error_handling_mixin.dart';
 import 'package:shopping_app/app/core/utils/mixins/routes_mixin.dart';
@@ -92,11 +94,11 @@ class PhoneAuthController extends GetxController
   }
 
   _onCodeSent(String verificationId, int? resendToken) {
-    final timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    final timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (_timer.value > 0) --_timer.value;
     });
 
-    Future.delayed(Duration(seconds: 62)).then((value) {
+    Future.delayed(const Duration(seconds: 62)).then((value) {
       timer.cancel();
     });
 
@@ -107,7 +109,7 @@ class PhoneAuthController extends GetxController
 
     customSnackBar(
       "Otp Sent!! Auto Retrieving Otp in 60 Seconds",
-      Icon(Icons.timer),
+      const Icon(Icons.timer),
       Colors.grey.shade800,
     );
   }

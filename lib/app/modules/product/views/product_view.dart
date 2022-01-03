@@ -1,8 +1,10 @@
-import 'package:custom_utils/spacing_utils.dart';
 import 'package:flutter/material.dart';
 
+import 'package:custom_utils/spacing_utils.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:velocity_x/velocity_x.dart';
+
 import 'package:shopping_app/app/core/global_widgets/buttons.dart';
 import 'package:shopping_app/app/core/global_widgets/cached_image.dart';
 import 'package:shopping_app/app/core/global_widgets/future_builder.dart';
@@ -10,7 +12,7 @@ import 'package:shopping_app/app/core/global_widgets/widgets.dart';
 import 'package:shopping_app/app/core/theme/color_theme.dart';
 import 'package:shopping_app/app/core/theme/sizing_theme.dart';
 import 'package:shopping_app/app/core/values/strings.dart';
-import 'package:velocity_x/velocity_x.dart';
+
 import '../../../core/utils/extensions.dart';
 import '../controllers/product_controller.dart';
 
@@ -52,7 +54,7 @@ class ProductView extends GetView<ProductController> {
                   ),
                 ),
               ),
-              _Header(),
+              const _Header(),
             ],
           ),
         );
@@ -71,7 +73,7 @@ class _AddToCart extends GetView<ProductController> {
         if (controller.isAddToCartLoading) {
           return AppTextButton(
             onTap: () {},
-            child: CenterLoading(color: Vx.white, size: 20),
+            child: const CenterLoading(color: Vx.white, size: 20),
           ).paddingOnly(bottom: 12);
         }
         return Expanded(
@@ -96,7 +98,7 @@ class _Header extends GetView<ProductController> {
       child: Container(
         decoration: BoxDecoration(
           color: Colors.grey.shade50,
-          borderRadius: BorderRadius.vertical(
+          borderRadius: const BorderRadius.vertical(
             top: Radius.circular(Sizing.radiusXL),
           ),
         ),
@@ -114,7 +116,7 @@ class _Header extends GetView<ProductController> {
                     .size(26)
                     .color(ColorTheme.headerColor)
                     .make(),
-                _Price(),
+                const _Price(),
               ],
             ).p32(),
           ],

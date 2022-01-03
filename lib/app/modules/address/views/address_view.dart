@@ -1,12 +1,13 @@
-import 'package:custom_utils/spacing_utils.dart';
 import 'package:flutter/material.dart';
 
+import 'package:custom_utils/spacing_utils.dart';
 import 'package:get/get.dart';
+import 'package:velocity_x/velocity_x.dart';
+
 import 'package:shopping_app/app/core/global_widgets/buttons.dart';
 import 'package:shopping_app/app/core/theme/color_theme.dart';
 import 'package:shopping_app/app/core/theme/sizing_theme.dart';
 import 'package:shopping_app/app/modules/address/controllers/address_controller.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 class AddressView extends StatelessWidget {
   final int? index;
@@ -191,7 +192,7 @@ class _Form extends StatelessWidget {
             verSpacing20,
             AppOutlinedButton(
               onTap: controller.reset,
-              child: Text("Reset"),
+              child: const Text("Reset"),
             ),
           ],
         ),
@@ -217,7 +218,7 @@ InputDecoration textDecoration(
         ),
       ),
     ),
-    enabledBorder: OutlineInputBorder(
+    enabledBorder: const OutlineInputBorder(
       borderRadius: Sizing.borderRadiusM,
       borderSide: BorderSide.none,
     ),

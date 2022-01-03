@@ -9,10 +9,10 @@ class AppTheme {
   static final lightTheme = ThemeData(
     textTheme: GoogleFonts.nunitoSansTextTheme(),
     scaffoldBackgroundColor: ColorTheme.whiteColor,
-    floatingActionButtonTheme: FloatingActionButtonThemeData(
+    floatingActionButtonTheme: const FloatingActionButtonThemeData(
       backgroundColor: ColorTheme.primaryColor,
     ),
-    appBarTheme: AppBarTheme(
+    appBarTheme: const AppBarTheme(
       backgroundColor: Colors.white,
       foregroundColor: ColorTheme.primaryColor,
       centerTitle: true,
@@ -21,9 +21,9 @@ class AppTheme {
     backgroundColor: ColorTheme.whiteColor,
     primarySwatch: ColorTheme.primarySwatch,
     brightness: Brightness.light,
-    colorScheme: ColorScheme.light(primary: ColorTheme.primaryColor),
+    colorScheme: const ColorScheme.light(primary: ColorTheme.primaryColor),
     primaryColorLight: ColorTheme.primaryColor,
-    textSelectionTheme: TextSelectionThemeData(
+    textSelectionTheme: const TextSelectionThemeData(
       cursorColor: ColorTheme.primaryColor,
       selectionColor: ColorTheme.primaryColor,
       selectionHandleColor: ColorTheme.primaryColor,

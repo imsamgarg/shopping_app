@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+
+import 'package:velocity_x/velocity_x.dart';
+
 import 'package:shopping_app/app/core/global_widgets/widgets.dart';
 import 'package:shopping_app/app/core/theme/sizing_theme.dart';
 import 'package:shopping_app/app/core/utils/helper.dart';
 import 'package:shopping_app/app/core/values/assets.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 class GoogleButton extends StatelessWidget {
   final VoidCallback? onTap;
@@ -19,7 +21,7 @@ class GoogleButton extends StatelessWidget {
       tag: "google",
       child: OutlinedButton(
         style: OutlinedButton.styleFrom(
-          shape: RoundedRectangleBorder(
+          shape: const RoundedRectangleBorder(
             borderRadius: Sizing.borderRadiusXLL,
           ),
         ),
@@ -52,13 +54,13 @@ class CallButton extends StatelessWidget {
       tag: "call",
       child: OutlinedButton(
         style: OutlinedButton.styleFrom(
-          shape: RoundedRectangleBorder(
+          shape: const RoundedRectangleBorder(
             borderRadius: Sizing.borderRadiusXLL,
           ),
         ),
         onPressed: onTap,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16.0),
+        child: const Padding(
+          padding: EdgeInsets.symmetric(vertical: 16.0),
           child: Icon(
             Icons.call,
           ),

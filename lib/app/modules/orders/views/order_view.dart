@@ -7,10 +7,10 @@ class OrderView extends GetView {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('OrderView'),
+        title: const Text('OrderView'),
         centerTitle: true,
       ),
-      body: Center(
+      body: const Center(
         child: Text(
           'OrderView is working',
           style: TextStyle(fontSize: 20),

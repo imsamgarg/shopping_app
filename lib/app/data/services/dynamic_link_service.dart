@@ -1,6 +1,8 @@
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/widgets.dart';
+
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:get/get.dart';
+
 import 'package:shopping_app/app/core/utils/mixins/error_handling_mixin.dart';
 import 'package:shopping_app/app/core/utils/mixins/routes_mixin.dart';
 import 'package:shopping_app/app/data/models/dynamic_link_model.dart';

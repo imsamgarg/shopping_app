@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+
 import 'package:shopping_app/app/data/repository/user_repository.dart';
 
 class AuthService extends GetxService {

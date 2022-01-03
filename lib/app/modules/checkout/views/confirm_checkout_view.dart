@@ -7,10 +7,10 @@ class ConfirmCheckoutView extends GetView {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('ConfirmCheckoutView'),
+        title: const Text('ConfirmCheckoutView'),
         centerTitle: true,
       ),
-      body: Center(
+      body: const Center(
         child: Text(
           'ConfirmCheckoutView is working',
           style: TextStyle(fontSize: 20),

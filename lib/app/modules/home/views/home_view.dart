@@ -1,9 +1,11 @@
-import 'package:custom_utils/spacing_utils.dart';
 import 'package:flutter/material.dart';
 
+import 'package:custom_utils/spacing_utils.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:velocity_x/velocity_x.dart';
+
 import 'package:shopping_app/app/core/global_widgets/buttons.dart';
 import 'package:shopping_app/app/core/global_widgets/cached_image.dart';
 import 'package:shopping_app/app/core/global_widgets/future_builder.dart';
@@ -16,7 +18,7 @@ import 'package:shopping_app/app/data/models/product_model.dart' as p;
 import 'package:shopping_app/app/modules/home/controllers/popular_products_controller.dart';
 import 'package:shopping_app/app/modules/home/views/favourite_view.dart';
 import 'package:shopping_app/app/modules/home/views/profile_view.dart';
-import 'package:velocity_x/velocity_x.dart';
+
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -32,7 +34,7 @@ class HomeView extends GetView<HomeController> {
             () => IndexedStack(
               index: controller.index,
               children: [
-                _HomeView(),
+                const _HomeView(),
                 FavouriteView(),
                 ProfileView(),
               ],
@@ -57,7 +59,7 @@ class _HomeView extends GetView<HomeController> {
           // _Heading(),
           if (controller.data?.banners.isNotEmpty ?? false) ...[
             verSliverSpacing16,
-            _Banners(),
+            const _Banners(),
             verSliverSpacing16,
           ],
           // _Categories(),
@@ -89,7 +91,7 @@ class _PopularProduct extends GetView<PopularProductsController> {
           return ProductCard(product: item.product);
         },
       ),
-      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
         maxCrossAxisExtent: productWidth,
         mainAxisSpacing: 10,
         mainAxisExtent: productHeight,
@@ -111,7 +113,7 @@ class _SubHeading extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          heading.text.semiBold.color(Color(0xff14284a)).size(18).make(),
+          heading.text.semiBold.color(const Color(0xff14284a)).size(18).make(),
           AppTextButton(
             onTap: onTap ?? () {},
             child: "See All".text.bold.make(),
@@ -272,14 +274,14 @@ class _Heading extends StatelessWidget {
               .text
               .bold
               .size(30)
-              .color(Color(0xff14284a))
+              .color(const Color(0xff14284a))
               .textStyle(GoogleFonts.varelaRound())
               .make(),
           verSpacing10,
           "Where Fashion Meets Your Soul"
               .text
               .size(17)
-              .color(Color(0xff14284a))
+              .color(const Color(0xff14284a))
               .make(),
         ],
       ),
@@ -297,9 +299,9 @@ class _AppBar extends StatelessWidget {
           IconButton(
             color: Vx.gray700,
             onPressed: () {},
-            icon: Icon(Icons.menu),
+            icon: const Icon(Icons.menu),
           ).box.roundedFull.color(Vx.gray500.withOpacity(0.1)).make(),
-          _CartIcon(),
+          const _CartIcon(),
         ],
       ).py16(),
     );
@@ -314,7 +316,7 @@ class _CartIcon extends GetView<HomeController> {
     return IconButton(
       splashRadius: 28,
       onPressed: controller.onCartTap,
-      icon: Icon(Icons.shopping_bag_outlined),
+      icon: const Icon(Icons.shopping_bag_outlined),
       color: Vx.gray700,
     ).box.roundedFull.color(Vx.gray500.withOpacity(0.1)).make();
   }
