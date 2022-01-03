@@ -11,8 +11,10 @@ class ProductController extends GetxController with ServicesMixin, RoutesMixin {
   late final instance = _getData();
   late final ProductModel product;
 
-  String? get productImage {}
-  List<String>? get images {}
+  String? get productImage => product.img?[1];
+  List<String>? get images {
+    return product.img?.sublist(1);
+  }
 
   String get id => product.id!;
 
@@ -67,20 +69,10 @@ class ProductController extends GetxController with ServicesMixin, RoutesMixin {
 
   CartModel createModel() {
     final color = optionsController.color;
-    // final colorPrice = colorOptions?[color]?.priceDifferce;
     final size = optionsController.size;
-    // final sizePrice = sizeOptions?[size];
-    // int price = product.price!;
-    // if (colorPrice != null) {
-    //   price += colorPrice;
-    // }
-    // if (sizePrice != null) {
-    //   price += sizePrice;
-    // }
     return CartModel(
       color: color,
       size: size,
-      // fullPrice: price,
       product: product,
     );
   }
