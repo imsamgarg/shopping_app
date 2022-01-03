@@ -15,6 +15,7 @@ class FiltersSheetController extends GetxController {
   late final minPrice = RxnDouble(filters.minPrice);
   late final maxPrice = RxnDouble(filters.maxPrice);
   late final sortBy = SortBy.popularity.obs;
+  late final showPopularity = true.obs;
 
   late final priceRange = RangeValues(filters.minPrice!, filters.maxPrice!).obs;
 
@@ -37,25 +38,45 @@ class FiltersSheetController extends GetxController {
     minPrice.value = value.start.round().toDouble();
     maxPrice.value = value.end.round().toDouble();
     priceRange.value = value;
+
+    changePopularityVisibility(value);
+    changeSorting(SortBy.priceLTH);
+  }
+
+  void changePopularityVisibility(RangeValues value) {
+    if (filters.minPrice == value.start) {
+      if (filters.maxPrice == value.end) {
+        showPopularity.value = true;
+        return;
+      }
+    }
+    showPopularity.value = false;
   }
 
   void onSaveFilterTap() {
+    populateFilters();
+
+    Get.back(result: filters);
+  }
+
+  void populateFilters() {
     if (filters.minPrice != minPrice.value) {
       filters.minPrice = minPrice.value;
+      filters.maxPrice = maxPrice.value;
     } else {
       filters.minPrice = null;
     }
 
     if (filters.maxPrice != maxPrice.value) {
       filters.maxPrice = maxPrice.value;
+      filters.minPrice = minPrice.value;
     } else {
       filters.maxPrice = null;
     }
 
     filters.color = color.value;
     filters.size = size.value;
-
-    Get.back(result: filters);
+    filters.sortBy = sortBy.value;
   }
 
   void onClearFilters() {
