@@ -57,7 +57,7 @@ class _Filters extends GetView<FiltersSheetController> {
         if (controller.colorList.isNotEmpty) ...colorWidgets,
         //sort By
         ...sortWidgets,
-        verSpacing20,
+        verSpacing28,
         AppTextButton(
           onTap: controller.onSaveFilterTap,
           child: ("Save Filter").text.size(16).bold.make(),
@@ -73,9 +73,9 @@ class _Filters extends GetView<FiltersSheetController> {
 
   List<Widget> widgetGroups(String heading, Widget child) {
     return [
-      verSpacing16,
+      verSpacing20,
       _subHeading(heading),
-      verSpacing8,
+      verSpacing16,
       child,
     ];
   }
