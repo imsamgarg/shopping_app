@@ -27,6 +27,8 @@ mixin RoutesMixin {
 
   void onOrderTap() => Get.toNamed(Routes.ORDERS);
 
+  void onCartTap() => Get.toNamed(Routes.CART);
+
   void onProductTap(ProductModel product) {
     Get.toNamed(Routes.PRODUCT, arguments: product);
   }
