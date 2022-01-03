@@ -33,10 +33,10 @@ class FilterController extends GetxController with ServicesMixin {
   }
 
   void onFilterTap() async {
-    filters ??= Filters(
-      minPrice: filterMap.minPrice?.toDouble(),
-      maxPrice: filterMap.maxPrice?.toDouble(),
-    );
+    filters ??= Filters();
+
+    filters!.minPrice = filterMap.minPrice?.toDouble();
+    filters!.maxPrice = filterMap.maxPrice?.toDouble();
 
     final result = await Get.bottomSheet(
       FilterBar(filters: filters!),
