@@ -42,7 +42,7 @@ class _Form extends StatelessWidget {
     this.index,
   }) : super(key: key);
 
-  final _stateList = {
+  static const _stateList = {
     "Andaman and Nicobar Islands",
     "Andhra Pradesh",
     "Arunachal Pradesh",
