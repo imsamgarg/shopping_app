@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 
 import 'package:shopping_app/app/modules/product/controllers/image_controller.dart';
+import 'package:shopping_app/app/modules/product/controllers/operations_controller.dart';
 import 'package:shopping_app/app/modules/product/controllers/options_controller.dart';
 import 'package:shopping_app/app/modules/product/controllers/share_controller.dart';
 
@@ -9,6 +10,9 @@ import '../controllers/product_controller.dart';
 class ProductBinding extends Bindings {
   @override
   void dependencies() {
+    Get.lazyPut<OperationsController>(
+      () => OperationsController(),
+    );
     Get.lazyPut<ProductImageController>(
       () => ProductImageController(),
     );

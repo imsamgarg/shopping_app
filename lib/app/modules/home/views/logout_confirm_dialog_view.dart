@@ -17,7 +17,7 @@ class LogoutConfirmDialog extends GetView<ProfileController> {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: const [
           Text(
             "Are You Sure Want To Logout?",
           ),

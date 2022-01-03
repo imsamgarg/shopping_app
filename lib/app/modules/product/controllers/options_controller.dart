@@ -18,9 +18,11 @@ class OptionsController extends GetxController {
 
   void changeColor(String? _color) {
     color = _color;
+    productController.updatePrice();
   }
 
   void changeSize(String? _size) {
     size = _size;
+    productController.updatePrice();
   }
 }

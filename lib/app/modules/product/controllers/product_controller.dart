@@ -27,6 +27,34 @@ class ProductController extends GetxController with ServicesMixin, RoutesMixin {
   String get name => product.name ?? "Error In Name";
   String get shareableLink => product.link ?? "";
 
+  late final _price = product.price.obs;
+  int? get totalPrice => _price.value;
+  set totalPrice(value) => _price.value = value;
+
+  void updatePrice() {
+    int price = product.price!;
+
+    final color = optionsController.color;
+    if (color != null) {
+      price += _getColorPrice(product, color);
+    }
+
+    final size = optionsController.size;
+    if (size != null) {
+      price += _getSizePrice(product, size);
+    }
+    totalPrice = price;
+  }
+
+  //* calculate price
+  int _getColorPrice(ProductModel product, String color) {
+    return product.color![color]!.priceDifferce!;
+  }
+
+  int _getSizePrice(ProductModel product, String size) {
+    return product.size![size]!;
+  }
+
   Future<bool> _getData() async {
     final argument = Get.arguments;
     if (argument is ProductModel) {

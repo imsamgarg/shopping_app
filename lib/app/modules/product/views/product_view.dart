@@ -2,11 +2,14 @@ import 'package:custom_utils/spacing_utils.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shopping_app/app/core/global_widgets/buttons.dart';
 import 'package:shopping_app/app/core/global_widgets/cached_image.dart';
 import 'package:shopping_app/app/core/global_widgets/future_builder.dart';
 import 'package:shopping_app/app/core/global_widgets/widgets.dart';
+import 'package:shopping_app/app/core/theme/color_theme.dart';
 import 'package:shopping_app/app/core/theme/sizing_theme.dart';
+import 'package:shopping_app/app/core/values/strings.dart';
 import 'package:velocity_x/velocity_x.dart';
 import '../../../core/utils/extensions.dart';
 import '../controllers/product_controller.dart';
@@ -19,7 +22,7 @@ class ProductView extends GetView<ProductController> {
       builder: (snapshot) {
         return Scaffold(
           bottomNavigationBar: Container(
-            height: 70,
+            height: 80,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -32,7 +35,7 @@ class ProductView extends GetView<ProductController> {
                 horSpacing16,
                 _AddToCart(),
               ],
-            ).px16(),
+            ).px16().paddingOnly(top: 12),
           ),
           body: CustomScrollView(
             slivers: [
@@ -97,23 +100,41 @@ class _Header extends GetView<ProductController> {
             top: Radius.circular(Sizing.radiusXL),
           ),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Column(
           children: [
-            controller.name.trim().trimText(15).text.bold.size(24).make(),
-            // _Price(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                controller.name
+                    .trim()
+                    .trimText(15)
+                    .text
+                    .textStyle(GoogleFonts.varelaRound())
+                    .bold
+                    .size(26)
+                    .color(ColorTheme.headerColor)
+                    .make(),
+                _Price(),
+              ],
+            ).p32(),
           ],
-        ).p20(),
+        ),
       ),
     );
   }
 }
 
-// class _Price extends GetView<ProductController> {
-//   const _Price({Key? key}) : super(key: key);
+class _Price extends GetView<ProductController> {
+  const _Price({Key? key}) : super(key: key);
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return controller.price.text.make();
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return "$rsSign ${controller.totalPrice}"
+        .text
+        .bold
+        .textStyle(GoogleFonts.varelaRound())
+        .color(ColorTheme.headerColor.withOpacity(0.9))
+        .size(24)
+        .make();
+  }
+}
