@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:custom_utils/spacing_utils.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shopping_app/app/modules/product/controllers/options_controller.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import 'package:shopping_app/app/core/global_widgets/buttons.dart';
@@ -87,11 +88,8 @@ class _AddToCart extends GetView<ProductController> {
   }
 }
 
-class _Header extends GetView<ProductController> {
-  const _Header({
-    Key? key,
-  }) : super(key: key);
-
+class _Header extends StatelessWidget {
+  const _Header();
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
@@ -103,26 +101,103 @@ class _Header extends GetView<ProductController> {
           ),
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                controller.name
-                    .trim()
-                    .trimText(15)
-                    .text
-                    .textStyle(GoogleFonts.varelaRound())
-                    .bold
-                    .size(26)
-                    .color(ColorTheme.headerColor)
-                    .make(),
-                const _Price(),
+              children: const [
+                _ProductName(),
+                _Price(),
               ],
-            ).p32(),
+            ),
+            verSpacing32,
+            const _Quantity(),
           ],
-        ),
+        ).p32(),
       ),
     );
+  }
+}
+
+const _kButtonWidth = 50.0;
+const _kButtonHeight = 40.0;
+
+class _Quantity extends GetView<OptionsController> {
+  const _Quantity({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      shape: const RoundedRectangleBorder(
+        borderRadius: Sizing.borderRadiusS,
+        side: BorderSide(
+          width: 0.3,
+          color: Colors.grey,
+        ),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _StepperButton(
+            icon: Icons.remove,
+            onTap: controller.decrementQuantity,
+          ),
+          horSpacing10,
+          Obx(
+            () {
+              return "${controller.quantity}"
+                  .text
+                  .bold
+                  .size(22)
+                  .textStyle(GoogleFonts.varelaRound())
+                  .make();
+            },
+          ),
+          horSpacing10,
+          _StepperButton(
+            icon: Icons.add,
+            onTap: controller.incrementQuantity,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _StepperButton extends StatelessWidget {
+  final IconData icon;
+  final VoidCallback onTap;
+  const _StepperButton({
+    Key? key,
+    required this.icon,
+    required this.onTap,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialButton(
+      padding: EdgeInsets.zero,
+      shape: Sizing.cardShape,
+      onPressed: onTap,
+      child: Icon(icon),
+    ).box.size(_kButtonWidth, _kButtonHeight).make();
+  }
+}
+
+class _ProductName extends GetView<ProductController> {
+  const _ProductName({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return controller.name
+        .trim()
+        .trimText(15)
+        .text
+        .textStyle(GoogleFonts.varelaRound())
+        .bold
+        .size(30)
+        .color(ColorTheme.headerColor)
+        .make();
   }
 }
 
