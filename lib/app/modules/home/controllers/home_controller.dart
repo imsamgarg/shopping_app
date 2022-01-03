@@ -31,8 +31,6 @@ class HomeController extends GetxController with ServicesMixin, RoutesMixin {
     return true;
   }
 
-  void onCartTap() {}
-
   List<String?> _getSubCatList() {
     final list = <String?>[];
     for (final cat in data!.categories) {
