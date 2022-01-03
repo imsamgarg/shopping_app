@@ -1,4 +1,15 @@
 include: package:lints/recommended.yaml
+
 linter:
   rules:
-    
+    - prefer_final_in_for_each
+    - prefer_const_constructors
+    - prefer_const_declarations
+    - prefer_const_literals_to_create_immutables
+    - camel_case_types
+
+analyzer:
+  exclude:
+    - '/home/sam/flutter_projects/shopping_app/lib/app/routes/*.dart'
+  errors:
+    camel_case_types: error
