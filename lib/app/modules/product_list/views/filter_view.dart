@@ -122,8 +122,15 @@ class _SortGroup extends GetView<FiltersSheetController> {
     return Obx(() {
       return Row(
         children: [
-          if (controller.showPopularity.value)
-            SortByChip(SortBy.popularity, "Popularity"),
+          AnimatedSwitcher(
+            duration: const Duration(milliseconds: 200),
+            child: controller.showPopularity.value
+                ? SortByChip(SortBy.popularity, "Popularity")
+                : const SizedBox.shrink(),
+            transitionBuilder: (child, animation) {
+              return ScaleTransition(scale: animation, child: child);
+            },
+          ),
           if (controller.showPopularity.value) horSpacing10,
           SortByChip(SortBy.priceLTH, "Price Low To High"),
           horSpacing10,
