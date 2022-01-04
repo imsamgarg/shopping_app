@@ -1,3 +1,4 @@
+import 'package:custom_utils/log_utils.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -46,8 +47,8 @@ class ProductImageController extends GetxController {
   }
 
   void onRightArrowPress() {
-    if (currentImage == imageLength - 1 && images[imageLength - 1] != null) {
-      return;
+    if (currentImage == imageLength - 2) {
+      if (images[imageLength - 1] == null) return;
     }
     int index = currentImage + 1;
 
