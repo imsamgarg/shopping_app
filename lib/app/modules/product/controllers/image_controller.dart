@@ -1,4 +1,3 @@
-import 'package:custom_utils/log_utils.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';

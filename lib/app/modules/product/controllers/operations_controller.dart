@@ -11,8 +11,13 @@ class ProductOpController extends GetxController
   late final optionsController = Get.find<OptionsController>();
   late final productController = Get.find<ProductController>();
 
+  late final product = productController.product;
+
   bool isAddToCartLoading = false;
   final String addToCartButtonId = "add_to_cart";
+
+  late bool isProductLiked = userService.isProductFavourite(product.id!);
+  final String isProductLikedId = "isProductLikedId";
 
   void onAddToCart() async {
     final cartModel = createModel();
@@ -45,5 +50,10 @@ class ProductOpController extends GetxController
       size: size,
       product: productController.product,
     );
+  }
+
+  void onLikeTap() async {
+    isProductLiked = await userService.toggleFavourite(product.id!);
+    update([isProductLikedId]);
   }
 }

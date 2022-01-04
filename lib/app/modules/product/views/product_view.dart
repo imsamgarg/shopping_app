@@ -7,6 +7,7 @@ import 'package:shopping_app/app/core/global_widgets/choice_chip.dart';
 import 'package:shopping_app/app/modules/product/controllers/image_controller.dart';
 import 'package:shopping_app/app/modules/product/controllers/operations_controller.dart';
 import 'package:shopping_app/app/modules/product/controllers/options_controller.dart';
+import 'package:shopping_app/app/modules/product/controllers/share_controller.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import 'package:shopping_app/app/core/global_widgets/buttons.dart';
@@ -45,6 +46,8 @@ class ProductView extends GetView<ProductController> {
             body: CustomScrollView(
               slivers: [
                 SliverAppBar(
+                  automaticallyImplyLeading: false,
+                  leading: const _ShareProduct(),
                   expandedHeight: 400,
                   actions: const [
                     _LikeProduct(),
@@ -57,21 +60,46 @@ class ProductView extends GetView<ProductController> {
                 const _Header(),
                 const _SelectSize(),
                 const _SelectColor(),
-                const _SelectColor(),
-                const _SelectColor(),
-                const _SelectColor(),
-                const _SelectColor(),
-                const _SelectColor(),
-                const _SelectColor(),
-                const _SelectColor(),
-                const _SelectColor(),
-                const _SelectColor(),
-                const _SelectColor(),
               ],
             ),
           ),
         );
       },
+    );
+  }
+}
+
+class _ShareProduct extends GetView<ShareController> {
+  const _ShareProduct();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8),
+      child: MaterialButton(
+        color: Vx.white,
+        padding: EdgeInsets.zero,
+        shape: const CircleBorder(),
+        onPressed: controller.onShareTap,
+        child: GetBuilder<ShareController>(
+          init: controller,
+          builder: (_) {
+            if (controller.isButtonLoading) {
+              return const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  color: Vx.blue500,
+                ),
+              );
+            }
+            return const Icon(
+              Icons.share_rounded,
+              color: Vx.blue500,
+            );
+          },
+        ),
+      ),
     );
   }
 }
@@ -108,10 +136,28 @@ class _LikeProduct extends GetView<ProductOpController> {
           color: Vx.white,
           padding: EdgeInsets.zero,
           shape: const CircleBorder(),
-          onPressed: () {},
-          child: const Icon(
-            Icons.favorite_rounded,
-            color: Vx.red500,
+          onPressed: controller.onLikeTap,
+          child: GetBuilder<ProductOpController>(
+            init: controller,
+            id: controller.isProductLikedId,
+            builder: (_) {
+              return AnimatedSwitcher(
+                duration: const Duration(milliseconds: 400),
+                reverseDuration: const Duration(milliseconds: 400),
+                child: Icon(
+                  controller.isProductLiked
+                      ? Icons.favorite_rounded
+                      : Icons.favorite_outline_rounded,
+                  color: controller.isProductLiked ? Vx.red500 : null,
+                ),
+                transitionBuilder: (child, animation) {
+                  return ScaleTransition(
+                    scale: animation,
+                    child: child,
+                  );
+                },
+              );
+            },
           ),
         ),
       ),
