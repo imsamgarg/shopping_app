@@ -11,6 +11,7 @@ import 'package:shopping_app/app/modules/auth/views/phone_auth_view.dart';
 import 'package:shopping_app/app/modules/auth/views/register_view.dart';
 import 'package:shopping_app/app/modules/home/views/categories_view.dart';
 import 'package:shopping_app/app/modules/home/views/sub_category_view.dart';
+import 'package:shopping_app/app/modules/product/views/image_view.dart';
 import 'package:shopping_app/app/routes/app_pages.dart';
 
 mixin RoutesMixin {
@@ -23,6 +24,8 @@ mixin RoutesMixin {
   }
 
   void onAddressListTap() => Get.toNamed(Routes.ADDRESS);
+
+  void onImageTap(String image) => Get.to(() => ImageView(image: image));
 
   void onAddAddressTap() => Get.to(() => const AddressView());
 
