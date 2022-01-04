@@ -57,7 +57,7 @@ class ProductModel {
     this.color,
   });
 
-  ProductModel.fromJson(Map<String, dynamic> json) {
+  ProductModel.fromJson(dynamic json) {
     id = json['id'];
     name = json['name'];
     category = json['category'];
@@ -152,7 +152,7 @@ class Color {
 
   Color({this.priceDifferce, this.img});
 
-  Color.fromJson(Map<String, dynamic> json) {
+  Color.fromJson(dynamic json) {
     priceDifferce = json['priceDifferce'];
     img = json['img'];
   }
