@@ -10,6 +10,8 @@ class ProductImageController extends GetxController {
   late final imageLength = images.length;
   int currentImage = 0;
 
+  String lastImageWidgetId = "lastImageWidgetId";
+
   List<String?> get images {
     return [...productController.images!, image];
   }
@@ -54,6 +56,8 @@ class ProductImageController extends GetxController {
 
   void showLastImage() {
     int index = imageLength - 1;
+    if (index == currentImage) return updateImageUrl();
+
     return animateToPage(index);
   }
 
@@ -69,5 +73,9 @@ class ProductImageController extends GetxController {
 
   void updateCurrentImageIndex(int index) {
     currentImage = index;
+  }
+
+  void updateImageUrl() {
+    update([lastImageWidgetId]);
   }
 }
