@@ -1,4 +1,3 @@
-import 'package:custom_utils/log_utils.dart';
 import 'package:flutter/material.dart';
 
 import 'package:custom_utils/spacing_utils.dart';
@@ -36,13 +35,8 @@ class ProductView extends GetView<ProductController> {
               height: 80,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: AppOutlinedButton(
-                      onTap: controller.onBuyNow,
-                      child: ("Buy Now").text.size(16).bold.make(),
-                    ),
-                  ),
+                children: const [
+                  _BuyNow(),
                   horSpacing16,
                   _AddToCart(),
                 ],
@@ -82,7 +76,23 @@ class ProductView extends GetView<ProductController> {
   }
 }
 
-class _LikeProduct extends GetView<OperationsController> {
+class _BuyNow extends GetView<ProductOpController> {
+  const _BuyNow({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: AppOutlinedButton(
+        onTap: controller.onBuyNow,
+        child: ("Buy Now").text.size(16).bold.make(),
+      ),
+    );
+  }
+}
+
+class _LikeProduct extends GetView<ProductOpController> {
   const _LikeProduct({
     Key? key,
   }) : super(key: key);
@@ -279,7 +289,9 @@ class _CustomPadding extends StatelessWidget {
   }
 }
 
-class _AddToCart extends GetView<ProductController> {
+class _AddToCart extends GetView<ProductOpController> {
+  const _AddToCart();
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder(

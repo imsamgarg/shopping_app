@@ -1,11 +1,49 @@
 import 'package:get/get.dart';
+import 'package:shopping_app/app/core/utils/mixins/routes_mixin.dart';
+import 'package:shopping_app/app/core/utils/mixins/services_mixin.dart';
+import 'package:shopping_app/app/data/models/cart_model.dart';
+import 'package:shopping_app/app/modules/product/controllers/product_controller.dart';
 
-class OperationsController extends GetxController {
-  //TODO: Implement OperationsController
+import 'options_controller.dart';
 
-  final count = 0.obs;
+class ProductOpController extends GetxController
+    with ServicesMixin, RoutesMixin {
+  late final optionsController = Get.find<OptionsController>();
+  late final productController = Get.find<ProductController>();
 
-  @override
-  void onClose() {}
-  void increment() => count.value++;
+  bool isAddToCartLoading = false;
+  final String addToCartButtonId = "add_to_cart";
+
+  void onAddToCart() async {
+    final cartModel = createModel();
+    toggleCartButtonLoading(true);
+
+    await cartService.addToCart(cartModel);
+
+    toggleCartButtonLoading(false);
+  }
+
+  void toggleCartButtonLoading(bool value) {
+    isAddToCartLoading = value;
+    update([addToCartButtonId]);
+  }
+
+  //* Done!!
+  void onBuyNow() {
+    final cartModel = createModel();
+
+    final checkoutModel = cartService.createCheckoutModel([cartModel]);
+
+    onCheckoutTap(checkoutModel);
+  }
+
+  CartModel createModel() {
+    final color = optionsController.color;
+    final size = optionsController.size;
+    return CartModel(
+      color: color,
+      size: size,
+      product: productController.product,
+    );
+  }
 }
