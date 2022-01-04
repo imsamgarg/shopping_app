@@ -151,10 +151,11 @@ class _SelectColor extends GetView<OptionsController> {
 class _CustomPadding extends StatelessWidget {
   const _CustomPadding({Key? key, required this.child}) : super(key: key);
   final Widget child;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 10),
       child: child,
     );
   }
@@ -200,8 +201,9 @@ class _Header extends StatelessWidget {
                 _Price(),
               ],
             ),
-            verSpacing32,
+            verSpacing20,
             const _Quantity(),
+            verSpacing12,
           ],
         ),
       ),
@@ -209,8 +211,8 @@ class _Header extends StatelessWidget {
   }
 }
 
-const _kButtonWidth = 50.0;
-const _kButtonHeight = 40.0;
+const _kButtonWidth = 32.0;
+const _kButtonHeight = 32.0;
 
 class _Quantity extends GetView<OptionsController> {
   const _Quantity({Key? key}) : super(key: key);
@@ -219,11 +221,11 @@ class _Quantity extends GetView<OptionsController> {
   Widget build(BuildContext context) {
     return Material(
       color: Colors.transparent,
-      shape: const RoundedRectangleBorder(
+      shape: RoundedRectangleBorder(
         borderRadius: Sizing.borderRadiusS,
         side: BorderSide(
-          width: 0.3,
-          color: Colors.grey,
+          width: 1,
+          color: Colors.grey.shade200,
         ),
       ),
       child: Row(
@@ -236,7 +238,7 @@ class _Quantity extends GetView<OptionsController> {
           horSpacing10,
           Obx(
             () {
-              return "${controller.quantity}".text.bold.size(22).make();
+              return "${controller.quantity}".text.bold.size(18).make();
             },
           ),
           horSpacing10,
@@ -265,7 +267,7 @@ class _StepperButton extends StatelessWidget {
       padding: EdgeInsets.zero,
       shape: Sizing.cardShape,
       onPressed: onTap,
-      child: Icon(icon),
+      child: Icon(icon, size: 20),
     ).box.size(_kButtonWidth, _kButtonHeight).make();
   }
 }
@@ -279,8 +281,9 @@ class _ProductName extends GetView<ProductController> {
         .trim()
         .trimText(15)
         .text
-        .bold
-        .size(30)
+        .extraBold
+        .textStyle(GoogleFonts.nunitoSans())
+        .size(26)
         .color(ColorTheme.headerColor)
         .make();
   }
@@ -291,13 +294,21 @@ class _Price extends GetView<ProductController> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      return "$rsSign ${controller.totalPrice}"
-          .text
-          .bold
-          .color(ColorTheme.headerColor.withOpacity(0.9))
-          .size(24)
-          .make();
-    });
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.baseline,
+      textBaseline: TextBaseline.alphabetic,
+      children: [
+        rsSign.text.size(22).make(),
+        horSpacing4,
+        Obx(() {
+          return "${controller.totalPrice}"
+              .text
+              .bold
+              .color(ColorTheme.headerColor.withOpacity(0.9))
+              .size(32)
+              .make();
+        }),
+      ],
+    );
   }
 }
