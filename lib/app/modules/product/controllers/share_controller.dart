@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:shopping_app/app/core/utils/helper.dart';
 
 import 'package:shopping_app/app/core/utils/mixins/services_mixin.dart';
 import 'package:shopping_app/app/core/utils/mixins/share_mixin.dart';
@@ -28,6 +29,7 @@ class ShareController extends GetxController with ServicesMixin, ShareMixin {
       }
       //
     } catch (e) {
+      errorSnackbar("Error in Sharing Link");
       rethrow;
     } finally {
       toggleButtonLoading(false);
@@ -35,6 +37,9 @@ class ShareController extends GetxController with ServicesMixin, ShareMixin {
   }
 
   void toggleButtonLoading(bool value) {
+    isButtonLoading = value;
     update();
   }
+
+  void onShareTap() async => shareProduct();
 }
