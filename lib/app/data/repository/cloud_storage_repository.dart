@@ -31,7 +31,7 @@ class FirebaseStorageRepository extends CloudStorageInterface {
 
   @override
   Future<Uint8List?> downloadFile(String path) async {
-    final ref = _rootRef.child(path);
+    final ref = _storage.refFromURL(path);
     return ref.getData();
   }
 }
