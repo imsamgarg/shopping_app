@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:custom_utils/spacing_utils.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shopping_app/app/core/global_widgets/choice_chip.dart';
 import 'package:shopping_app/app/modules/product/controllers/options_controller.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -23,43 +24,138 @@ class ProductView extends GetView<ProductController> {
     return AppFutureBuilder(
       future: controller.instance,
       builder: (snapshot) {
-        return Scaffold(
-          bottomNavigationBar: Container(
-            height: 80,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: AppOutlinedButton(
-                    onTap: controller.onBuyNow,
-                    child: ("Buy Now").text.size(16).bold.make(),
-                  ),
-                ),
-                horSpacing16,
-                _AddToCart(),
-              ],
-            ).px16().paddingOnly(top: 12),
+        return Theme(
+          data: Theme.of(context).copyWith(
+            textTheme: GoogleFonts.varelaRoundTextTheme(),
           ),
-          body: CustomScrollView(
-            slivers: [
-              SliverAppBar(
-                expandedHeight: 400,
-                flexibleSpace: FlexibleSpaceBar(
-                  background: PageView.builder(
-                    itemBuilder: (context, index) {
-                      return CachedImage(
-                        url: controller.images![index],
-                      );
-                    },
-                    itemCount: controller.images!.length,
+          child: Scaffold(
+            bottomNavigationBar: Container(
+              height: 80,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: AppOutlinedButton(
+                      onTap: controller.onBuyNow,
+                      child: ("Buy Now").text.size(16).bold.make(),
+                    ),
+                  ),
+                  horSpacing16,
+                  _AddToCart(),
+                ],
+              ).px16().paddingOnly(top: 12),
+            ),
+            body: CustomScrollView(
+              slivers: [
+                SliverAppBar(
+                  expandedHeight: 400,
+                  actions: const [
+                    Material(
+                      color: Vx.white,
+                      shape: CircleBorder(),
+                      child: Icon(
+                        Icons.favorite_rounded,
+                        color: Vx.red500,
+                      ),
+                    ),
+                  ],
+                  flexibleSpace: FlexibleSpaceBar(
+                    background: PageView.builder(
+                      itemBuilder: (context, index) {
+                        return CachedImage(
+                          borderRadius: BorderRadius.zero,
+                          url: controller.images![index],
+                        );
+                      },
+                      itemCount: controller.images!.length,
+                    ),
                   ),
                 ),
-              ),
-              const _Header(),
-            ],
+                verSliverSpacing12,
+                const _Header(),
+                const _SelectSize(),
+                const _SelectColor(),
+              ],
+            ),
           ),
         );
       },
+    );
+  }
+}
+
+class _SelectSize extends GetView<OptionsController> {
+  const _SelectSize({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: _CustomPadding(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            "Select Size".text.bold.size(16).make(),
+            verSpacing12,
+            Wrap(
+              spacing: 10,
+              children: [
+                for (final size in controller.sizeOptions!)
+                  Obx(
+                    () => CustomChip(
+                      isSelected: controller.size == size,
+                      label: size,
+                      onSelected: (_) => controller.changeSize(size),
+                    ),
+                  ),
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _SelectColor extends GetView<OptionsController> {
+  const _SelectColor({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: _CustomPadding(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            "Select Color".text.bold.size(16).make(),
+            verSpacing12,
+            Wrap(
+              spacing: 10,
+              children: [
+                for (final color in controller.colorOptions!)
+                  Obx(
+                    () => CustomChip(
+                      isSelected: controller.color == color,
+                      label: color,
+                      onSelected: (_) => controller.changeColor(color),
+                    ),
+                  ),
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _CustomPadding extends StatelessWidget {
+  const _CustomPadding({Key? key, required this.child}) : super(key: key);
+  final Widget child;
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 10),
+      child: child,
     );
   }
 }
@@ -93,13 +189,7 @@ class _Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.grey.shade50,
-          borderRadius: const BorderRadius.vertical(
-            top: Radius.circular(Sizing.radiusXL),
-          ),
-        ),
+      child: _CustomPadding(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -113,7 +203,7 @@ class _Header extends StatelessWidget {
             verSpacing32,
             const _Quantity(),
           ],
-        ).p32(),
+        ),
       ),
     );
   }
@@ -128,6 +218,7 @@ class _Quantity extends GetView<OptionsController> {
   @override
   Widget build(BuildContext context) {
     return Material(
+      color: Colors.transparent,
       shape: const RoundedRectangleBorder(
         borderRadius: Sizing.borderRadiusS,
         side: BorderSide(
@@ -145,12 +236,7 @@ class _Quantity extends GetView<OptionsController> {
           horSpacing10,
           Obx(
             () {
-              return "${controller.quantity}"
-                  .text
-                  .bold
-                  .size(22)
-                  .textStyle(GoogleFonts.varelaRound())
-                  .make();
+              return "${controller.quantity}".text.bold.size(22).make();
             },
           ),
           horSpacing10,
@@ -193,7 +279,6 @@ class _ProductName extends GetView<ProductController> {
         .trim()
         .trimText(15)
         .text
-        .textStyle(GoogleFonts.varelaRound())
         .bold
         .size(30)
         .color(ColorTheme.headerColor)
@@ -206,12 +291,13 @@ class _Price extends GetView<ProductController> {
 
   @override
   Widget build(BuildContext context) {
-    return "$rsSign ${controller.totalPrice}"
-        .text
-        .bold
-        .textStyle(GoogleFonts.varelaRound())
-        .color(ColorTheme.headerColor.withOpacity(0.9))
-        .size(24)
-        .make();
+    return Obx(() {
+      return "$rsSign ${controller.totalPrice}"
+          .text
+          .bold
+          .color(ColorTheme.headerColor.withOpacity(0.9))
+          .size(24)
+          .make();
+    });
   }
 }
