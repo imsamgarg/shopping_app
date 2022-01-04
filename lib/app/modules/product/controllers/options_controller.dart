@@ -5,8 +5,11 @@ import 'product_controller.dart';
 class OptionsController extends GetxController {
   late final productController = Get.find<ProductController>();
 
-  late final colorOptions = productController.colorOptions;
-  late final sizeOptions = productController.sizeOptions;
+  late final _colorOptions = productController.colorOptions;
+  late final _sizeOptions = productController.sizeOptions;
+
+  late final colorOptions = _colorOptions?.entries.map((e) => e.key).toList();
+  late final sizeOptions = _sizeOptions?.entries.map((e) => e.key).toList();
 
   final _color = RxnString();
   get color => _color.value;
