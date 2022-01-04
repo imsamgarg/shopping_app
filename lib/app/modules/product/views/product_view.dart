@@ -1,9 +1,12 @@
+import 'package:custom_utils/log_utils.dart';
 import 'package:flutter/material.dart';
 
 import 'package:custom_utils/spacing_utils.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shopping_app/app/core/global_widgets/choice_chip.dart';
+import 'package:shopping_app/app/modules/product/controllers/image_controller.dart';
+import 'package:shopping_app/app/modules/product/controllers/operations_controller.dart';
 import 'package:shopping_app/app/modules/product/controllers/options_controller.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -50,36 +53,151 @@ class ProductView extends GetView<ProductController> {
                 SliverAppBar(
                   expandedHeight: 400,
                   actions: const [
-                    Material(
-                      color: Vx.white,
-                      shape: CircleBorder(),
-                      child: Icon(
-                        Icons.favorite_rounded,
-                        color: Vx.red500,
-                      ),
-                    ),
+                    _LikeProduct(),
                   ],
                   flexibleSpace: FlexibleSpaceBar(
-                    background: PageView.builder(
-                      itemBuilder: (context, index) {
-                        return CachedImage(
-                          borderRadius: BorderRadius.zero,
-                          url: controller.images![index],
-                        );
-                      },
-                      itemCount: controller.images!.length,
-                    ),
+                    background: _ImageCorousal(),
                   ),
                 ),
                 verSliverSpacing12,
                 const _Header(),
                 const _SelectSize(),
                 const _SelectColor(),
+                const _SelectColor(),
+                const _SelectColor(),
+                const _SelectColor(),
+                const _SelectColor(),
+                const _SelectColor(),
+                const _SelectColor(),
+                const _SelectColor(),
+                const _SelectColor(),
+                const _SelectColor(),
+                const _SelectColor(),
               ],
             ),
           ),
         );
       },
+    );
+  }
+}
+
+class _LikeProduct extends GetView<OperationsController> {
+  const _LikeProduct({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 8.0),
+      child: SizedBox(
+        height: 40,
+        width: 40,
+        child: MaterialButton(
+          color: Vx.white,
+          padding: EdgeInsets.zero,
+          shape: const CircleBorder(),
+          onPressed: () {},
+          child: const Icon(
+            Icons.favorite_rounded,
+            color: Vx.red500,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ImageCorousal extends GetView<ProductImageController> {
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        _ImagesView(),
+        _SwipeButton(
+          alignment: Alignment.centerLeft,
+          icon: Icons.keyboard_arrow_left_rounded,
+          onTap: controller.onLeftArrowPress,
+          padding: const EdgeInsets.only(left: 8),
+        ),
+        _SwipeButton(
+          alignment: Alignment.centerRight,
+          icon: Icons.keyboard_arrow_right_rounded,
+          onTap: controller.onRightArrowPress,
+          padding: const EdgeInsets.only(right: 8),
+        ),
+      ],
+    );
+  }
+}
+
+class _ImagesView extends GetView<ProductImageController> {
+  @override
+  Widget build(BuildContext context) {
+    return PageView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+      controller: controller.pageController,
+      itemBuilder: (context, index) {
+        final child = CachedImage(
+          borderRadius: BorderRadius.zero,
+          url: controller.images[index]!,
+        );
+
+        if (index != controller.imageLength - 1) return child;
+
+        return GetBuilder<ProductImageController>(
+          init: controller,
+          id: controller.lastImageWidgetId,
+          builder: (_) {
+            return CachedImage(
+              borderRadius: BorderRadius.zero,
+              url: controller.images[index]!,
+            );
+          },
+        );
+      },
+      itemCount: controller.imageLength,
+    );
+  }
+}
+
+class _SwipeButton extends StatelessWidget {
+  final Alignment alignment;
+  final EdgeInsets padding;
+  final IconData icon;
+  final VoidCallback onTap;
+
+  const _SwipeButton({
+    Key? key,
+    required this.alignment,
+    required this.padding,
+    required this.icon,
+    required this.onTap,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: alignment,
+      child: Padding(
+        padding: padding,
+        child: SizedBox(
+          width: 40,
+          height: 40,
+          child: MaterialButton(
+            padding: EdgeInsets.zero,
+            // color: Colors.black.withOpacity(0.1),
+            shape: const CircleBorder(),
+            onPressed: onTap,
+            child: Icon(
+              icon,
+              size: 30,
+              color: Vx.white,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
