@@ -22,7 +22,7 @@ class DynamicLink {
 
   DynamicLink.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    type = json['linkType'];
+    type = json['type'];
     category = json['category'];
     subCategory = json['subCategory'];
     if (type == null) {
