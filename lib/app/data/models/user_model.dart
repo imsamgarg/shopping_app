@@ -11,14 +11,14 @@ class UserModel {
   UserModel({required this.favourites, required this.cartItems, this.address});
 
   UserModel.fromJson(Map<String, dynamic> json) {
-    json['cart'] != null
-        ? cartItems = (json['cart'] as Map).map(
+    cartItems = json['cart'] != null
+        ? (json['cart'] as Map).map(
             (key, value) => MapEntry(key as String, CartModel.fromJson(value)),
           )
         : {};
 
-    json['favourite'] != null
-        ? favourites = (json['favourite'] as Map).map(
+    favourites = json['favourite'] != null
+        ? (json['favourite'] as Map).map(
             (key, value) => MapEntry(
               key as String,
               DateTime.fromMillisecondsSinceEpoch(value),
