@@ -45,10 +45,11 @@ class DynamicLinkService extends GetxService
   }
 
   bool _shouldCheckForLink() {
-    return false;
+    //TODO: implement krna eh
+    return true;
   }
 
-  void _handleLink() => _instance.onLink.listen(_extractLink);
+  void _handleLink() => _instance.onLink.first.then(_extractLink);
 
   Future<dynamic> _extractLink(PendingDynamicLinkData? linkData) async {
     if (!_shouldCheckForLink()) return;
@@ -62,25 +63,4 @@ class DynamicLinkService extends GetxService
   void handleDynamicLink() {
     handleLink(link);
   }
-
-  // void handleLink() {
-  //   if (link == null) return;
-  //   final id = link?.id;
-  //   switch (link?.linkType) {
-  //     case DynamicLinkType.product:
-  //       onProductTapWithId(id);
-  //       break;
-  //     case DynamicLinkType.subCategory:
-  //       onSubCategoryTap(id);
-  //       break;
-  //     case DynamicLinkType.order:
-  //       //Hje Implement ni Kita
-  //       break;
-  //     case DynamicLinkType.offer:
-  //       //Hje Implenent ni Kita.
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  // }
 }
