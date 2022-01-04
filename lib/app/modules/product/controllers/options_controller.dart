@@ -1,9 +1,11 @@
 import 'package:get/get.dart';
+import 'package:shopping_app/app/modules/product/controllers/image_controller.dart';
 
 import 'product_controller.dart';
 
 class OptionsController extends GetxController {
   late final productController = Get.find<ProductController>();
+  late final imageController = Get.find<ProductImageController>();
 
   late final _colorOptions = productController.colorOptions;
   late final _sizeOptions = productController.sizeOptions;
@@ -40,6 +42,11 @@ class OptionsController extends GetxController {
   void changeColor(String? _color) {
     color = _color;
     productController.updatePrice();
+
+    final image = _colorOptions?[color]?.img;
+    if (image != null) {
+      imageController.setSecondaryImage(image);
+    }
   }
 
   void changeSize(String? _size) {
