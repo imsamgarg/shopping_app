@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:custom_utils/spacing_utils.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shopping_app/app/core/global_widgets/choice_chip.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import 'package:shopping_app/app/core/global_widgets/buttons.dart';
 import 'package:shopping_app/app/core/theme/color_theme.dart';
 import 'package:shopping_app/app/core/theme/sizing_theme.dart';
-import 'package:shopping_app/app/core/utils/helper.dart';
 import 'package:shopping_app/app/core/values/strings.dart';
 import 'package:shopping_app/app/core/values/values.dart';
 import 'package:shopping_app/app/modules/product_list/controllers/filter_controller.dart';
@@ -209,44 +209,6 @@ class _ColorGroup extends GetView<FiltersSheetController> {
             ),
           )
       ],
-    );
-  }
-}
-
-class CustomChip extends StatelessWidget {
-  final void Function(bool)? onSelected;
-
-  final bool isSelected;
-
-  final String label;
-
-  CustomChip({
-    Key? key,
-    required this.isSelected,
-    required this.label,
-    this.onSelected,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ChoiceChip(
-      label: Text(label),
-      padding: const EdgeInsets.all(8),
-      labelStyle: TextStyle(
-        fontSize: 18,
-        color: MaterialStateColor.resolveWith(
-          (state) {
-            if (state.contains(MaterialState.selected)) {
-              return Vx.white;
-            } else {
-              return Vx.black;
-            }
-          },
-        ),
-      ),
-      selectedColor: primaryColor(context),
-      selected: isSelected,
-      onSelected: onSelected,
     );
   }
 }
