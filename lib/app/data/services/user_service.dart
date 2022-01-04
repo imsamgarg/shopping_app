@@ -103,17 +103,22 @@ mixin _Favourite implements _Parent {
   }
 
   Future<void> editFavourites(String id, bool save) async {
+    final time = DateTime.now();
+
     if (save) {
-      user.favourites.putIfAbsent(id, () => DateTime.now());
+      user.favourites.putIfAbsent(id, () => time);
     } else {
       user.favourites.remove(id);
     }
+
+    final data = user.favourites.entries.map((e) {
+      return MapEntry(e.key, e.value.millisecondsSinceEpoch);
+    });
+
     await _dbRepo.updateFirebaseDocument(
       Db.usersCol,
       uid,
-      data: {
-        Db.favouriteField: user.favourites.toString(),
-      },
+      data: {Db.favouriteField: data},
     );
   }
 
