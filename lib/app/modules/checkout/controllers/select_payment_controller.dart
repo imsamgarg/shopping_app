@@ -12,7 +12,7 @@ class SelectPaymentMethodController extends GetxController with ServicesMixin {
 
   late final price = checkoutController.totalPrice;
 
-  late final configData = configService.data!.config;
+  late final configData = configService.data!.deliveryConfig;
   late final isCodAvailable = configData?.isCodAvailable ?? false;
   late final isRazorPayAvailable = configData?.isRazorPayAvailable ?? false;
 

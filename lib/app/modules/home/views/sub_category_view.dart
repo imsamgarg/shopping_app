@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'package:shopping_app/app/data/models/app_model.dart';
-
-// import 'package:get/get.dart';
-// import 'package:shopping_app/app/modules/home/controllers/tap_controller.dart';
+import 'package:shopping_app/app/data/models/category_model.dart';
 
 class SubCategoryView extends StatelessWidget {
   final Category category;

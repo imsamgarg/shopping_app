@@ -12,12 +12,14 @@ class HomeController extends GetxController with ServicesMixin, RoutesMixin {
 
   //
   AppModel? data;
-  List<AppBanner> get offers => data?.banners ?? [];
+
+  late final offers = data?.banners ?? [];
 
   late final Future<bool> instance = _getData();
 
-  late final cats = data?.categories.map((e) => e.name ?? "").toList() ?? [];
-  late final subCats = _getSubCatList();
+  late final cats = data?.categories ?? [];
+
+  late final subCats = data?.subCategories ?? [];
 
   void onIndexChange(int p1) {
     if (data == null) return;
@@ -38,20 +40,10 @@ class HomeController extends GetxController with ServicesMixin, RoutesMixin {
   }
 
   Future<bool> _getData() async {
-    await userService.initUser();
-    await configService.init();
+    await Future.wait([userService.initUser(), configService.initService()]);
+
     data = configService.data;
     1.delay().then((_) => linkService.handleDynamicLink());
     return true;
-  }
-
-  List<String?> _getSubCatList() {
-    final list = <String?>[];
-    for (final cat in data!.categories) {
-      for (final subCat in cat.subCats!) {
-        list.add(subCat.name);
-      }
-    }
-    return list;
   }
 }

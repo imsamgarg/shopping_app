@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 
 import 'package:shopping_app/app/core/values/values.dart';
-import 'package:shopping_app/app/data/models/app_model.dart';
 import 'package:shopping_app/app/data/models/cart_model.dart';
+import 'package:shopping_app/app/data/models/category_model.dart';
 import 'package:shopping_app/app/data/models/dynamic_link_model.dart';
 import 'package:shopping_app/app/data/models/product_model.dart';
 import 'package:shopping_app/app/modules/address/views/address_view.dart';
@@ -55,13 +55,12 @@ mixin RoutesMixin {
   }
 
   void onSubCategoryTap({
-    String? category,
-    String? subCategory,
-    bool? isPopular,
+    SubCategory? subCategory,
+    bool isPopular = false,
   }) {
     _gotoProductsList(
-      category: category,
-      subCategory: subCategory,
+      category: subCategory?.category,
+      subCategory: subCategory?.name,
       isPopular: isPopular,
     );
   }
@@ -83,17 +82,17 @@ mixin RoutesMixin {
         break;
       case DynamicLinkType.subCategory:
         {
-          final category = link.category;
-          final subCategory = link.subCategory;
-          onSubCategoryTap(category: category, subCategory: subCategory);
+          final subCategory = SubCategory(
+            category: link.category,
+            name: link.subCategory,
+          );
+          onSubCategoryTap(subCategory: subCategory);
           break;
         }
-      case DynamicLinkType.order:
-        //Hje Implement ni Kita
-        break;
-      case DynamicLinkType.offer:
-        //Hje Implenent ni Kita.
-        break;
+      // case DynamicLinkType.order:
+      //   break;
+      // case DynamicLinkType.offer:
+      //   break;
       default:
         break;
     }
