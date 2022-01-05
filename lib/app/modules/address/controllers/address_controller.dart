@@ -6,6 +6,7 @@ import 'package:shopping_app/app/core/utils/helper.dart';
 import 'package:shopping_app/app/core/utils/mixins/services_mixin.dart';
 import 'package:shopping_app/app/core/utils/mixins/validator_mixin.dart';
 import 'package:shopping_app/app/data/models/user_model.dart';
+import 'package:shopping_app/app/data/models/user_models/address_model.dart';
 import 'package:shopping_app/app/modules/address/controllers/address_list_controller.dart';
 
 class AddressController extends GetxController
@@ -33,7 +34,7 @@ class AddressController extends GetxController
   void onInit() {
     Address address;
     if (index != null) {
-      address = userService.user.address![index!];
+      address = addressService.addressList[index!];
     } else {
       address = Address();
     }
@@ -42,11 +43,13 @@ class AddressController extends GetxController
     alternativeController = TextEditingController(
       text: address.alternativeNumber,
     );
+
     localityController = TextEditingController(text: address.locality);
     houseStreetController = TextEditingController(text: address.houseStreet);
     pinCodeController = TextEditingController(
       text: address.pinCode?.toString(),
     );
+
     cityController = TextEditingController(text: address.city);
     if (address.state != null) state = address.state;
     super.onInit();
@@ -71,9 +74,9 @@ class AddressController extends GetxController
       state: state!,
     );
     if (shouldSave) {
-      await userService.addAddress(_address);
+      await addressService.addAddress(_address);
     } else {
-      await userService.updateAddress(_address, index!);
+      await addressService.updateAddress(_address, index!);
     }
     Get.find<AddressListController>().updateData();
     successSnackbar("Address Saved");
