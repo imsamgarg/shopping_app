@@ -5,17 +5,12 @@ import 'package:shopping_app/app/core/utils/mixins/services_mixin.dart';
 import 'package:shopping_app/app/data/models/product_model.dart';
 import 'package:shopping_app/app/modules/home/controllers/home_controller.dart';
 
+typedef FavouritePageController = PagingController<int, ProductModel>;
+
 class FavouriteController extends GetxController with ServicesMixin {
   static const _fetchCount = 10;
-  late final PagingController<int, ProductModel> pagingController;
+  late final FavouritePageController pagingController = _getController();
   late final homeController = Get.find<HomeController>();
-
-  @override
-  void onInit() {
-    pagingController = PagingController<int, ProductModel>(firstPageKey: 0);
-    pagingController.addPageRequestListener(fetchProducts);
-    super.onInit();
-  }
 
   @override
   void onClose() {
@@ -60,5 +55,12 @@ class FavouriteController extends GetxController with ServicesMixin {
 
   void onBackPress() {
     homeController.setHomeView();
+  }
+
+  FavouritePageController _getController() {
+    final _pagingController = FavouritePageController(firstPageKey: 0);
+    _pagingController.addPageRequestListener(fetchProducts);
+
+    return _pagingController;
   }
 }
