@@ -53,7 +53,9 @@ class ProductOpController extends GetxController
   }
 
   void onLikeTap() async {
-    isProductLiked = await userService.toggleFavourite(product.id!);
+    String id = product.id!;
+    isProductLiked = await userService.toggleFavourite(id, product: product);
+
     update([isProductLikedId]);
   }
 }
