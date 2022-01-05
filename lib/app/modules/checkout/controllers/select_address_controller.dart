@@ -2,14 +2,14 @@ import 'package:get/get.dart';
 
 import 'package:shopping_app/app/core/utils/helper.dart';
 import 'package:shopping_app/app/core/utils/mixins/services_mixin.dart';
-import 'package:shopping_app/app/data/models/user_model.dart';
+import 'package:shopping_app/app/data/models/user_models/address_model.dart';
 import 'package:shopping_app/app/modules/address/views/address_view.dart';
 import 'package:shopping_app/app/modules/checkout/views/confirm_checkout_view.dart';
 
 import 'checkout_controller.dart';
 
 class SelectAddressController extends GetxController with ServicesMixin {
-  late List<Address> addressList = userService.addreesList;
+  late List<Address> addressList = addressService.addressList;
   late final checkoutController = CheckoutController.to;
 
   final _selectedAddress = RxnInt();

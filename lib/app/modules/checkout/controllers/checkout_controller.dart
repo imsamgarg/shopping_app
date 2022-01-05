@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 
 import 'package:shopping_app/app/core/values/values.dart';
 import 'package:shopping_app/app/data/models/cart_model.dart';
-import 'package:shopping_app/app/data/models/user_model.dart';
+import 'package:shopping_app/app/data/models/user_models/address_model.dart';
 import 'package:shopping_app/app/modules/checkout/views/checkout_loading_view.dart';
 
 class CheckoutController extends GetxController {
