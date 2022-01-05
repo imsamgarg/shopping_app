@@ -27,8 +27,11 @@ class HomeView extends GetView<HomeController> {
     return AppFutureBuilder(
       builder: (data) {
         return Scaffold(
-          bottomNavigationBar: AppNavbar(
-            onIndexChange: controller.onIndexChange,
+          bottomNavigationBar: Obx(
+            () => AppNavbar(
+              onIndexChange: controller.onIndexChange,
+              index: controller.index,
+            ),
           ),
           body: Obx(
             () => IndexedStack(
