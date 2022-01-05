@@ -3,10 +3,12 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import 'package:shopping_app/app/core/utils/mixins/services_mixin.dart';
 import 'package:shopping_app/app/data/models/product_model.dart';
+import 'package:shopping_app/app/modules/home/controllers/home_controller.dart';
 
 class FavouriteController extends GetxController with ServicesMixin {
   static const _fetchCount = 10;
   late final PagingController<int, ProductModel> pagingController;
+  late final homeController = Get.find<HomeController>();
 
   @override
   void onInit() {
@@ -43,7 +45,7 @@ class FavouriteController extends GetxController with ServicesMixin {
     );
   }
 
-  void removeFavouriteProduct([int? index, String? id]) {
+  void removeFavouriteProduct({int? index, String? id}) {
     final list = pagingController.value.itemList ?? [];
     if (index != null) {
       list.removeAt(index);
@@ -54,5 +56,9 @@ class FavouriteController extends GetxController with ServicesMixin {
       itemList: list,
       nextPageKey: list.length,
     );
+  }
+
+  void onBackPress() {
+    homeController.setHomeView();
   }
 }
