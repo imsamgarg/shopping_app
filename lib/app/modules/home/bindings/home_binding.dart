@@ -1,7 +1,9 @@
 import 'package:get/get.dart';
+import 'package:shopping_app/app/data/services/address_service.dart';
 
 import 'package:shopping_app/app/data/services/cart_service.dart';
 import 'package:shopping_app/app/data/services/config_service.dart';
+import 'package:shopping_app/app/data/services/favourties_service.dart';
 import 'package:shopping_app/app/data/services/products_service.dart';
 import 'package:shopping_app/app/data/services/storage_service.dart';
 import 'package:shopping_app/app/data/services/user_service.dart';
@@ -16,10 +18,13 @@ class HomeBinding extends Bindings {
   @override
   void dependencies() {
     //services
+    Get.lazyPut<CartService>(() => CartService());
     Get.lazyPut<StorageService>(() => StorageService());
+    Get.lazyPut<FavouriteService>(() => FavouriteService());
+    Get.lazyPut<AddressService>(() => AddressService());
+
     Get.put<UserService>(UserService());
     Get.put<ProductsService>(ProductsService());
-    Get.put<CartService>(CartService());
     Get.put<ConfigService>(ConfigService());
 
     //controllers
