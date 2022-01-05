@@ -22,7 +22,7 @@ class OptionsController extends GetxController {
   set size(value) => _size.value = value;
 
   final _quantity = 1.obs;
-  get quantity => _quantity.value;
+  int get quantity => _quantity.value;
   set quantity(value) => _quantity.value = value;
 
   void incrementQuantity() {

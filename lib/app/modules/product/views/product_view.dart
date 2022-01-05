@@ -4,6 +4,7 @@ import 'package:custom_utils/spacing_utils.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shopping_app/app/core/global_widgets/choice_chip.dart';
+import 'package:shopping_app/app/core/global_widgets/stepper.dart';
 import 'package:shopping_app/app/modules/product/controllers/image_controller.dart';
 import 'package:shopping_app/app/modules/product/controllers/operations_controller.dart';
 import 'package:shopping_app/app/modules/product/controllers/options_controller.dart';
@@ -371,7 +372,7 @@ class _AddToCart extends GetView<ProductOpController> {
   }
 }
 
-class _Header extends StatelessWidget {
+class _Header extends GetView<OptionsController> {
   const _Header();
   @override
   Widget build(BuildContext context) {
@@ -388,73 +389,16 @@ class _Header extends StatelessWidget {
               ],
             ),
             verSpacing20,
-            const _Quantity(),
+            CustomStepper(
+              onDecrementTap: controller.decrementQuantity,
+              onIncrementTap: controller.incrementQuantity,
+              value: controller.quantity,
+            ),
             verSpacing12,
           ],
         ),
       ),
     );
-  }
-}
-
-const _kButtonWidth = 32.0;
-const _kButtonHeight = 32.0;
-
-class _Quantity extends GetView<OptionsController> {
-  const _Quantity({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      shape: RoundedRectangleBorder(
-        borderRadius: Sizing.borderRadiusS,
-        side: BorderSide(
-          width: 1,
-          color: Colors.grey.shade200,
-        ),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _StepperButton(
-            icon: Icons.remove,
-            onTap: controller.decrementQuantity,
-          ),
-          horSpacing10,
-          Obx(
-            () {
-              return "${controller.quantity}".text.bold.size(18).make();
-            },
-          ),
-          horSpacing10,
-          _StepperButton(
-            icon: Icons.add,
-            onTap: controller.incrementQuantity,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _StepperButton extends StatelessWidget {
-  final IconData icon;
-  final VoidCallback onTap;
-  const _StepperButton({
-    Key? key,
-    required this.icon,
-    required this.onTap,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialButton(
-      padding: EdgeInsets.zero,
-      shape: Sizing.cardShape,
-      onPressed: onTap,
-      child: Icon(icon, size: 20),
-    ).box.size(_kButtonWidth, _kButtonHeight).make();
   }
 }
 
