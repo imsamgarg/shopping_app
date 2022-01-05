@@ -7,6 +7,8 @@ import 'package:shopping_app/app/data/repository/database_repository.dart';
 class AddressService extends GetxService with ServicesMixin {
   List<Address>? _addressList;
 
+  static AddressService service() => Get.find<AddressService>();
+
   List<Address> get addressList => _addressList ?? [];
 
   late final _dbRepo = FirebaseDbRepository();

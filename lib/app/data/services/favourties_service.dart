@@ -13,6 +13,8 @@ class FavouriteService extends GetxService with ServicesMixin {
     return favouriteMap?.keys.map((e) => e).toList() ?? <String>[];
   }
 
+  static FavouriteService service() => Get.find<FavouriteService>();
+
   late final _dbRepo = FirebaseDbRepository();
   late final userId = userService.uid;
 

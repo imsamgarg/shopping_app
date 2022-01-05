@@ -1,9 +1,11 @@
 import 'package:get/get.dart';
+import 'package:shopping_app/app/data/services/address_service.dart';
 
 import 'package:shopping_app/app/data/services/auth_service.dart';
 import 'package:shopping_app/app/data/services/cart_service.dart';
 import 'package:shopping_app/app/data/services/config_service.dart';
 import 'package:shopping_app/app/data/services/dynamic_link_service.dart';
+import 'package:shopping_app/app/data/services/favourties_service.dart';
 import 'package:shopping_app/app/data/services/orders_service.dart';
 import 'package:shopping_app/app/data/services/products_service.dart';
 import 'package:shopping_app/app/data/services/storage_service.dart';
@@ -16,8 +18,10 @@ mixin ServicesMixin {
   late final ConfigService configService = ConfigService.service();
   late final OrdersService ordersService = OrdersService.service();
   late final StorageService storageService = StorageService.service();
+  late final AddressService addressService = AddressService.service();
   late final ProductsService productsService = ProductsService.service();
   late final DynamicLinkService linkService = DynamicLinkService.service();
+  late final FavouriteService favouriteService = FavouriteService.service();
 
   Future<void> deleteAllServices() {
     return Future.wait([
@@ -27,8 +31,10 @@ mixin ServicesMixin {
       Get.delete<ConfigService>(force: true),
       Get.delete<OrdersService>(force: true),
       Get.delete<StorageService>(force: true),
+      Get.delete<AddressService>(force: true),
       Get.delete<ProductsService>(force: true),
       Get.delete<DynamicLinkService>(force: true),
+      Get.delete<FavouriteService>(force: true),
     ]);
   }
 }
