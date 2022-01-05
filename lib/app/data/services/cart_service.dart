@@ -5,14 +5,17 @@ import 'package:shopping_app/app/core/utils/mixins/services_mixin.dart';
 import 'package:shopping_app/app/core/values/db_strings.dart';
 import 'package:shopping_app/app/data/models/cart_model.dart';
 import 'package:shopping_app/app/data/models/product_model.dart';
-import 'package:shopping_app/app/data/models/user_model.dart';
 import 'package:shopping_app/app/data/repository/database_repository.dart';
 
 class CartService extends GetxService with ServicesMixin {
-  late final UserModel _user = userService.user;
   late final _repo = FirebaseDbRepository();
-  late final cartItems = _user.cartItems;
-  bool isInit = false;
+
+  Map<String, CartModel>? _cartMap;
+  Map<String, CartModel> get cartMap => _cartMap!;
+
+  late final userId = userService.uid;
+
+  bool isProductsPopulated = false;
 
   static CartService service() => Get.find<CartService>();
 
@@ -20,21 +23,37 @@ class CartService extends GetxService with ServicesMixin {
   get cartLength => _cartLength.value;
   set cartLength(value) => _cartLength.value = value;
 
-  Future<CartService> init() async {
-    if (isInit) {
+  Future<CartService> initService() async {
+    if (_cartMap != null && isProductsPopulated) {
       return this;
     }
-    await _getCartProducts();
-    isInit = true;
+
+    _cartMap = await _getCartMap();
+    await getCartProducts();
+
+    isProductsPopulated = true;
     return this;
   }
 
-  Future _getCartProducts() async {
-    final ids = cartItems.keys.toList();
+  Future<Map<String, CartModel>> _getCartMap() async {
+    final snapshot = await _repo.getSubCollectionDocument(
+      collection: Db.usersCol,
+      documentId: userId,
+      subCollection: Db.cartSubCol,
+      subColDocId: Db.cartSubCol,
+    );
+
+    final data = snapshot.data();
+
+    return data?.map((k, v) => MapEntry(k, CartModel.fromJson(v))) ?? {};
+  }
+
+  Future getCartProducts() async {
+    final ids = cartMap.keys.toList();
     final docs = await _repo.getDocsFromRealtimeDb(ids, Db.productCol);
     final products = docs.map((e) => ProductModel.fromJson(e));
     for (final product in products) {
-      final cartItem = cartItems[product.id!]!;
+      final cartItem = cartMap[product.id!]!;
       populateCartProductField(cartItem, product);
     }
   }
@@ -87,7 +106,7 @@ class CartService extends GetxService with ServicesMixin {
   ////////////////
 
   bool isProductInCart(String id) {
-    return cartItems.containsKey(id);
+    return cartMap.containsKey(id);
   }
 
   Future<bool> addToCart(CartModel cartModel) async {
@@ -101,7 +120,7 @@ class CartService extends GetxService with ServicesMixin {
 
     final data = cartModel.toJson();
     await uploadToDatabase(id, data);
-    cartItems.putIfAbsent(id, () => cartModel);
+    cartMap.putIfAbsent(id, () => cartModel);
     cartLength += 1;
 
     return true;
@@ -122,7 +141,7 @@ class CartService extends GetxService with ServicesMixin {
     // final data = cartItems.map((key, value) => MapEntry(key, value.toJson()));
     await deleteFromDatabase(id);
     //remove locally only after successfully removed from database
-    cartItems.remove(id);
+    cartMap.remove(id);
     cartLength -= 1;
   }
 
@@ -140,7 +159,7 @@ class CartService extends GetxService with ServicesMixin {
 
   int _getCartLength() {
     var count = 0;
-    for (final _ in cartItems.entries) {
+    for (final _ in cartMap.entries) {
       count += 1;
     }
     return count;
@@ -157,7 +176,7 @@ class CartService extends GetxService with ServicesMixin {
 
   //so state can be mantained globally
   void changeQuantity(String id, int quantity) {
-    cartItems[id]?.quantity = quantity;
+    cartMap[id]?.quantity = quantity;
   }
 
   CheckoutModel createCheckoutModel(
