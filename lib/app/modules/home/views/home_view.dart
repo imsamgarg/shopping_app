@@ -26,21 +26,24 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return AppFutureBuilder(
       builder: (data) {
-        return Scaffold(
-          bottomNavigationBar: Obx(
-            () => AppNavbar(
-              onIndexChange: controller.onIndexChange,
-              index: controller.index,
+        return WillPopScope(
+          onWillPop: controller.onBackPress,
+          child: Scaffold(
+            bottomNavigationBar: Obx(
+              () => AppNavbar(
+                onIndexChange: controller.onIndexChange,
+                index: controller.index,
+              ),
             ),
-          ),
-          body: Obx(
-            () => IndexedStack(
-              index: controller.index,
-              children: [
-                const _HomeView(),
-                FavouriteView(),
-                ProfileView(),
-              ],
+            body: Obx(
+              () => IndexedStack(
+                index: controller.index,
+                children: [
+                  const _HomeView(),
+                  FavouriteView(),
+                  ProfileView(),
+                ],
+              ),
             ),
           ),
         );

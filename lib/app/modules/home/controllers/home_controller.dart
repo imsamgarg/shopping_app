@@ -28,6 +28,15 @@ class HomeController extends GetxController with ServicesMixin, RoutesMixin {
     index = 0;
   }
 
+  Future<bool> onBackPress() async {
+    if (index == 0) {
+      return true;
+    }
+
+    index = 0;
+    return false;
+  }
+
   Future<bool> _getData() async {
     await userService.initUser();
     await configService.init();
