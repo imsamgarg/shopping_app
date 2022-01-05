@@ -24,6 +24,10 @@ class HomeController extends GetxController with ServicesMixin, RoutesMixin {
     index = p1;
   }
 
+  void setHomeView() {
+    index = 0;
+  }
+
   Future<bool> _getData() async {
     await userService.initUser();
     await configService.init();
