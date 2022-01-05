@@ -141,15 +141,25 @@ class _LikeProduct extends GetView<ProductOpController> {
             init: controller,
             id: controller.isProductLikedId,
             builder: (_) {
+              late Widget likedIcon;
+              late Widget notLikedIcon;
+              if (controller.isProductLiked) {
+                likedIcon = const Icon(
+                  Icons.favorite_rounded,
+                  size: 30,
+                  color: Vx.red500,
+                  key: ValueKey("yes"),
+                );
+              } else {
+                notLikedIcon = const Icon(
+                  Icons.favorite_outline_rounded,
+                  key: ValueKey("no"),
+                );
+              }
               return AnimatedSwitcher(
-                duration: const Duration(milliseconds: 400),
-                reverseDuration: const Duration(milliseconds: 400),
-                child: Icon(
-                  controller.isProductLiked
-                      ? Icons.favorite_rounded
-                      : Icons.favorite_outline_rounded,
-                  color: controller.isProductLiked ? Vx.red500 : null,
-                ),
+                duration: const Duration(milliseconds: 200),
+                switchInCurve: Curves.easeInOut,
+                child: controller.isProductLiked ? likedIcon : notLikedIcon,
                 transitionBuilder: (child, animation) {
                   return ScaleTransition(
                     scale: animation,
