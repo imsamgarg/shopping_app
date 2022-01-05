@@ -9,6 +9,8 @@ typedef FutureDocumentSnapshot = Future<DocumentSnapshot<Map<String, dynamic>>>;
 typedef FutureQuerySnapshot = Future<QuerySnapshot<Map<String, dynamic>>>;
 typedef StreamDocumentSnapshot = Stream<DocumentSnapshot<Map<String, dynamic>>>;
 
+typedef FutureDocReference = Future<DocumentReference<Map<String, dynamic>>>;
+
 class FirebaseDbRepository {
   static final FirebaseDbRepository instance = FirebaseDbRepository._();
 
@@ -36,6 +38,48 @@ class FirebaseDbRepository {
         .collection(subCollection)
         .doc(subColDocId)
         .get();
+  }
+
+  Future<void> deleteSubCollectionDocument({
+    required String collection,
+    required String documentId,
+    required String subCollection,
+    required String subColDocId,
+  }) {
+    return _firestore
+        .collection(collection)
+        .doc(documentId)
+        .collection(subCollection)
+        .doc(subColDocId)
+        .delete();
+  }
+
+  Future<void> updateSubCollectionDocument({
+    required String collection,
+    required String documentId,
+    required String subCollection,
+    required String subColDocId,
+    required Map<String, Object?> data,
+  }) {
+    return _firestore
+        .collection(collection)
+        .doc(documentId)
+        .collection(subCollection)
+        .doc(subColDocId)
+        .update(data);
+  }
+
+  FutureDocReference addSubCollectionDocument({
+    required String collection,
+    required String documentId,
+    required String subCollection,
+    required Map<String, Object?> data,
+  }) {
+    return _firestore
+        .collection(collection)
+        .doc(documentId)
+        .collection(subCollection)
+        .add(data);
   }
 
   FutureQuerySnapshot getAllSubCollectionDocuments({
