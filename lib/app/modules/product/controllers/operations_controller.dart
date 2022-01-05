@@ -16,7 +16,7 @@ class ProductOpController extends GetxController
   bool isAddToCartLoading = false;
   final String addToCartButtonId = "add_to_cart";
 
-  late bool isProductLiked = userService.isProductFavourite(product.id!);
+  late bool isProductLiked = favouriteService.isProductFavourite(product.id!);
   final String isProductLikedId = "isProductLikedId";
 
   void onAddToCart() async {
@@ -54,7 +54,13 @@ class ProductOpController extends GetxController
 
   void onLikeTap() async {
     String id = product.id!;
-    isProductLiked = await userService.toggleFavourite(id, product: product);
+    final value = await favouriteService.toggleFavourite(id, product: product);
+
+    toggleFavouriteButton(value);
+  }
+
+  void toggleFavouriteButton(bool value) {
+    isProductLiked = value;
 
     update([isProductLikedId]);
   }
