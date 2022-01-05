@@ -5,6 +5,10 @@ import 'package:shopping_app/app/core/values/db_strings.dart';
 import 'package:shopping_app/app/core/values/values.dart';
 import 'package:shopping_app/app/data/models/product_model.dart';
 
+typedef FutureDocumentSnapshot = Future<DocumentSnapshot<Map<String, dynamic>>>;
+typedef FutureQuerySnapshot = Future<QuerySnapshot<Map<String, dynamic>>>;
+typedef StreamDocumentSnapshot = Stream<DocumentSnapshot<Map<String, dynamic>>>;
+
 class FirebaseDbRepository {
   static final FirebaseDbRepository instance = FirebaseDbRepository._();
 
@@ -20,7 +24,7 @@ class FirebaseDbRepository {
     return (await _firestore.collection(collection).doc(id).get()).data();
   }
 
-  Future getSubCollectionDocument({
+  FutureDocumentSnapshot getSubCollectionDocument({
     required String collection,
     required String documentId,
     required String subCollection,
@@ -34,7 +38,7 @@ class FirebaseDbRepository {
         .get();
   }
 
-  Future getAllSubCollectionDocuments({
+  FutureQuerySnapshot getAllSubCollectionDocuments({
     required String collection,
     required String documentId,
     required String subCollection,
@@ -46,8 +50,7 @@ class FirebaseDbRepository {
         .get();
   }
 
-  Stream<DocumentSnapshot<Map<String, dynamic>>> subscribeToDocument(
-      String docId, String collection) {
+  StreamDocumentSnapshot subscribeToDocument(String docId, String collection) {
     return _firestore.collection(collection).doc(docId).snapshots();
   }
 
@@ -60,7 +63,7 @@ class FirebaseDbRepository {
     return Future.wait(futures);
   }
 
-  Future updateFirebaseDocument(
+  Future<void> updateFirebaseDocument(
     String collection,
     String docId, {
     required Map<String, Object?> data,
