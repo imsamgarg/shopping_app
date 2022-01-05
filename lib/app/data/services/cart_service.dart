@@ -15,8 +15,6 @@ class CartService extends GetxService with ServicesMixin {
 
   late final userId = userService.uid;
 
-  bool isProductsPopulated = false;
-
   static CartService service() => Get.find<CartService>();
 
   late final _cartLength = _getCartLength().obs;
@@ -24,14 +22,11 @@ class CartService extends GetxService with ServicesMixin {
   set cartLength(value) => _cartLength.value = value;
 
   Future<CartService> initService() async {
-    if (_cartMap != null && isProductsPopulated) {
+    if (_cartMap != null) {
       return this;
     }
 
     _cartMap = await _getCartMap();
-    await getCartProducts();
-
-    isProductsPopulated = true;
     return this;
   }
 
@@ -49,7 +44,13 @@ class CartService extends GetxService with ServicesMixin {
   }
 
   Future getCartProducts() async {
-    final ids = cartMap.keys.toList();
+    //only get products which are not already populated
+    final ids = cartMap.entries
+        .where((e) => e.value.product == null)
+        .map((e) => e.key)
+        .toList();
+
+    //fetch products
     final docs = await _repo.getDocsFromRealtimeDb(ids, Db.productCol);
     final products = docs.map((e) => ProductModel.fromJson(e));
     for (final product in products) {
@@ -110,6 +111,8 @@ class CartService extends GetxService with ServicesMixin {
   }
 
   Future<bool> addToCart(CartModel cartModel) async {
+    await initService();
+
     final id = cartModel.product!.id!;
     if (isProductInCart(id)) {
       return false;

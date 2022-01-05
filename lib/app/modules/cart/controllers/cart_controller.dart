@@ -23,6 +23,8 @@ class CartController extends GetxController with ServicesMixin, RoutesMixin {
 
   Future<bool> _getCartProducts() async {
     await cartService.initService();
+    await cartService.getCartProducts();
+
     convertCartMapToList();
     return true;
   }
