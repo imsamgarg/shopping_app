@@ -19,7 +19,7 @@ class FavouriteController extends GetxController with ServicesMixin {
   }
 
   Future<void> fetchProducts(int pageKey) async {
-    final products = await userService.getFavouriteProducts(
+    final products = await favouriteService.getFavouriteProducts(
       pageKey,
       pageKey + _fetchCount,
     );
