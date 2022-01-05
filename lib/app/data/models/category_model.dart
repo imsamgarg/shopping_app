@@ -3,7 +3,7 @@ class SubCategory {
   String? category;
   String? image;
 
-  SubCategory({this.name, this.image});
+  SubCategory({this.name, this.image, this.category});
 
   SubCategory.fromJson(dynamic json) {
     name = json['name'];
