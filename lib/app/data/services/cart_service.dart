@@ -119,21 +119,27 @@ class CartService extends GetxService with ServicesMixin {
     populateCartProductField(cartModel, product);
 
     final data = cartModel.toJson();
-    await uploadToDatabase(id, data);
+    await addToDatabase(id, data);
     cartMap.putIfAbsent(id, () => cartModel);
     cartLength += 1;
 
     return true;
   }
 
-  Future<void> uploadToDatabase(String id, Map<String, dynamic> data) async {
-    await _repo.updateFirebaseDocument(
-      Db.usersCol,
-      userService.uid,
-      data: {
-        Db.cartField: {id: data}
-      },
+  Future<void> _updateCartDatabase(Map<String, Object?> data) {
+    return _repo.updateSubCollectionDocument(
+      collection: Db.usersCol,
+      documentId: userId,
+      subCollection: Db.cartSubCol,
+      subColDocId: Db.cartSubCol,
+      data: data,
     );
+  }
+
+  Future<void> addToDatabase(String id, Map cartData) {
+    final data = {id: cartData};
+
+    return _updateCartDatabase(data);
   }
 
   Future removeFromCart(CartModel cartModel) async {
@@ -145,16 +151,10 @@ class CartService extends GetxService with ServicesMixin {
     cartLength -= 1;
   }
 
-  Future<void> deleteFromDatabase(String id) async {
-    await _repo.updateFirebaseDocument(
-      Db.usersCol,
-      userService.uid,
-      data: {
-        Db.cartField: {
-          id: FieldValue.delete(),
-        }
-      },
-    );
+  Future<void> deleteFromDatabase(String id) {
+    final data = {id: FieldValue.delete()};
+
+    return _updateCartDatabase(data);
   }
 
   int _getCartLength() {
