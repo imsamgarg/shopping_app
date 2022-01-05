@@ -5,34 +5,19 @@ import 'package:velocity_x/velocity_x.dart';
 
 import 'package:shopping_app/app/core/utils/helper.dart';
 
-class AppNavbar extends StatefulWidget {
-  const AppNavbar({Key? key, required this.onIndexChange}) : super(key: key);
-  final NavbarCallback onIndexChange;
-
-  @override
-  _AppNavbarState createState() => _AppNavbarState();
-}
-
 typedef NavbarCallback = void Function(int);
 
-class _Placeholder extends StatelessWidget {
-  const _Placeholder({Key? key, required this.child}) : super(key: key);
-  final Widget child;
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(child: Container(child: Center(child: child)));
-  }
-}
+class AppNavbar extends StatelessWidget {
+  const AppNavbar({
+    Key? key,
+    required this.onIndexChange,
+    this.index = 0,
+  }) : super(key: key);
 
-class _AppNavbarState extends State<AppNavbar> {
-  int index = 0;
+  final NavbarCallback onIndexChange;
+  final int index;
 
-  void changeIndex(int i) {
-    setState(() {
-      index = i;
-    });
-    widget.onIndexChange(i);
-  }
+  void changeIndex(int i) => onIndexChange(i);
 
   @override
   Widget build(BuildContext context) {
@@ -114,5 +99,14 @@ class _NavbarItem extends StatelessWidget {
               ],
             ).py8().box.color(color.withOpacity(0.2)).roundedLg.make(),
     );
+  }
+}
+
+class _Placeholder extends StatelessWidget {
+  const _Placeholder({Key? key, required this.child}) : super(key: key);
+  final Widget child;
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(child: Container(child: Center(child: child)));
   }
 }
