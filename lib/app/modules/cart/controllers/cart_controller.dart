@@ -22,7 +22,7 @@ class CartController extends GetxController with ServicesMixin, RoutesMixin {
   set finalPrice(value) => _finalPrice.value = value;
 
   Future<bool> _getCartProducts() async {
-    await cartService.init();
+    await cartService.initService();
     convertCartMapToList();
     return true;
   }
@@ -47,7 +47,7 @@ class CartController extends GetxController with ServicesMixin, RoutesMixin {
   }
 
   void convertCartMapToList() {
-    for (final cartItem in cartService.cartItems.entries) {
+    for (final cartItem in cartService.cartMap.entries) {
       cartItems.add(cartItem.value);
     }
   }
