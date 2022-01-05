@@ -63,7 +63,7 @@ class _HomeView extends GetView<HomeController> {
         slivers: [
           _AppBar(),
           // _Heading(),
-          if (controller.data?.banners.isNotEmpty ?? false) ...[
+          if (controller.data?.banners?.isNotEmpty ?? false) ...[
             verSliverSpacing16,
             const _Banners(),
             verSliverSpacing16,
@@ -158,22 +158,21 @@ class _SubCategories extends GetView<HomeController> {
   // final colors = Colors.accents.sublist(0, 5);
   List<Widget> getCards() {
     final list = <Widget>[];
-    // final list = <String?>[];
-    for (final cat in controller.data!.categories) {
-      for (var x = 0; x < cat.subCats!.length; ++x) {
-        final color = x < colors.length
-            ? colors[x]
-            : colors[x - (x ~/ colors.length) * colors.length];
-        final item = controller.subCats[x];
-        final card = _CategoryCard(
-          text: item!,
-          color: color,
-          onTap: () {
-            controller.onSubCategoryTap(subCategory: item, category: cat.name);
-          },
-        );
-        list.add(card);
-      }
+    final subCategories = controller.data!.subCategories ?? [];
+
+    for (int x = 0; x < subCategories.length; x++) {
+      final color = x < colors.length
+          ? colors[x]
+          : colors[x - (x ~/ colors.length) * colors.length];
+      final subCat = subCategories[x];
+
+      final card = _CategoryCard(
+        text: subCat.name!,
+        color: color,
+        onTap: () => controller.onSubCategoryTap(subCategory: subCat),
+      );
+
+      list.add(card);
     }
     return list;
   }
@@ -190,8 +189,12 @@ class _CategoryCard extends StatelessWidget {
   final Color? color;
   final VoidCallback? onTap;
   final String text;
-  const _CategoryCard({Key? key, this.color, this.onTap, required this.text})
-      : super(key: key);
+  const _CategoryCard({
+    Key? key,
+    this.color,
+    this.onTap,
+    required this.text,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -244,13 +247,13 @@ class _Banners extends GetView<HomeController> {
     return SliverToBoxAdapter(
       child: VxSwiper.builder(
         autoPlay: true,
-        itemCount: 10,
+        itemCount: controller.data!.banners!.length,
         viewportFraction: 0.9,
         height: 180,
         enableInfiniteScroll: false,
         enlargeCenterPage: true,
         itemBuilder: (context, index) {
-          return _Banner(banner: controller.data!.banners[index]).px(2);
+          return _Banner(banner: controller.data!.banners![index]).px(2);
         },
       ),
     );
@@ -263,7 +266,7 @@ class _Banner extends GetView<HomeController> {
   const _Banner({Key? key, required this.banner}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return CachedImage(url: banner.img!).onTap(
+    return CachedImage(url: banner.image!).onTap(
       () => controller.handleLink(banner.toDynamicLink()),
     );
   }
