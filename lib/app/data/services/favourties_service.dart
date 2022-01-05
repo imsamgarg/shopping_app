@@ -9,6 +9,10 @@ import 'package:shopping_app/app/modules/home/controllers/favourite_controller.d
 class FavouriteService extends GetxService with ServicesMixin {
   Map<String, Timestamp>? favouriteMap;
 
+  List<String> get favouriteList {
+    return favouriteMap?.keys.map((e) => e).toList() ?? <String>[];
+  }
+
   late final _dbRepo = FirebaseDbRepository();
   late final userId = userService.uid;
 

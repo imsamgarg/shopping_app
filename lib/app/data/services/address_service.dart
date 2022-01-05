@@ -5,17 +5,19 @@ import 'package:shopping_app/app/data/models/user_models/address_model.dart';
 import 'package:shopping_app/app/data/repository/database_repository.dart';
 
 class AddressService extends GetxService with ServicesMixin {
-  List<Address>? addressList;
+  List<Address>? _addressList;
+
+  List<Address> get addressList => _addressList ?? [];
 
   late final _dbRepo = FirebaseDbRepository();
   late final userId = userService.uid;
 
   Future<AddressService> initService() async {
-    if (addressList != null) {
+    if (_addressList != null) {
       return this;
     }
 
-    addressList = await _getAddresses();
+    _addressList = await _getAddresses();
     return this;
   }
 
@@ -45,11 +47,11 @@ class AddressService extends GetxService with ServicesMixin {
 
     address.id = snapshot.id;
 
-    addressList?.add(address);
+    _addressList?.add(address);
   }
 
   Future updateAddress(Address address, int index) async {
-    final address = addressList?[index];
+    final address = _addressList?[index];
 
     final data = address?.toJson();
 
@@ -61,11 +63,11 @@ class AddressService extends GetxService with ServicesMixin {
       data: data!,
     );
 
-    addressList?.add(address);
+    _addressList?.add(address);
   }
 
   Future delAddress(int index) async {
-    final address = addressList?[index];
+    final address = _addressList?[index];
 
     await _dbRepo.deleteSubCollectionDocument(
       collection: Db.usersCol,
@@ -74,6 +76,6 @@ class AddressService extends GetxService with ServicesMixin {
       subColDocId: address!.id!,
     );
 
-    addressList?.removeAt(index);
+    _addressList?.removeAt(index);
   }
 }
