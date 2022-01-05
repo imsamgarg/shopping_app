@@ -20,6 +20,32 @@ class FirebaseDbRepository {
     return (await _firestore.collection(collection).doc(id).get()).data();
   }
 
+  Future getSubCollectionDocument({
+    required String collection,
+    required String documentId,
+    required String subCollection,
+    required String subColDocId,
+  }) {
+    return _firestore
+        .collection(collection)
+        .doc(documentId)
+        .collection(subCollection)
+        .doc(subColDocId)
+        .get();
+  }
+
+  Future getAllSubCollectionDocuments({
+    required String collection,
+    required String documentId,
+    required String subCollection,
+  }) {
+    return _firestore
+        .collection(collection)
+        .doc(documentId)
+        .collection(subCollection)
+        .get();
+  }
+
   Stream<DocumentSnapshot<Map<String, dynamic>>> subscribeToDocument(
       String docId, String collection) {
     return _firestore.collection(collection).doc(docId).snapshots();
@@ -84,16 +110,6 @@ class FirebaseDbRepository {
       query = query.where(Db.priceField, isLessThanOrEqualTo: maxPrice);
     }
 
-    ///Filter Queries
-    // if (size != null) {
-    //   query = query.where("${Db.sizeField}.$size", isNotEqualTo: null);
-    // }
-    // if (color != null) {
-    //   query = query.where("${Db.colorField}.$color", isNotEqualTo: null);
-    // }
-
-    ///Filtering
-    ///
     final filterList = [];
 
     if (color != null) {
