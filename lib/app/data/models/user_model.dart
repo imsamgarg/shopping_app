@@ -1,12 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'cart_model.dart';
 
 class UserModel {
-  late Map<String, DateTime> favourites;
+  late Map<String, Timestamp> favourites;
   late Map<String, CartModel> cartItems;
   List<Address>? address;
   List<String>? orders;
   int? ordersCount;
-  List<String>? savedList;
+  // List<String>? savedList;
 
   UserModel({required this.favourites, required this.cartItems, this.address});
 
@@ -21,11 +23,11 @@ class UserModel {
         ? (json['favourite'] as Map).map(
             (key, value) => MapEntry(
               key as String,
-              DateTime.fromMillisecondsSinceEpoch(value),
+              value,
             ),
           )
         : {};
-    savedList = favourites.entries.map((e) => e.key).toList();
+    // savedList = favourites.entries.map((e) => e.key).toList();
     ordersCount = json['ordersCount'];
     if (json['orders'] != null) {
       orders = (json['orders'] as List).cast<String>();

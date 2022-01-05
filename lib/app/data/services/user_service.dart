@@ -6,6 +6,7 @@ import 'package:shopping_app/app/data/models/product_model.dart';
 import 'package:shopping_app/app/data/models/user_model.dart';
 import 'package:shopping_app/app/data/repository/database_repository.dart';
 import 'package:shopping_app/app/data/repository/user_repository.dart';
+import 'package:shopping_app/app/modules/home/controllers/favourite_controller.dart';
 
 class UserService extends GetxService with _Address, _Favourite, _Parent {
   String get userName => _userRepo.userName;
@@ -88,47 +89,68 @@ mixin _Favourite implements _Parent {
   }
 
   Future<List<ProductModel>> getFavouriteProducts(int start, int end) async {
+    int length = user.favourites.length;
+    final favouriteProductList = user.favourites.keys.map((e) => e).toList();
+
     late int _end;
-    int l = user.savedList!.length;
-    if (end > l) {
-      _end = l;
+    if (end > length) {
+      _end = length;
     } else {
       _end = end;
     }
     final docs = await _dbRepo.getDocsFromRealtimeDb(
-      user.savedList!.sublist(start, _end),
+      favouriteProductList.sublist(start, _end),
       Db.productCol,
     );
     return docs.map((e) => ProductModel.fromJson(e)).toList();
   }
 
-  Future<void> editFavourites(String id, bool save) async {
-    final time = DateTime.now();
+  Future<void> removeFavouriteProduct(String id) async {
+    user.favourites.remove(id);
 
-    if (save) {
-      user.favourites.putIfAbsent(id, () => time);
-    } else {
-      user.favourites.remove(id);
-    }
-
-    final data = user.favourites.entries.map((e) {
-      return MapEntry(e.key, e.value.millisecondsSinceEpoch);
-    });
+    final data = user.favourites;
 
     await _dbRepo.updateFirebaseDocument(
       Db.usersCol,
       uid,
       data: {Db.favouriteField: data},
     );
+
+    removeFromFavouritesUi(id);
   }
 
-  Future<bool> toggleFavourite(String id) async {
+  Future<void> addFavouriteProduct(String id, ProductModel product) async {
+    final time = Timestamp.now();
+    user.favourites.putIfAbsent(id, () => time);
+
+    final data = user.favourites;
+
+    await _dbRepo.updateFirebaseDocument(
+      Db.usersCol,
+      uid,
+      data: {
+        Db.favouriteField: data,
+      },
+    );
+
+    addToFavouritesUi(product);
+  }
+
+  void removeFromFavouritesUi(String id) {
+    Get.find<FavouriteController>().removeFavouriteProduct(id: id);
+  }
+
+  void addToFavouritesUi(ProductModel product) {
+    Get.find<FavouriteController>().addFavouriteProduct(product);
+  }
+
+  Future<bool> toggleFavourite(String id, {ProductModel? product}) async {
     if (isProductFavourite(id)) {
-      await editFavourites(id, false);
+      await removeFavouriteProduct(id);
       return false;
-    } else {
-      await editFavourites(id, true);
-      return true;
     }
+
+    await addFavouriteProduct(id, product!);
+    return true;
   }
 }
