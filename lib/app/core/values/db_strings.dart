@@ -7,13 +7,12 @@ abstract class Db {
 
   static const configDocument = "config_doc";
 
-  // static const String postCol = "posts";
-  // static const String catCol = "categories";
-  // static const String keysCol = "api_keys";
-  // static const String commentsCol = "comments";
-  // static const String likesCol = "likes";
-
-  // static const String weatherDoc = "weather";
+  //same doc//single doc
+  static const String favouriteSubCol = "favourite";
+  static const String cartSubCol = "cart";
+  //multiple docs
+  static const String addressSubCol = "address";
+  static const String ordersSubCol = "orders";
 
   static const String popularityField = "popularity";
   static const String favouriteField = "favourite";
