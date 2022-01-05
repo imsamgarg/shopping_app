@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 
 import 'package:shopping_app/app/core/values/db_strings.dart';
 import 'package:shopping_app/app/data/models/app_model.dart';
-import 'package:shopping_app/app/data/models/category_model.dart';
 import 'package:shopping_app/app/data/repository/database_repository.dart';
 
 class ConfigService extends GetxService {
@@ -22,28 +21,32 @@ class ConfigService extends GetxService {
   }
 
   Future<void> _getData() async {
-    final _data = await Future.wait([
-      getDoc(Db.bannerDoc),
-      getDoc(Db.categoriesDoc),
-      getDoc(Db.subCategoriesDoc),
-      getDoc(Db.deliveryConfigDoc),
-    ]);
+    // final _data = await Future.wait([
+    //   getDoc(Db.bannerDoc),
+    //   getDoc(Db.categoriesDoc),
+    //   getDoc(Db.subCategoriesDoc),
+    //   getDoc(Db.deliveryConfigDoc),
+    // ]);
 
-    data = AppModel();
+    // data = AppModel();
 
-    data!.banners = (_data[0] as List?)?.map((e) {
-      return AppBanner.fromJson(e);
-    }).toList();
+    final doc = await getDoc(Db.configCol);
 
-    data!.categories = (_data[1] as List?)?.map((e) {
-      return Category.fromJson(e);
-    }).toList();
+    data = AppModel.fromJson(doc);
 
-    data!.subCategories = (_data[2] as List?)?.map((e) {
-      return SubCategory.fromJson(e);
-    }).toList();
+    // data!.banners = (_data[0] as List?)?.map((e) {
+    //   return AppBanner.fromJson(e);
+    // }).toList();
 
-    data!.deliveryConfig = DeliveryConfiguration.fromJson(_data[3]);
+    // data!.categories = (_data[1] as List?)?.map((e) {
+    //   return Category.fromJson(e);
+    // }).toList();
+
+    // data!.subCategories = (_data[2] as List?)?.map((e) {
+    //   return SubCategory.fromJson(e);
+    // }).toList();
+
+    // data!.deliveryConfig = DeliveryConfiguration.fromJson(_data[3]);
 
     return;
   }

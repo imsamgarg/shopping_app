@@ -14,6 +14,22 @@ class AppModel {
     this.categories,
     this.subCategories,
   });
+
+  AppModel.fromJson(dynamic json) {
+    deliveryConfig = DeliveryConfiguration.fromJson(json['deliveryConfig']);
+
+    banners = (json['banners'] as List?)?.map((e) {
+      return AppBanner.fromJson(e);
+    }).toList();
+
+    categories = (json['categories'] as List?)?.map((e) {
+      return Category.fromJson(e);
+    }).toList();
+
+    subCategories = (json['subCategories'] as List?)?.map((e) {
+      return SubCategory.fromJson(e);
+    }).toList();
+  }
 }
 
 class DeliveryConfiguration {
