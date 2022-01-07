@@ -10,7 +10,7 @@ import 'package:shopping_app/app/core/global_widgets/buttons.dart';
 import 'package:shopping_app/app/core/global_widgets/cached_image.dart';
 import 'package:shopping_app/app/core/global_widgets/future_builder.dart';
 import 'package:shopping_app/app/core/global_widgets/navbar.dart';
-import 'package:shopping_app/app/core/global_widgets/product.dart';
+import 'package:shopping_app/app/core/global_widgets/product_card.dart';
 import 'package:shopping_app/app/core/utils/helper.dart';
 import 'package:shopping_app/app/core/values/values.dart';
 import 'package:shopping_app/app/data/models/app_model.dart';
@@ -141,11 +141,11 @@ class _SubCategories extends GetView<HomeController> {
   // Color(0xFFF7D9C4),
   // Color(0xFF903A73),
   // Color(0xFFFFF0E6),
-  //   // Color(0xFFB44C78),
+  //    Color(0xFFB44C78),
   //   Color(0xFFF9AC9D),
-  //   // Color(0xFFFFCEB8),
-  //   // Color(0xFFFF7079),
-  //   // Color(0xFFFFB190),
+  //    Color(0xFFFFCEB8),
+  //    Color(0xFFFF7079),
+  //    Color(0xFFFFB190),
   //   Color(0xFFE56189),
   // ];
   final colors = [

@@ -6,7 +6,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import 'package:shopping_app/app/core/global_widgets/future_builder.dart';
-import 'package:shopping_app/app/core/global_widgets/product.dart';
+import 'package:shopping_app/app/core/global_widgets/product_card.dart';
 import 'package:shopping_app/app/core/theme/sizing_theme.dart';
 import 'package:shopping_app/app/core/values/values.dart';
 import 'package:shopping_app/app/data/models/product_model.dart';
