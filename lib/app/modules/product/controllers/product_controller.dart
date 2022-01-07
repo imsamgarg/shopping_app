@@ -26,6 +26,8 @@ class ProductController extends GetxController with ServicesMixin, RoutesMixin {
 
   late final _price = product.price.obs;
   int? get totalPrice => _price.value;
+
+  String get description => product.description!;
   set totalPrice(value) => _price.value = value;
 
   void updatePrice() {

@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:shopping_app/app/core/utils/helper.dart';
 import 'package:shopping_app/app/core/utils/mixins/routes_mixin.dart';
 import 'package:shopping_app/app/core/utils/mixins/services_mixin.dart';
 import 'package:shopping_app/app/data/models/cart_model.dart';
@@ -24,6 +25,8 @@ class ProductOpController extends GetxController
     toggleCartButtonLoading(true);
 
     await cartService.addToCart(cartModel);
+
+    successSnackbar("Product Added To Cart");
 
     toggleCartButtonLoading(false);
   }

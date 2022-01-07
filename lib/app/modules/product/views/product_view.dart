@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shopping_app/app/core/global_widgets/choice_chip.dart';
 import 'package:shopping_app/app/core/global_widgets/stepper.dart';
+import 'package:shopping_app/app/core/utils/helper.dart';
 import 'package:shopping_app/app/modules/product/controllers/image_controller.dart';
 import 'package:shopping_app/app/modules/product/controllers/operations_controller.dart';
 import 'package:shopping_app/app/modules/product/controllers/options_controller.dart';
@@ -16,7 +17,6 @@ import 'package:shopping_app/app/core/global_widgets/cached_image.dart';
 import 'package:shopping_app/app/core/global_widgets/future_builder.dart';
 import 'package:shopping_app/app/core/global_widgets/widgets.dart';
 import 'package:shopping_app/app/core/theme/color_theme.dart';
-import 'package:shopping_app/app/core/theme/sizing_theme.dart';
 import 'package:shopping_app/app/core/values/strings.dart';
 
 import '../../../core/utils/extensions.dart';
@@ -61,11 +61,32 @@ class ProductView extends GetView<ProductController> {
                 const _Header(),
                 const _SelectSize(),
                 const _SelectColor(),
+                const _Description(),
+                const _DeliveryCharges(),
               ],
             ),
           ),
         );
       },
+    );
+  }
+}
+
+class _Description extends GetView<ProductController> {
+  const _Description();
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: _CustomPadding(
+        child: Column(
+          children: [
+            const _SubHeading("Description"),
+            verSpacing20,
+            controller.description.text.make(),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -254,7 +275,7 @@ class _SwipeButton extends StatelessWidget {
           height: 40,
           child: MaterialButton(
             padding: EdgeInsets.zero,
-            // color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withOpacity(0.1),
             shape: const CircleBorder(),
             onPressed: onTap,
             child: Icon(
@@ -279,7 +300,7 @@ class _SelectSize extends GetView<OptionsController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            "Select Size".text.bold.size(16).make(),
+            const _SubHeading("Select Size"),
             verSpacing12,
             Wrap(
               spacing: 10,
@@ -301,6 +322,19 @@ class _SelectSize extends GetView<OptionsController> {
   }
 }
 
+class _SubHeading extends StatelessWidget {
+  const _SubHeading(
+    this.text, {
+    Key? key,
+  }) : super(key: key);
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(child: text.text.bold.size(16).make());
+  }
+}
+
 class _SelectColor extends GetView<OptionsController> {
   const _SelectColor({Key? key}) : super(key: key);
 
@@ -311,7 +345,7 @@ class _SelectColor extends GetView<OptionsController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            "Select Color".text.bold.size(16).make(),
+            const _SubHeading("Select Color"),
             verSpacing12,
             Wrap(
               spacing: 10,
@@ -439,6 +473,52 @@ class _Price extends GetView<ProductController> {
               .make();
         }),
       ],
+    );
+  }
+}
+
+class _DeliveryCharges extends GetView<ProductController> {
+  const _DeliveryCharges();
+
+  @override
+  Widget build(BuildContext context) {
+    var appData = controller.configService.data?.deliveryConfig;
+
+    if (appData == null) {
+      return const SliverToBoxAdapter();
+    }
+
+    return SliverToBoxAdapter(
+      child: _CustomPadding(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const _SubHeading("Delivery / Return"),
+            "COD :- $rsSign${appData.codCharges} For Orders Less Then $rsSign${appData.codFreeOn}"
+                .text
+                .size(17)
+                .make()
+                .box
+                .py8
+                .make(),
+            "Online Payment :- $rsSign${appData.razorPayCharges} For Orders Less Then $rsSign${appData.razorPayFreeOn}"
+                .text
+                .size(17)
+                .make()
+                .box
+                .py8
+                .make(),
+            // if (product.isReturnable)
+            //   "Return/Replacement Period :- ${product.returnDays} Days"
+            //       .text
+            //       .size(17)
+            //       .make()
+            //       .box
+            //       .py8
+            //       .make(),
+          ],
+        ),
+      ),
     );
   }
 }
