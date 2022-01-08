@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
 import 'package:shopping_app/app/modules/product/controllers/image_controller.dart';
-import 'package:shopping_app/app/modules/product/controllers/operations_controller.dart';
+import 'package:shopping_app/app/modules/product/controllers/product_op_controller.dart';
 import 'package:shopping_app/app/modules/product/controllers/options_controller.dart';
 import 'package:shopping_app/app/modules/product/controllers/share_controller.dart';
 

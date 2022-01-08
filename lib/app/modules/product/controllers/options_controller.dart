@@ -21,24 +21,6 @@ class OptionsController extends GetxController {
   get size => _size.value;
   set size(value) => _size.value = value;
 
-  final _quantity = 1.obs;
-  int get quantity => _quantity.value;
-  set quantity(value) => _quantity.value = value;
-
-  void incrementQuantity() {
-    if (quantity >= 10) {
-      return;
-    }
-    ++quantity;
-  }
-
-  void decrementQuantity() {
-    if (quantity == 1) {
-      return;
-    }
-    --quantity;
-  }
-
   void changeColor(String? _color) {
     color = _color;
     productController.updatePrice();

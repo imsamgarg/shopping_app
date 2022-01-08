@@ -5,9 +5,8 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shopping_app/app/core/global_widgets/choice_chip.dart';
 import 'package:shopping_app/app/core/global_widgets/stepper.dart';
-import 'package:shopping_app/app/core/utils/helper.dart';
 import 'package:shopping_app/app/modules/product/controllers/image_controller.dart';
-import 'package:shopping_app/app/modules/product/controllers/operations_controller.dart';
+import 'package:shopping_app/app/modules/product/controllers/product_op_controller.dart';
 import 'package:shopping_app/app/modules/product/controllers/options_controller.dart';
 import 'package:shopping_app/app/modules/product/controllers/share_controller.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -406,7 +405,7 @@ class _AddToCart extends GetView<ProductOpController> {
   }
 }
 
-class _Header extends GetView<OptionsController> {
+class _Header extends GetView<ProductOpController> {
   const _Header();
   @override
   Widget build(BuildContext context) {

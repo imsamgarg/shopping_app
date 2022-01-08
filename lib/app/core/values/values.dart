@@ -43,3 +43,10 @@ const double xl = 700;
 //*product cart sizes
 const double productHeight = 250;
 const double productWidth = 200;
+
+//*product quantity
+///10
+const double productMaxQuantity = 10;
+
+///1
+const double productMinQuantity = 1;
