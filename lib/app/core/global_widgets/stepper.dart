@@ -31,7 +31,7 @@ class CustomStepper extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: Sizing.borderRadiusS,
         side: BorderSide(
-          width: 1,
+          width: 0.5,
           color: Colors.grey.shade200,
         ),
       ),

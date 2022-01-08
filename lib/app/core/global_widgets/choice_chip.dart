@@ -24,13 +24,13 @@ class CustomChip extends StatelessWidget {
       label: Text(label),
       padding: const EdgeInsets.all(8),
       labelStyle: TextStyle(
-        fontSize: 18,
+        fontSize: 16,
         color: MaterialStateColor.resolveWith(
           (state) {
             if (state.contains(MaterialState.selected)) {
               return Vx.white;
             } else {
-              return Vx.black;
+              return ColorTheme.headerColor;
             }
           },
         ),
@@ -52,7 +52,7 @@ class SelectedBorder extends RoundedRectangleBorder
       return const RoundedRectangleBorder(
         borderRadius: Sizing.borderRadiusXLL,
         side: BorderSide(
-          width: 1,
+          width: 0.5,
           color: ColorTheme.primaryColor,
         ),
       );
@@ -60,8 +60,8 @@ class SelectedBorder extends RoundedRectangleBorder
       return RoundedRectangleBorder(
         borderRadius: Sizing.borderRadiusXLL,
         side: BorderSide(
-          width: 1,
-          color: Colors.grey.shade300,
+          width: 0.5,
+          color: Colors.grey.shade200,
         ),
       );
     }

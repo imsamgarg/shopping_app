@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:get/get.dart';
+import 'package:shopping_app/app/modules/home/controllers/home_controller.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class CenterLoading extends StatelessWidget {
   const CenterLoading({
@@ -19,6 +22,37 @@ class CenterLoading extends StatelessWidget {
         color: color ?? Theme.of(context).colorScheme.primary,
         size: size,
       ),
+    );
+  }
+}
+
+class EmptyWidget extends StatelessWidget {
+  const EmptyWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const SizedBox.shrink();
+  }
+}
+
+const kEmptyWidget = EmptyWidget();
+
+class CartIcon extends GetView<HomeController> {
+  const CartIcon({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 50,
+      width: 50,
+      child: MaterialButton(
+        elevation: 0,
+        padding: EdgeInsets.zero,
+        shape: const CircleBorder(),
+        onPressed: controller.onCartTap,
+        child: const Icon(Icons.shopping_bag_outlined),
+        color: Vx.gray700,
+      ).box.roundedFull.color(Vx.gray500.withOpacity(0.1)).make(),
     );
   }
 }
