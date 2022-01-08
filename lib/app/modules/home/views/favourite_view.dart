@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:shopping_app/app/core/global_widgets/future_builder.dart';
 import 'package:shopping_app/app/core/global_widgets/product_card.dart';
+import 'package:shopping_app/app/core/global_widgets/widgets.dart';
 import 'package:shopping_app/app/core/theme/sizing_theme.dart';
 import 'package:shopping_app/app/core/utils/helper.dart';
 import 'package:shopping_app/app/core/values/values.dart';
@@ -26,6 +27,11 @@ class FavouriteView extends GetView<FavouriteController> {
                   color: primaryColor(context),
                 ),
               ),
+              actions: [
+                CartIcon(
+                  color: primaryColor(context),
+                )
+              ],
               title: const Text("Favourites"),
             ),
             body: Padding(

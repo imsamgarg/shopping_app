@@ -4,6 +4,7 @@ import 'package:custom_utils/log_utils.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:shopping_app/app/core/global_widgets/app_bar.dart';
+import 'package:shopping_app/app/core/utils/helper.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import 'package:shopping_app/app/core/global_widgets/future_builder.dart';
@@ -21,6 +22,7 @@ class ProductsListView extends GetView<ProductsListController> {
     return Scaffold(
       appBar: AppBarWithCartIcon(
         (controller.title),
+        color: primaryColor(context),
       ),
       floatingActionButton: _FilterFloatingButton(),
       body: Padding(

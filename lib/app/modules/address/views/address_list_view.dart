@@ -5,6 +5,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:shopping_app/app/core/global_widgets/app_bar.dart';
 import 'package:shopping_app/app/core/global_widgets/future_builder.dart';
+import 'package:shopping_app/app/core/utils/helper.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import 'package:shopping_app/app/core/theme/color_theme.dart';
@@ -33,6 +34,7 @@ class AddressListView extends GetView<AddressListController> {
                 slivers: [
                   SliverAppBarWithCartIcon(
                     ("Address List"),
+                    color: primaryColor(context),
                   ),
                   if (addressCount != 0) ...[
                     verSliverSpacing10,

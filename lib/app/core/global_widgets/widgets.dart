@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:shopping_app/app/core/utils/helper.dart';
 import 'package:shopping_app/app/modules/home/controllers/home_controller.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -38,7 +39,8 @@ class EmptyWidget extends StatelessWidget {
 const kEmptyWidget = EmptyWidget();
 
 class CartIcon extends GetView<HomeController> {
-  const CartIcon({Key? key}) : super(key: key);
+  final Color? color;
+  const CartIcon({this.color, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -47,12 +49,18 @@ class CartIcon extends GetView<HomeController> {
       width: 50,
       child: MaterialButton(
         elevation: 0,
+        hoverElevation: 0,
+        focusElevation: 0,
+        highlightElevation: 0,
         padding: EdgeInsets.zero,
+        color: color != null ? null : Colors.grey.withOpacity(0.1),
         shape: const CircleBorder(),
         onPressed: controller.onCartTap,
-        child: const Icon(Icons.shopping_bag_outlined),
-        color: Vx.gray700,
-      ).box.roundedFull.color(Vx.gray500.withOpacity(0.1)).make(),
+        child: Icon(
+          Icons.shopping_bag_outlined,
+          color: color,
+        ),
+      ),
     );
   }
 }
