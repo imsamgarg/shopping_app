@@ -26,14 +26,14 @@ class ProductOpController extends GetxController
   set quantity(value) => _quantity.value = value;
 
   void incrementQuantity() {
-    if (quantity >= productMaxQuantity) {
+    if (quantity >= kProductMaxQuantity) {
       return;
     }
     ++quantity;
   }
 
   void decrementQuantity() {
-    if (quantity == productMinQuantity) {
+    if (quantity == kProductMinQuantity) {
       return;
     }
     --quantity;

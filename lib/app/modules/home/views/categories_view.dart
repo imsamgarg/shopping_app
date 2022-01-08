@@ -51,9 +51,9 @@ class _SubCategoryView extends GetView<HomeController> {
           child: GridView.builder(
             itemCount: subCategories.length,
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: productWidth,
+              maxCrossAxisExtent: kProductWidth,
               mainAxisSpacing: 10,
-              mainAxisExtent: productHeight - 50,
+              mainAxisExtent: kProductHeight - 50,
               crossAxisSpacing: 10,
             ),
             itemBuilder: (context, index) {

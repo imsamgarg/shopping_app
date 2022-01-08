@@ -16,7 +16,7 @@ class Sizing {
   static const leftPadding = EdgeInsets.only(left: 20);
 
   static final cardShape =
-      RoundedRectangleBorder(borderRadius: BorderRadius.circular(radius));
+      RoundedRectangleBorder(borderRadius: BorderRadius.circular(kRadius));
   static const roundShape =
       RoundedRectangleBorder(borderRadius: borderRadiusXLL);
 

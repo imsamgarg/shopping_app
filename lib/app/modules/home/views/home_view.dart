@@ -4,6 +4,7 @@ import 'package:custom_utils/spacing_utils.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:shopping_app/app/core/theme/color_theme.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import 'package:shopping_app/app/core/global_widgets/buttons.dart';
@@ -98,9 +99,9 @@ class _PopularProduct extends GetView<PopularProductsController> {
         },
       ),
       gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-        maxCrossAxisExtent: productWidth,
+        maxCrossAxisExtent: kProductWidth,
         mainAxisSpacing: 10,
-        mainAxisExtent: productHeight,
+        mainAxisExtent: kProductHeight,
         crossAxisSpacing: 10,
       ),
     );
@@ -137,16 +138,16 @@ class _SubCategories extends GetView<HomeController> {
   //   Color(0xFF6B2A5F),
   //   Colors.blue,
   //   Colors.green,
-  // Colors.accents
-  // Color(0xFFF7D9C4),
-  // Color(0xFF903A73),
-  // Color(0xFFFFF0E6),
-  //    Color(0xFFB44C78),
-  //   Color(0xFFF9AC9D),
-  //    Color(0xFFFFCEB8),
-  //    Color(0xFFFF7079),
-  //    Color(0xFFFFB190),
-  //   Color(0xFFE56189),
+  //   Colors.accents
+  //   Color(FFF7D9C4),
+  //   Color(FF903A73),
+  //   Color(FFFFF0E6),
+  //   Color(FFB44C78),
+  //   Color(FFF9AC9D),
+  //   Color(FFFFCEB8),
+  //   Color(FFFF7079),
+  //   Color(FFFFB190),
+  //   Color(FFE56189),
   // ];
   final colors = [
     Colors.redAccent,
@@ -208,7 +209,7 @@ class _CategoryCard extends StatelessWidget {
         .box
         .px24
         .color(_color.withOpacity(0.07))
-        .withRounded(value: radius)
+        .withRounded(value: kRadius)
         .make()
         .pOnly(right: 8)
         .onTap(() => onTap?.call());
@@ -272,31 +273,31 @@ class _Banner extends GetView<HomeController> {
   }
 }
 
-class _Heading extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return SliverToBoxAdapter(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          "Fashion 24x7 "
-              .text
-              .bold
-              .size(30)
-              .color(const Color(0xff14284a))
-              .textStyle(GoogleFonts.varelaRound())
-              .make(),
-          verSpacing10,
-          "Where Fashion Meets Your Soul"
-              .text
-              .size(17)
-              .color(const Color(0xff14284a))
-              .make(),
-        ],
-      ),
-    );
-  }
-}
+// class _Heading extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return SliverToBoxAdapter(
+//       child: Column(
+//         crossAxisAlignment: CrossAxisAlignment.start,
+//         children: [
+//           "Fashion 24x7 "
+//               .text
+//               .bold
+//               .size(30)
+//               .color(ColorTheme.headerColor)
+//               .textStyle(GoogleFonts.varelaRound())
+//               .make(),
+//           verSpacing10,
+//           "Where Fashion Meets Your Soul"
+//               .text
+//               .size(17)
+//               .color(ColorTheme.headerColor)
+//               .make(),
+//         ],
+//       ),
+//     );
+//   }
+// }
 
 class _AppBar extends StatelessWidget {
   @override

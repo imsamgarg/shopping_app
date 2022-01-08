@@ -34,9 +34,9 @@ class FavouriteView extends GetView<FavouriteController> {
             },
           ),
           gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-            maxCrossAxisExtent: productWidth,
+            maxCrossAxisExtent: kProductWidth,
             mainAxisSpacing: 10,
-            mainAxisExtent: productHeight,
+            mainAxisExtent: kProductHeight,
             crossAxisSpacing: 10,
           ),
         ),

@@ -1,10 +1,10 @@
-const double radius = 15;
+const double kRadius = 15;
 
 ///24
-const double fontSizeXL = 24;
+const double kFontSizeXL = 24;
 
 ///16
-const double fontSizeM = 16;
+const double kFontSizeM = 16;
 
 enum ScreenSize {
   sm,
@@ -41,12 +41,12 @@ const double lg = 600;
 const double xl = 700;
 
 //*product cart sizes
-const double productHeight = 250;
-const double productWidth = 200;
+const double kProductHeight = 250;
+const double kProductWidth = 200;
 
 //*product quantity
 ///10
-const double productMaxQuantity = 10;
+const double kProductMaxQuantity = 10;
 
 ///1
-const double productMinQuantity = 1;
+const double kProductMinQuantity = 1;
