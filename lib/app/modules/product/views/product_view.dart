@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shopping_app/app/core/global_widgets/choice_chip.dart';
 import 'package:shopping_app/app/core/global_widgets/stepper.dart';
+import 'package:shopping_app/app/core/utils/helper.dart';
 import 'package:shopping_app/app/modules/product/controllers/image_controller.dart';
 import 'package:shopping_app/app/modules/product/controllers/product_op_controller.dart';
 import 'package:shopping_app/app/modules/product/controllers/options_controller.dart';
@@ -15,7 +16,6 @@ import 'package:shopping_app/app/core/global_widgets/buttons.dart';
 import 'package:shopping_app/app/core/global_widgets/cached_image.dart';
 import 'package:shopping_app/app/core/global_widgets/future_builder.dart';
 import 'package:shopping_app/app/core/global_widgets/widgets.dart';
-import 'package:shopping_app/app/core/theme/color_theme.dart';
 import 'package:shopping_app/app/core/values/strings.dart';
 
 import '../../../core/utils/extensions.dart';
@@ -33,40 +33,56 @@ class ProductView extends GetView<ProductController> {
           ),
           child: Scaffold(
             bottomNavigationBar: Container(
-              height: 80,
+              height: 70,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  _BuyNow(),
+                children: [
+                  const _BuyNow(),
                   horSpacing16,
-                  _AddToCart(),
-                ],
-              ).px16().paddingOnly(top: 12),
-            ),
-            body: CustomScrollView(
-              slivers: [
-                SliverAppBar(
-                  automaticallyImplyLeading: false,
-                  leading: const _ShareProduct(),
-                  expandedHeight: 400,
-                  actions: const [
-                    _LikeProduct(),
-                  ],
-                  flexibleSpace: FlexibleSpaceBar(
-                    background: _ImageCorousal(),
+                  const _AddToCart(),
+                  horSpacing16,
+                  CartIcon(
+                    color: Vx.white,
+                    backgroundColor: primaryColor(context),
                   ),
-                ),
-                verSliverSpacing12,
-                const _Header(),
-                const _SelectSize(),
-                const _SelectColor(),
-                const _Description(),
-                const _DeliveryCharges(),
-              ],
+                ],
+              ).px16().paddingOnly(top: 10, bottom: 10),
             ),
+            body: const _Body(),
           ),
         );
       },
+    );
+  }
+}
+
+class _Body extends GetView<OptionsController> {
+  const _Body({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomScrollView(
+      slivers: [
+        SliverAppBar(
+          automaticallyImplyLeading: false,
+          leading: const _ShareProduct(),
+          expandedHeight: 400,
+          actions: const [
+            _LikeProduct(),
+          ],
+          flexibleSpace: FlexibleSpaceBar(
+            background: _ImageCorousal(),
+          ),
+        ),
+        verSliverSpacing12,
+        const _Header(),
+        if (controller.sizeOptions != null) const _SelectSize(),
+        if (controller.colorOptions != null) const _SelectColor(),
+        const _Description(),
+        const _DeliveryCharges(),
+      ],
     );
   }
 }
@@ -79,10 +95,15 @@ class _Description extends GetView<ProductController> {
     return SliverToBoxAdapter(
       child: _CustomPadding(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const Divider(),
+            verSpacing12,
             const _SubHeading("Description"),
             verSpacing20,
-            controller.description.text.make(),
+            controller.description.text.capitalize
+                .color(Colors.grey[600]!)
+                .make(),
           ],
         ),
       ),
@@ -135,7 +156,8 @@ class _BuyNow extends GetView<ProductOpController> {
     return Expanded(
       child: AppOutlinedButton(
         onTap: controller.onBuyNow,
-        child: ("Buy Now").text.size(16).bold.make(),
+        padding: const EdgeInsets.all(16),
+        child: ("Buy Now").text.size(14).bold.make(),
       ),
     );
   }
@@ -202,17 +224,28 @@ class _ImageCorousal extends GetView<ProductImageController> {
     return Stack(
       children: [
         _ImagesView(),
-        _SwipeButton(
-          alignment: Alignment.centerLeft,
-          icon: Icons.keyboard_arrow_left_rounded,
-          onTap: controller.onLeftArrowPress,
-          padding: const EdgeInsets.only(left: 8),
+        Obx(
+          () {
+            if (!controller.showLeftSwipeButton) return kEmptyWidget;
+            return _SwipeButton(
+              alignment: Alignment.centerLeft,
+              icon: Icons.keyboard_arrow_left_rounded,
+              onTap: controller.onLeftArrowPress,
+              padding: const EdgeInsets.only(left: 8),
+            );
+          },
         ),
-        _SwipeButton(
-          alignment: Alignment.centerRight,
-          icon: Icons.keyboard_arrow_right_rounded,
-          onTap: controller.onRightArrowPress,
-          padding: const EdgeInsets.only(right: 8),
+        Obx(
+          () {
+            if (!controller.showRightSwipeButton) return kEmptyWidget;
+
+            return _SwipeButton(
+              alignment: Alignment.centerRight,
+              icon: Icons.keyboard_arrow_right_rounded,
+              onTap: controller.onRightArrowPress,
+              padding: const EdgeInsets.only(right: 8),
+            );
+          },
         ),
       ],
     );
@@ -226,9 +259,13 @@ class _ImagesView extends GetView<ProductImageController> {
       physics: const NeverScrollableScrollPhysics(),
       controller: controller.pageController,
       itemBuilder: (context, index) {
-        final child = CachedImage(
-          borderRadius: BorderRadius.zero,
-          url: controller.images[index]!,
+        final image = controller.images[index]!;
+
+        final child = Hero(
+          tag: image,
+          child: CachedImage(
+            url: image,
+          ).onTap(() => controller.onImageTap(image)),
         );
 
         if (index != controller.imageLength - 1) return child;
@@ -237,9 +274,12 @@ class _ImagesView extends GetView<ProductImageController> {
           init: controller,
           id: controller.lastImageWidgetId,
           builder: (_) {
-            return CachedImage(
-              borderRadius: BorderRadius.zero,
-              url: controller.images[index]!,
+            final image = controller.images[index]!;
+            return Hero(
+              tag: image,
+              child: CachedImage(
+                url: image,
+              ).onTap(() => controller.onImageTap(image)),
             );
           },
         );
@@ -273,6 +313,7 @@ class _SwipeButton extends StatelessWidget {
           width: 40,
           height: 40,
           child: MaterialButton(
+            elevation: 0,
             padding: EdgeInsets.zero,
             color: Colors.black.withOpacity(0.1),
             shape: const CircleBorder(),
@@ -396,8 +437,9 @@ class _AddToCart extends GetView<ProductOpController> {
         }
         return Expanded(
           child: AppTextButton(
+            padding: const EdgeInsets.all(16),
             onTap: controller.onAddToCart,
-            child: ("Add To Cart").text.size(16).bold.make(),
+            child: ("Add To Cart").text.size(14).bold.make(),
           ),
         );
       },
@@ -421,11 +463,13 @@ class _Header extends GetView<ProductOpController> {
                 _Price(),
               ],
             ),
-            verSpacing20,
-            CustomStepper(
-              onDecrementTap: controller.decrementQuantity,
-              onIncrementTap: controller.incrementQuantity,
-              value: controller.quantity,
+            verSpacing28,
+            Obx(
+              () => CustomStepper(
+                onDecrementTap: controller.decrementQuantity,
+                onIncrementTap: controller.incrementQuantity,
+                value: controller.quantity,
+              ),
             ),
             verSpacing12,
           ],
@@ -440,15 +484,27 @@ class _ProductName extends GetView<ProductController> {
 
   @override
   Widget build(BuildContext context) {
-    return controller.name
-        .trim()
-        .trimText(15)
-        .text
-        .extraBold
-        .textStyle(GoogleFonts.nunitoSans())
-        .size(26)
-        .color(ColorTheme.headerColor)
-        .make();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        (controller.name)
+            .trim()
+            .trimText(15)
+            .text
+            .fontWeight(FontWeight.w900)
+            .textStyle(Theme.of(context).textTheme.headline5!)
+            // .size(26)
+            // .color(ColorTheme.headerColor)
+            .make(),
+        verSpacing8,
+        (controller.product.subCategory!)
+            .text
+            .bold
+            .size(16)
+            .color(Colors.grey.shade500)
+            .make(),
+      ],
+    );
   }
 }
 
@@ -461,13 +517,14 @@ class _Price extends GetView<ProductController> {
       crossAxisAlignment: CrossAxisAlignment.baseline,
       textBaseline: TextBaseline.alphabetic,
       children: [
-        rsSign.text.size(22).make(),
+        (rsSign.text).color(primaryColor(context)).size(22).make(),
         horSpacing4,
         Obx(() {
-          return "${controller.totalPrice}"
+          return ("${controller.totalPrice}")
               .text
               .bold
-              .color(ColorTheme.headerColor.withOpacity(0.9))
+              .color(primaryColor(context))
+              // .color(ColorTheme.headerColor.withOpacity(0.9))
               .size(32)
               .make();
         }),
@@ -487,34 +544,31 @@ class _DeliveryCharges extends GetView<ProductController> {
       return const SliverToBoxAdapter();
     }
 
+    final codCharges = "$rsSign${appData.codCharges}";
+    final codFreeOn = "$rsSign${appData.codFreeOn}";
+
+    final prepaidCharges = "$rsSign${appData.razorPayCharges}";
+    final prepaidFreeOn = "$rsSign${appData.razorPayFreeOn}";
+
+    final cod = "COD : $codCharges  For Orders Less Then $codFreeOn";
+    final prepaid =
+        "Online Payment : $prepaidCharges  For Orders Less Then $prepaidFreeOn";
+
+    Widget _textStyle(String text) {
+      return text.text.make();
+    }
+
     return SliverToBoxAdapter(
       child: _CustomPadding(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const Divider(),
+            verSpacing12,
             const _SubHeading("Delivery / Return"),
-            "COD :- $rsSign${appData.codCharges} For Orders Less Then $rsSign${appData.codFreeOn}"
-                .text
-                .size(17)
-                .make()
-                .box
-                .py8
-                .make(),
-            "Online Payment :- $rsSign${appData.razorPayCharges} For Orders Less Then $rsSign${appData.razorPayFreeOn}"
-                .text
-                .size(17)
-                .make()
-                .box
-                .py8
-                .make(),
-            // if (product.isReturnable)
-            //   "Return/Replacement Period :- ${product.returnDays} Days"
-            //       .text
-            //       .size(17)
-            //       .make()
-            //       .box
-            //       .py8
-            //       .make(),
+            verSpacing12,
+            _textStyle(cod),
+            _textStyle(prepaid),
           ],
         ),
       ),
