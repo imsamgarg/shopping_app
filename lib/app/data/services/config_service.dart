@@ -30,7 +30,7 @@ class ConfigService extends GetxService {
 
     // data = AppModel();
 
-    final doc = await getDoc(Db.configCol);
+    final doc = await getDoc(Db.configDocument);
 
     data = AppModel.fromJson(doc);
 

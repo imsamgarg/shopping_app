@@ -5,7 +5,7 @@ abstract class Db {
   static const configCol = "config";
   static const filterMapCol = "filters";
 
-  // static const configDocument = "config_doc";
+  static const configDocument = "config_doc";
   static const deliveryConfigDoc = "delivery";
   static const aboutAppDoc = "about";
   static const bannerDoc = "banner";

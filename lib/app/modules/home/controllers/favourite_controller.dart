@@ -12,6 +12,7 @@ class FavouriteController extends GetxController with ServicesMixin {
   late final FavouritePageController pagingController = _getController();
   late final homeController = Get.find<HomeController>();
 
+  late final instance = _getFavourites();
   @override
   void onClose() {
     pagingController.dispose();
@@ -62,5 +63,10 @@ class FavouriteController extends GetxController with ServicesMixin {
     _pagingController.addPageRequestListener(fetchProducts);
 
     return _pagingController;
+  }
+
+  Future<bool> _getFavourites() async {
+    await favouriteService.initService();
+    return true;
   }
 }

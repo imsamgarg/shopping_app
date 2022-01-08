@@ -66,7 +66,7 @@ class FirebaseDbRepository {
         .doc(documentId)
         .collection(subCollection)
         .doc(subColDocId)
-        .update(data);
+        .set(data, SetOptions(merge: true));
   }
 
   FutureDocReference addSubCollectionDocument({
