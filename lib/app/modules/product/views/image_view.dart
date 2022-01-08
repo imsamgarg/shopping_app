@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:shopping_app/app/core/global_widgets/cached_image.dart';
 
 class ImageView extends StatelessWidget {
   final String image;
@@ -10,9 +10,19 @@ class ImageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: InteractiveViewer(
-          child: CachedNetworkImage(imageUrl: image),
+      appBar: AppBar(
+        title: const Text("Image"),
+        elevation: 1,
+      ),
+      body: InteractiveViewer(
+        child: Center(
+          child: Hero(
+            tag: image,
+            child: CachedImage(
+              url: image,
+              borderRadius: BorderRadius.zero,
+            ),
+          ),
         ),
       ),
     );
