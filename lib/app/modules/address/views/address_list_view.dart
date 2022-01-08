@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:custom_utils/spacing_utils.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
+import 'package:shopping_app/app/core/global_widgets/app_bar.dart';
 import 'package:shopping_app/app/core/global_widgets/future_builder.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -30,8 +31,8 @@ class AddressListView extends GetView<AddressListController> {
               final addressCount = controller.addresses.length;
               return CustomScrollView(
                 slivers: [
-                  const SliverAppBar(
-                    title: Text("Address List"),
+                  SliverAppBarWithCartIcon(
+                    ("Address List"),
                   ),
                   if (addressCount != 0) ...[
                     verSliverSpacing10,
