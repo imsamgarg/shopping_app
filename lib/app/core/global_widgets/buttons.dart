@@ -215,7 +215,7 @@ class AppOutlinedButton extends StatelessWidget {
 class DialogButton extends StatelessWidget {
   final VoidCallback onTap;
   final Color? color;
-  final Color textColor;
+  final Color? textColor;
   final String heading;
   final bool isLoading;
 
@@ -225,7 +225,7 @@ class DialogButton extends StatelessWidget {
     this.color,
     required this.heading,
     this.isLoading = false,
-    this.textColor = Vx.white,
+    this.textColor,
   }) : super(key: key);
 
   @override
@@ -236,7 +236,7 @@ class DialogButton extends StatelessWidget {
       child: AppTextButton(
         child: heading.text.make(),
         padding: const EdgeInsets.all(0),
-        color: color ?? Vx.white,
+        color: color,
         isLoading: isLoading,
         loadingSize: 14,
         foregroundColor: textColor,

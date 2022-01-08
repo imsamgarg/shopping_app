@@ -33,7 +33,7 @@ class ProfileView extends GetView<ProfileController> {
             _MailAuth(),
             verSpacing8,
             _CustomButton(
-              onTap: controller.logout,
+              onTap: controller.onCartTap,
               title: "Your Cart",
             ),
             _CustomButton(
