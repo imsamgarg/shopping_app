@@ -1,16 +1,25 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:shopping_app/app/core/utils/mixins/routes_mixin.dart';
 
 import 'package:shopping_app/app/modules/product/controllers/product_controller.dart';
 
-class ProductImageController extends GetxController {
+class ProductImageController extends GetxController with RoutesMixin {
   String? image;
   late final productController = Get.find<ProductController>();
   late final imageLength = images.length;
   int currentImage = 0;
 
   String lastImageWidgetId = "lastImageWidgetId";
+
+  final _showLeftSwipeButton = false.obs;
+  get showLeftSwipeButton => _showLeftSwipeButton.value;
+  set showLeftSwipeButton(value) => _showLeftSwipeButton.value = value;
+
+  late final _showRightSwipeButton = (images.length > 2).obs;
+  get showRightSwipeButton => _showRightSwipeButton.value;
+  set showRightSwipeButton(value) => _showRightSwipeButton.value = value;
 
   List<String?> get images {
     return [...productController.images!, image];
@@ -72,6 +81,11 @@ class ProductImageController extends GetxController {
   }
 
   void updateCurrentImageIndex(int index) {
+    showLeftSwipeButton = index != 0;
+
+    showRightSwipeButton =
+        (index == imageLength - 1) ? false : (images[imageLength - 1] != null);
+
     currentImage = index;
   }
 
