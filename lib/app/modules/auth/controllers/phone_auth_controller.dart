@@ -27,7 +27,7 @@ class PhoneAuthController extends GetxController
 
   final String buttonId = "button";
   final String timerId = "timer";
-  final String inputFieldsId = "fields";
+  final String builderId = "fields";
 
   final _timer = 60.obs;
   get timer => _timer.value;
@@ -74,7 +74,7 @@ class PhoneAuthController extends GetxController
     errorSnackbar(errorMsg);
     toggleButtonLoading(false);
     isOtpSent = true;
-    update([inputFieldsId, timerId]);
+    update([builderId, timerId]);
   }
 
   void onVerifyOtp() async {
@@ -105,7 +105,7 @@ class PhoneAuthController extends GetxController
     _verificationId = verificationId;
     toggleButtonLoading(false);
     isOtpSent = true;
-    update([inputFieldsId, timerId]);
+    update([builderId, timerId]);
 
     customSnackBar(
       "Otp Sent!! Auto Retrieving Otp in 60 Seconds",
