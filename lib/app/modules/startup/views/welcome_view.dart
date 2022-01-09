@@ -34,7 +34,7 @@ class WelcomeView extends GetView<StartupController> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Image.asset(
-                          Assets.assetsImagesWelcome,
+                          Assets.assetsImagesWelcome2,
                           height: 300,
                           width: 300,
                         ),

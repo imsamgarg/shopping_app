@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:custom_utils/spacing_utils.dart';
 import 'package:get/get.dart';
+import 'package:shopping_app/app/core/values/assets.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import 'package:shopping_app/app/core/global_widgets/buttons.dart';
@@ -30,6 +31,7 @@ class LoginView extends GetView<LoginController> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 HeaderImage(
+                  image: Assets.assetsImagesLoginMain,
                   viewInsets: context.mq.viewInsets.bottom,
                 ),
                 Column(
