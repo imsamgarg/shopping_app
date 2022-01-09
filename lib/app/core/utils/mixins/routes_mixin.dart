@@ -70,7 +70,7 @@ mixin RoutesMixin {
   }
 
   void onAllCategoriesTap() {
-    Get.to(() => CategoriesView());
+    Get.to(() => CategoriesView(), transition: Transition.rightToLeftWithFade);
   }
 
   void handleLink(DynamicLink? link) {

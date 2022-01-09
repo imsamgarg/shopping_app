@@ -23,7 +23,10 @@ class SelectAddressController extends GetxController with ServicesMixin {
   }
 
   void onAddAddress() async {
-    await Get.to(() => const AddressView());
+    await Get.to(
+      () => const AddressView(),
+      transition: Transition.rightToLeftWithFade,
+    );
     //update the ui
     update();
   }
@@ -40,7 +43,10 @@ class SelectAddressController extends GetxController with ServicesMixin {
   }
 
   void gotoConfirmationView() {
-    Get.to(() => ConfirmCheckoutView());
+    Get.to(
+      () => ConfirmCheckoutView(),
+      transition: Transition.rightToLeftWithFade,
+    );
   }
 
   void updateCheckoutData() {

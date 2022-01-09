@@ -13,6 +13,7 @@ void main() {
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
       theme: AppTheme.lightTheme,
+      defaultTransition: Transition.native,
     ),
   );
 }

@@ -46,6 +46,7 @@ class AppPages {
       name: _Paths.PRODUCT_LIST,
       page: () => ProductsListView(),
       binding: ProductListBinding(),
+      transition: Transition.rightToLeftWithFade,
     ),
     GetPage(
       name: _Paths.PRODUCT,
@@ -56,16 +57,19 @@ class AppPages {
       name: _Paths.ADDRESS,
       page: () => AddressListView(),
       binding: AddressBinding(),
+      transition: Transition.rightToLeftWithFade,
     ),
     GetPage(
       name: _Paths.ORDERS,
       page: () => OrderListView(),
       binding: OrdersBinding(),
+      transition: Transition.rightToLeftWithFade,
     ),
     GetPage(
       name: _Paths.CHECKOUT,
       page: () => SelectPaymentMethodView(),
       binding: CheckoutBinding(),
+      transition: Transition.rightToLeftWithFade,
     ),
     GetPage(
       name: _Paths.AUTH,
