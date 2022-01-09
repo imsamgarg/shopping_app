@@ -42,7 +42,10 @@ const double xl = 700;
 
 //*product cart sizes
 const double kProductHeight = 250;
+const double kHorProductHeight = 170;
+
 const double kProductWidth = 200;
+const double kHorProductWidth = 130;
 
 //*product quantity
 ///10

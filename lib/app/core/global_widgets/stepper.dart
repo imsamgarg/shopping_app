@@ -27,7 +27,7 @@ class CustomStepper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.transparent,
+      color: Vx.white,
       shape: RoundedRectangleBorder(
         borderRadius: Sizing.borderRadiusS,
         side: BorderSide(

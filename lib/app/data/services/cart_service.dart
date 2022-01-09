@@ -168,14 +168,14 @@ class CartService extends GetxService with ServicesMixin {
     return count;
   }
 
-  ////* No Longer Used
-  // void incrementQuantity(String id) {
-  //   ++cartItems[id]?.quantity;
-  // }
+  //* Now Used
+  void incrementQuantity(String id) {
+    ++cartMap[id]?.quantity;
+  }
 
-  // void decrementQuantity(String id) {
-  //   --cartItems[id]?.quantity;
-  // }
+  void decrementQuantity(String id) {
+    --cartMap[id]?.quantity;
+  }
 
   //so state can be mantained globally
   void changeQuantity(String id, int quantity) {

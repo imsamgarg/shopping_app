@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:custom_utils/spacing_utils.dart';
+import 'package:shopping_app/app/core/values/values.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import 'package:shopping_app/app/core/global_widgets/cached_image.dart';
@@ -148,82 +149,65 @@ class _DiscountText extends StatelessWidget {
 
 class CartItem extends StatelessWidget {
   final String img;
-  final String extra;
+  final String? extra;
   final String productName;
-  final bool inStock;
-  // final bool optionInStock;
-  // final int finalPrice;
-  // final int quantity;
+  final ProductAvailability availability;
   final Widget stepper;
-  final VoidCallback onDeleteTap;
-
   final Widget productPrice;
+  final VoidCallback onDeleteTap;
 
   const CartItem({
     Key? key,
     required this.img,
     required this.productName,
-    // required this.finalPrice,
     this.extra = "",
-    this.inStock = true,
-    // this.optionInStock = true,
+    required this.availability,
     required this.onDeleteTap,
     required this.stepper,
-    // required this.quantity,
     required this.productPrice,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    bool isAvailable = availability == ProductAvailability.available;
     return Stack(
       children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              flex: 2,
-              child: CachedImage(url: img),
-            ),
-            const SizedBox(
-              width: 20,
-            ),
-            Expanded(
-              flex: 4,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: 05,
-                  ),
-                  _ProductName(pName: productName),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  productPrice,
-                  // ProductPrice(
-                  //   price: finalPrice,
-                  // ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  if (inStock) stepper,
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  (inStock ? extra : "Out Of Stock")
-                      .text
-                      .color(primaryColor(context))
-                      .make(),
-                ],
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                width: kHorProductWidth,
+                child: CachedImage(url: img),
               ),
-            )
-          ],
+              const SizedBox(
+                width: 20,
+              ),
+              Expanded(
+                flex: 4,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _ProductName(pName: productName),
+                    verSpacing10,
+                    productPrice,
+                    verSpacing10,
+                    if (availability == ProductAvailability.available) stepper,
+                    verSpacing10,
+                    if (extra != null)
+                      extra!.text.bold.color(primaryColor(context)).make(),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
-        if (!inStock) const OutOfStockMask(),
+        if (!isAvailable) const OutOfStockMask(),
         Icon(
           Icons.delete_forever_rounded,
-          color: (inStock) ? Vx.red700 : Vx.white,
+          color: (isAvailable) ? primaryColor(context) : Vx.white,
         )
             .box
             .p8
@@ -235,23 +219,47 @@ class CartItem extends StatelessWidget {
             .material(color: Colors.transparent)
             .objectTopRight(),
       ],
-    );
+    )
+        .p8()
+        .box
+        .height(kHorProductHeight)
+        .color(Vx.gray50)
+        .withRounded(value: Sizing.radiusL)
+        .make()
+        .pSymmetric(h: 16, v: 8);
   }
 }
 
 class OutOfStockMask extends StatelessWidget {
-  final String msg;
+  final ProductAvailability? availability;
 
   const OutOfStockMask({
     Key? key,
-    this.msg = "Product/Option Is Out Of Stock",
+    this.availability,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    late String message;
+    switch (availability) {
+      case ProductAvailability.notAvailable:
+        message = "Product Is Out Of Stock";
+        break;
+      case ProductAvailability.colorNotAvailable:
+        message = "This Color Is Out Of Stock";
+        break;
+      case ProductAvailability.sizeNotAvailable:
+        message = "This Size Is Out Of Stock";
+        break;
+      case ProductAvailability.productDeleted:
+        message = "This Product Is Not Available";
+        break;
+      default:
+        break;
+    }
     return AbsorbPointer(
       absorbing: true,
-      child: msg.text.white
+      child: message.text.white
           .size(17)
           .make()
           .box

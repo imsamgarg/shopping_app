@@ -5,16 +5,25 @@ import 'package:shopping_app/app/core/values/values.dart';
 
 import 'cart_controller.dart';
 
+class ProductDetail {
+  int quantity;
+  int price;
+
+  ProductDetail({required this.quantity, required this.price});
+}
+
 class CartProductController extends GetxController with ServicesMixin {
   late final cartController = Get.find<CartController>();
   late final cartItems = cartController.cartItems;
 
-  late final List<RxInt> productPriceList = cartItems.map((e) {
-    return RxInt(e.fullPrice! * e.quantity);
-  }).toList(growable: false);
+  late final List<Rx<ProductDetail>> productDetailList = cartItems.map((e) {
+    final quantity = e.quantity;
+    final price = e.fullPrice! * quantity;
+    return Rx(ProductDetail(quantity: quantity, price: price));
+  }).toList();
 
   int productPrice(int index) {
-    return productPriceList[index].value;
+    return productDetailList[index].value.price;
   }
 
   ProductAvailability checkAvailability(int index) {
@@ -27,25 +36,75 @@ class CartProductController extends GetxController with ServicesMixin {
     if (!(item.inStock ?? false)) {
       return ProductAvailability.notAvailable;
     }
-    if (!(item.isColorInStock ?? false)) {
+    if (item.isColorInStock == false) {
       return ProductAvailability.colorNotAvailable;
     }
-    if (!(item.isSizeInStock ?? false)) {
+    if (item.isSizeInStock == false) {
       return ProductAvailability.sizeNotAvailable;
     }
 
     return ProductAvailability.available;
   }
+  ////* No Longer Used
+  // void changeProductQuantity(int index, int quantity) {
+  //   //?local to cart screen
+  //   final item = cartItems[index];
+  //   item.quantity = quantity;
 
-  void changeProductQuantity(int index, int quantity) {
-    //local to cart screen
+  //   //?globally
+  //   final id = item.product!.id!;
+  //   cartService.changeQuantity(id, quantity);
+
+  //   //?update total price ui
+  //   cartController.updateTotalPrice();
+
+  //   //?update item price
+  //   updateProductPrice(index);
+  // }
+
+  void decrementQuantity(int index) {
+    // local to cart screen
     final item = cartItems[index];
-    item.quantity = quantity;
 
-    //globally
+    if (item.quantity == kProductMinQuantity) {
+      return;
+    }
+    // --item.quantity;
+
+    // globally
     final id = item.product!.id!;
-    cartService.changeQuantity(id, quantity);
+    cartService.decrementQuantity(id);
 
+    updatePriceChanges(index);
+    updateQuantityChanges(index, item.quantity);
+  }
+
+  void incrementQuantity(int index) {
+    // local to cart screen
+    final item = cartItems[index];
+
+    if (item.quantity >= kProductMaxQuantity) {
+      return;
+    }
+    // ++item.quantity;
+
+    // globally
+    final id = item.product!.id!;
+    cartService.incrementQuantity(id);
+
+    updatePriceChanges(index);
+    updateQuantityChanges(index, item.quantity);
+  }
+
+  void updateProductPrice(int index) {
+    final item = cartItems[index];
+
+    //calculate full price
+    final price = item.fullPrice! * item.quantity;
+    productDetailList[index].update((val) => val?.price = price);
+  }
+
+  void updatePriceChanges(int index) {
     //update total price ui
     cartController.updateTotalPrice();
 
@@ -53,12 +112,15 @@ class CartProductController extends GetxController with ServicesMixin {
     updateProductPrice(index);
   }
 
-  void updateProductPrice(int index) {
-    final item = cartItems[index];
+  void removeProductDetail(int index) {
+    //close subscription
+    // productDetailList[index]();
+    //remove state
+    productDetailList.removeAt(index);
+  }
 
-    //calculate full price
-    final price = item.product!.price! * item.quantity;
-    productPriceList[index].value = price;
+  void updateQuantityChanges(int index, int quantity) {
+    productDetailList[index].update((val) => val?.quantity = quantity);
   }
 }
 

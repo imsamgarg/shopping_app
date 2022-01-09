@@ -171,16 +171,12 @@ class Price extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () {
-        return "$rsSign $price"
-            .text
-            .semiBold
-            .color(ColorTheme.headerColor)
-            .size(22)
-            .make();
-      },
-    );
+    return "$rsSign $price"
+        .text
+        .semiBold
+        .color(ColorTheme.headerColor)
+        .size(22)
+        .make();
   }
 }
 
