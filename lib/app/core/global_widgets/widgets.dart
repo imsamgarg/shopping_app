@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
+import 'package:velocity_x/velocity_x.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:shopping_app/app/core/theme/color_theme.dart';
+import 'package:shopping_app/app/core/values/strings.dart';
 import 'package:shopping_app/app/modules/home/controllers/home_controller.dart';
 
 class CenterLoading extends StatelessWidget {
@@ -158,3 +161,56 @@ class CartIcon extends GetView<HomeController> {
 //     );
 //   }
 // }
+
+class Price extends StatelessWidget {
+  final int price;
+  const Price({
+    Key? key,
+    required this.price,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(
+      () {
+        return "$rsSign $price"
+            .text
+            .semiBold
+            .color(ColorTheme.headerColor)
+            .size(22)
+            .make();
+      },
+    );
+  }
+}
+
+class CardSkeleton extends StatelessWidget {
+  final Widget? child;
+  final Color? bgColor;
+
+  const CardSkeleton({Key? key, this.child, this.bgColor = Vx.white})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(8.0),
+      decoration: cardDecoration(bgColor: bgColor),
+      child: child,
+    );
+  }
+}
+
+BoxDecoration cardDecoration(
+        {Color? bgColor = Vx.white,
+        Color? borderColor,
+        BorderRadius? borderRadius}) =>
+    BoxDecoration(
+      color: bgColor,
+      border: Border.all(
+          color: borderColor ?? ColorTheme.primaryColor.withOpacity(0.09),
+          style: BorderStyle.solid,
+          width: 1),
+      borderRadius: borderRadius ?? BorderRadius.circular(10),
+// boxShadow: [BoxShadow(color: Colors.grey[100], blurRadius: 10, spreadRadius: 10)]
+    );

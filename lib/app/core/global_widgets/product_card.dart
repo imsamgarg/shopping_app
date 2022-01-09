@@ -71,7 +71,7 @@ class _ProductDetail extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              _ProductPrice(
+              ProductPrice(
                 price: price,
               ),
               const SizedBox(
@@ -111,10 +111,10 @@ class _ProductName extends StatelessWidget {
   }
 }
 
-class _ProductPrice extends StatelessWidget {
+class ProductPrice extends StatelessWidget {
   final int? price;
 
-  const _ProductPrice({
+  const ProductPrice({
     Key? key,
     required this.price,
   }) : super(key: key);
@@ -143,5 +143,122 @@ class _DiscountText extends StatelessWidget {
         .make()
         .box
         .make();
+  }
+}
+
+class CartItem extends StatelessWidget {
+  final String img;
+  final String extra;
+  final String productName;
+  final bool inStock;
+  // final bool optionInStock;
+  // final int finalPrice;
+  // final int quantity;
+  final Widget stepper;
+  final VoidCallback onDeleteTap;
+
+  final Widget productPrice;
+
+  const CartItem({
+    Key? key,
+    required this.img,
+    required this.productName,
+    // required this.finalPrice,
+    this.extra = "",
+    this.inStock = true,
+    // this.optionInStock = true,
+    required this.onDeleteTap,
+    required this.stepper,
+    // required this.quantity,
+    required this.productPrice,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              flex: 2,
+              child: CachedImage(url: img),
+            ),
+            const SizedBox(
+              width: 20,
+            ),
+            Expanded(
+              flex: 4,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 05,
+                  ),
+                  _ProductName(pName: productName),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  productPrice,
+                  // ProductPrice(
+                  //   price: finalPrice,
+                  // ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  if (inStock) stepper,
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  (inStock ? extra : "Out Of Stock")
+                      .text
+                      .color(primaryColor(context))
+                      .make(),
+                ],
+              ),
+            )
+          ],
+        ),
+        if (!inStock) const OutOfStockMask(),
+        Icon(
+          Icons.delete_forever_rounded,
+          color: (inStock) ? Vx.red700 : Vx.white,
+        )
+            .box
+            .p8
+            .height(45)
+            .width(45)
+            .alignCenter
+            .make()
+            .onInkTap(onDeleteTap)
+            .material(color: Colors.transparent)
+            .objectTopRight(),
+      ],
+    );
+  }
+}
+
+class OutOfStockMask extends StatelessWidget {
+  final String msg;
+
+  const OutOfStockMask({
+    Key? key,
+    this.msg = "Product/Option Is Out Of Stock",
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AbsorbPointer(
+      absorbing: true,
+      child: msg.text.white
+          .size(17)
+          .make()
+          .box
+          .withRounded(value: 8)
+          .alignCenter
+          .color(Colors.black.withOpacity(0.5))
+          .make(),
+    );
   }
 }
