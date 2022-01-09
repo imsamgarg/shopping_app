@@ -6,7 +6,7 @@ import 'package:shopping_app/app/data/models/user_models/address_model.dart';
 import 'package:shopping_app/app/modules/checkout/views/checkout_loading_view.dart';
 
 class CheckoutController extends GetxController {
-  static CheckoutController to = Get.find<CheckoutController>();
+  static CheckoutController get to => Get.find<CheckoutController>();
   late final List<CartModel> cartItems;
 
   late PaymentMethod _paymentMethod;

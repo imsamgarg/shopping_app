@@ -15,8 +15,6 @@ class CheckoutBinding extends Bindings {
     Get.lazyPut<SelectPaymentMethodController>(
       () => SelectPaymentMethodController(),
     );
-    Get.lazyPut<CheckoutController>(
-      () => CheckoutController(),
-    );
+    Get.put<CheckoutController>(CheckoutController());
   }
 }

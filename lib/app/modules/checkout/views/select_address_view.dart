@@ -1,8 +1,6 @@
-import 'package:custom_utils/spacing_utils.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:shopping_app/app/core/global_widgets/buttons.dart';
 import 'package:shopping_app/app/core/global_widgets/future_builder.dart';
 import 'package:shopping_app/app/core/global_widgets/widgets.dart';
 import 'package:shopping_app/app/core/theme/sizing_theme.dart';
@@ -21,60 +19,96 @@ class SelectAddressView extends StatelessWidget {
     return AppFutureBuilder(
       future: addressListController.instance,
       builder: (snapshot) {
-        return Scaffold(
-          bottomNavigationBar: const _BottomBar(),
-          appBar: AppBar(
-            title: const Text('Select Address'),
-          ),
-          body: GetBuilder<AddressListController>(
-            init: addressListController,
-            builder: (_) {
-              final addressList = addressListController.addresses;
-              final addressCount = addressList.length;
-              if (addressCount == 0) {
-                return Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        "No Addresses Saved!"
-                            .text
-                            .size(16)
-                            .make()
-                            .box
-                            .py12
-                            .make(),
-                        horSpacing10,
-                        AppTextButton(
-                          onTap: addressListController.onAddAddressTap,
-                          child: const Text("Add Address"),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              }
+        return GetBuilder<AddressListController>(
+          init: addressListController,
+          builder: (_) {
+            final addressList = addressListController.addresses;
 
-              return Padding(
-                child: ListView.builder(
-                  itemBuilder: (context, index) {
-                    return Obx(
-                      () => _CustomTile(
-                        address: addressList[index],
-                        value: controller.selectedAddress,
-                        groupValue: index,
-                        onAddressChange: controller.onAddressChanged,
-                      ),
-                    );
-                  },
-                  itemCount: addressCount,
-                ),
-                padding: const EdgeInsets.only(top: 10),
-              );
-            },
-          ),
+            final isAddressEmpty = addressList.isEmpty;
+            if (isAddressEmpty) _EmptyBody(isAddressEmpty: isAddressEmpty);
+
+            return _Body(addressList: addressList);
+          },
         );
       },
+    );
+  }
+}
+
+class _Body extends GetView<SelectAddressController> {
+  const _Body({
+    Key? key,
+    required this.addressList,
+  }) : super(key: key);
+
+  final List<Address> addressList;
+
+  @override
+  Widget build(BuildContext context) {
+    final addressCount = addressList.length;
+
+    return Scaffold(
+      key: const ValueKey("2"),
+      bottomNavigationBar: const _BottomBar(),
+      appBar: AppBar(
+        title: const Text('Select Address'),
+      ),
+      body: Padding(
+        child: ListView.builder(
+          itemBuilder: (context, index) {
+            return Obx(
+              () => _CustomTile(
+                address: addressList[index],
+                groupValue: controller.selectedAddress,
+                value: index,
+                onAddressChange: controller.onAddressChanged,
+              ).p8(),
+            );
+          },
+          itemCount: addressCount,
+        ),
+        padding: const EdgeInsets.only(top: 10),
+      ),
+    );
+  }
+}
+
+class _EmptyBody extends GetView<SelectAddressController> {
+  const _EmptyBody({
+    Key? key,
+    required this.isAddressEmpty,
+  }) : super(key: key);
+
+  final bool isAddressEmpty;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      key: const ValueKey("1"),
+      floatingActionButton: FloatingActionButton(
+        onPressed: controller.onAddAddress,
+        child: const Icon(Icons.add_rounded, color: Vx.white, size: 35),
+      ),
+      bottomNavigationBar: kEmptyWidget,
+      appBar: AppBar(
+        title: const Text('Select Address'),
+      ),
+      body: SizedBox(
+        height: 65,
+        child: Card(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: "No Addresses Saved!"
+                .text
+                .size(16)
+                .make()
+                .box
+                .py12
+                .px8
+                .makeCentered(),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -82,15 +116,15 @@ class SelectAddressView extends StatelessWidget {
 class _CustomTile extends StatelessWidget {
   const _CustomTile({
     Key? key,
-    this.value,
+    required this.value,
     this.onAddressChange,
     required this.address,
     required this.groupValue,
   }) : super(key: key);
 
   final Address address;
-  final int? value;
-  final int groupValue;
+  final int value;
+  final int? groupValue;
   final ValueChanged<int?>? onAddressChange;
 
   @override
@@ -100,6 +134,7 @@ class _CustomTile extends StatelessWidget {
       value: value,
       selected: isSelected,
       tileColor: Vx.white,
+      activeColor: primaryColor(context),
       shape: Sizing.cardShape,
       title: AddressCard(address: address),
       groupValue: groupValue,
@@ -124,12 +159,7 @@ class AddressCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: address.toString().text.size(16).make(),
-        ),
-      ),
+      child: address.toString().text.size(16).make(),
     );
   }
 }
@@ -173,11 +203,11 @@ class _ConfirmOrder extends GetView<SelectAddressController> {
         child: "Confirm Order"
             .text
             .white
+            .bold
             .make()
             .box
             .padding(const EdgeInsets.symmetric(horizontal: 24, vertical: 16))
             .roundedLg
-            .outerShadowXl
             .color(primaryColor(context))
             .make()
             .onTap(controller.onConfirmOrder),
@@ -193,6 +223,6 @@ class _Price extends GetView<SelectAddressController> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => Price(price: controller.totalPrice));
+    return Price(price: controller.totalPrice);
   }
 }

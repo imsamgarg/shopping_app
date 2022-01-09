@@ -1,3 +1,4 @@
+import 'package:custom_utils/log_utils.dart';
 import 'package:custom_utils/spacing_utils.dart';
 import 'package:flutter/material.dart';
 
@@ -30,8 +31,8 @@ class SelectPaymentMethodView extends GetView<SelectPaymentMethodController> {
             if (controller.isCodAvailable)
               Obx(
                 () => _CustomTile(
-                  value: controller.paymentMethod,
-                  groupValue: PaymentMethod.cashOnDelivery,
+                  groupValue: controller.paymentMethod,
+                  value: PaymentMethod.cashOnDelivery,
                   title: 'Cash On Delivery',
                   onPaymentMethodChange: controller.onPaymentMethodChange,
                 ),
@@ -40,8 +41,8 @@ class SelectPaymentMethodView extends GetView<SelectPaymentMethodController> {
             if (controller.isRazorPayAvailable)
               Obx(
                 () => _CustomTile(
-                  value: controller.paymentMethod,
-                  groupValue: PaymentMethod.prepaid,
+                  groupValue: controller.paymentMethod,
+                  value: PaymentMethod.prepaid,
                   onPaymentMethodChange: controller.onPaymentMethodChange,
                   title: 'Online Payment',
                 ),
@@ -68,13 +69,14 @@ class _CustomTile extends StatelessWidget {
   }) : super(key: key);
 
   final ValueChanged<PaymentMethod?>? onPaymentMethodChange;
-  final PaymentMethod? value;
-  final PaymentMethod groupValue;
+  final PaymentMethod value;
+  final PaymentMethod? groupValue;
   final String title;
 
   @override
   Widget build(BuildContext context) {
     final isSelected = value == groupValue;
+    customLog(isSelected);
     return RadioListTile<PaymentMethod?>(
       value: value,
       selectedTileColor: primaryColor(context),
@@ -131,13 +133,13 @@ class _ConfirmOrder extends GetView<SelectPaymentMethodController> {
         child: "Confirm Order"
             .text
             .white
+            .bold
             .make()
             .box
             .padding(
               const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
             )
             .roundedLg
-            .outerShadowXl
             .color(primaryColor(context))
             .make()
             .onTap(controller.onConfirmOrder),
