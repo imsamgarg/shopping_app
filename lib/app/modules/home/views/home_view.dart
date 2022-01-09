@@ -4,6 +4,7 @@ import 'package:custom_utils/spacing_utils.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:shopping_app/app/core/global_widgets/widgets.dart';
 import 'package:shopping_app/app/core/theme/color_theme.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -62,8 +63,9 @@ class _HomeView extends GetView<HomeController> {
     return SafeArea(
       child: CustomScrollView(
         slivers: [
-          _AppBar(),
-          // _Heading(),
+          // _AppBar(),
+          verSliverSpacing16,
+          _Heading(),
           if (controller.data?.banners?.isNotEmpty ?? false) ...[
             verSliverSpacing16,
             const _Banners(),
@@ -273,61 +275,51 @@ class _Banner extends GetView<HomeController> {
   }
 }
 
-// class _Heading extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return SliverToBoxAdapter(
-//       child: Column(
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         children: [
-//           "Fashion 24x7 "
-//               .text
-//               .bold
-//               .size(30)
-//               .color(ColorTheme.headerColor)
-//               .textStyle(GoogleFonts.varelaRound())
-//               .make(),
-//           verSpacing10,
-//           "Where Fashion Meets Your Soul"
-//               .text
-//               .size(17)
-//               .color(ColorTheme.headerColor)
-//               .make(),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
-class _AppBar extends StatelessWidget {
+class _Heading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          IconButton(
-            color: Vx.gray700,
-            onPressed: () {},
-            icon: const Icon(Icons.menu),
-          ).box.roundedFull.color(Vx.gray500.withOpacity(0.1)).make(),
-          const _CartIcon(),
+          "Fashion 24x7 "
+              .text
+              .bold
+              .size(26)
+              .color(ColorTheme.headerColor)
+              .textStyle(GoogleFonts.varelaRound())
+              .make(),
+          CartIcon(
+            backgroundColor: Colors.grey.withOpacity(0.1),
+          ),
         ],
-      ).py16(),
+      ),
     );
   }
 }
 
-class _CartIcon extends GetView<HomeController> {
-  const _CartIcon({Key? key}) : super(key: key);
+// "Where Fashion Meets Your Soul"
+// .text
+// .size(17)
+// .color(ColorTheme.headerColor)
+// .make(),
 
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-      splashRadius: 28,
-      onPressed: controller.onCartTap,
-      icon: const Icon(Icons.shopping_bag_outlined),
-      color: Vx.gray700,
-    ).box.roundedFull.color(Vx.gray500.withOpacity(0.1)).make();
-  }
-}
+// class _AppBar extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return SliverToBoxAdapter(
+//       child: Row(
+//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//         children: [
+//           IconButton(
+//             color: Vx.gray700,
+//             onPressed: () {},
+//             icon: const Icon(Icons.menu),
+//           ).box.roundedFull.color(Vx.gray500.withOpacity(0.1)).make(),
+//           const _CartIcon(),
+//         ],
+//       ).py16(),
+//     );
+//   }
+// }
+
