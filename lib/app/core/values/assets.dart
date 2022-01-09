@@ -57,6 +57,18 @@ class Assets {
   /// assets/images/welcome.png
   static const String assetsImagesWelcome = "assets/images/welcome.png";
 
+  /// Assets for assetsImagesWelcome1
+  /// assets/images/welcome_1.png
+  static const String assetsImagesWelcome1 = "assets/images/welcome_1.png";
+
+  /// Assets for assetsImagesWelcome2
+  /// assets/images/welcome_2.png
+  static const String assetsImagesWelcome2 = "assets/images/welcome_2.png";
+
+  /// Assets for assetsImagesWelcome3
+  /// assets/images/welcome_3.png
+  static const String assetsImagesWelcome3 = "assets/images/welcome_3.png";
+
   /// Assets for assetsModelsAppModel
   /// assets/models/app_model.json
   static const String assetsModelsAppModel = "assets/models/app_model.json";
