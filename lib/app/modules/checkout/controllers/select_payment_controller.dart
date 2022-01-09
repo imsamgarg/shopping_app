@@ -22,7 +22,31 @@ class SelectPaymentMethodController extends GetxController with ServicesMixin {
   late final razorPayCharges = configData!.razorPayCharges!;
   late final razorPayFreeOn = configData!.razorPayFreeOn!;
 
-  int get totalPrice {
+  int get deliveryCharges {
+    if (paymentMethod == PaymentMethod.cashOnDelivery) {
+      return price < codFreeOn ? codCharges : 0;
+    }
+    if (paymentMethod == PaymentMethod.prepaid) {
+      return price < razorPayFreeOn ? razorPayCharges : 0;
+    }
+    return 0;
+  }
+
+  int get freeDelWorth {
+    if (paymentMethod == PaymentMethod.cashOnDelivery) {
+      return price < codFreeOn ? codFreeOn - price : 0;
+    }
+    if (paymentMethod == PaymentMethod.prepaid) {
+      return price < razorPayFreeOn ? razorPayCharges - price : 0;
+    }
+    return 0;
+  }
+
+  bool get isFreeDelivery {
+    return deliveryCharges == 0;
+  }
+
+  int calculatePrice() {
     if (paymentMethod == PaymentMethod.cashOnDelivery) {
       return price < codFreeOn ? price + codCharges : price;
     }
@@ -32,12 +56,21 @@ class SelectPaymentMethodController extends GetxController with ServicesMixin {
     return price;
   }
 
+  late final _totalPrice = calculatePrice().obs;
+  get totalPrice => _totalPrice.value;
+  set totalPrice(value) => _totalPrice.value = value;
+
   late final _paymentMethod = Rxn<PaymentMethod>();
-  get paymentMethod => _paymentMethod.value;
+  PaymentMethod? get paymentMethod => _paymentMethod.value;
   set paymentMethod(value) => _paymentMethod.value = value;
 
   void onPaymentMethodChange(PaymentMethod? _paymentMethod) {
     paymentMethod = _paymentMethod;
+    return updateFinalPrice();
+  }
+
+  void updateFinalPrice() {
+    totalPrice = calculatePrice();
   }
 
   void onConfirmOrder() {

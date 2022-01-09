@@ -12,11 +12,13 @@ class SelectAddressController extends GetxController with ServicesMixin {
   late List<Address> addressList = addressService.addressList;
   late final checkoutController = CheckoutController.to;
 
+  late final totalPrice = checkoutController.totalPrice;
+
   final _selectedAddress = RxnInt();
   get selectedAddress => _selectedAddress.value;
   set selectedAddress(value) => _selectedAddress.value = value;
 
-  void onAddressChanged(int index) {
+  void onAddressChanged(int? index) {
     selectedAddress = index;
   }
 
