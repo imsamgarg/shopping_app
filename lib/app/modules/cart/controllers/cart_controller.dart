@@ -9,24 +9,37 @@ import 'package:shopping_app/app/core/values/values.dart';
 import 'package:shopping_app/app/data/models/cart_model.dart';
 import 'package:shopping_app/app/modules/cart/controllers/cart_product_controller.dart';
 
+import '../../../routes/app_pages.dart';
+
 class CartController extends GetxController with ServicesMixin, RoutesMixin {
   late final instance = _getCartProducts();
   late final List<CartModel> cartItems = [];
 
-  final invalidCartMessage = "Some Products are not available.";
+  final invalidCartMessage = "Some products are not available";
 
   late final cartProductsController = Get.find<CartProductController>();
 
-  late final RxInt _finalPrice = calculateTotalPrice().obs;
+  late final RxInt _finalPrice;
   int get finalPrice => _finalPrice.value;
   set finalPrice(value) => _finalPrice.value = value;
+
+  late final _isCartEmpty = true.obs;
+  bool get isCartEmpty => _isCartEmpty.value;
+  set isCartEmpty(value) => _isCartEmpty.value = value;
 
   Future<bool> _getCartProducts() async {
     await cartService.initService();
     await cartService.getCartProducts();
 
     convertCartMapToList();
+    listenToPrice();
     return true;
+  }
+
+  void listenToPrice() {
+    _finalPrice = calculateTotalPrice().obs;
+    isCartEmpty = cartItems.isEmpty;
+    _finalPrice.listen((p0) => isCartEmpty = cartItems.isEmpty);
   }
 
   int calculateTotalPrice() {
@@ -42,10 +55,24 @@ class CartController extends GetxController with ServicesMixin, RoutesMixin {
     await cartService.removeFromCart(cartItems[index]);
     //remove from list
     cartItems.removeAt(index);
+
+    //remove product card
     AnimatedList.of(context).removeItem(
       index,
-      (_, animation) => SizeTransition(sizeFactor: animation, child: child),
+      (_, animation) => SlideTransition(
+        position: Tween<Offset>(
+          begin: const Offset(-1, 0),
+          end: const Offset(0, 0),
+        ).animate(animation),
+        child: child,
+      ),
+      duration: const Duration(milliseconds: 700),
     );
+
+    //remove price subscription
+    cartProductsController.removeProductDetail(index);
+
+    updateTotalPrice();
   }
 
   void convertCartMapToList() {
@@ -84,26 +111,8 @@ class CartController extends GetxController with ServicesMixin, RoutesMixin {
     //all clear
     return true;
   }
+
+  void onHomeScreenTap() {
+    Get.until((route) => Get.currentRoute == Routes.HOME);
+  }
 }
-
-///*No Longer Needed
-
-// void decrementQuantity(int index) {
-//   local to cart screen
-//   final item = cartItems[index];
-//   --item.quantity;
-
-//   globally
-//   final id = item.product!.id!;
-//   cartService.decrementQuantity(id);
-// }
-
-// void incrementQuantity(int index) {
-//   local to cart screen
-//   final item = cartItems[index];
-//   ++item.quantity;
-
-//   globally
-//   final id = item.product!.id!;
-//   cartService.incrementQuantity(id);
-// }
