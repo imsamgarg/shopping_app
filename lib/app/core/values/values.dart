@@ -47,6 +47,10 @@ const double kHorProductHeight = 170;
 const double kProductWidth = 200;
 const double kHorProductWidth = 130;
 
+//300
+const double kAssetImagesHeight = 300;
+const double kAssetImagesWidth = 300;
+
 //*product quantity
 ///10
 const double kProductMaxQuantity = 10;

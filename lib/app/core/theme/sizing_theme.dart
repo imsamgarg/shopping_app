@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:shopping_app/app/core/values/values.dart';
 
 class Sizing {
+  static const borderRadiusXS = BorderRadius.all(Radius.circular(radiusXS));
   static const borderRadiusS = BorderRadius.all(Radius.circular(radiusS));
   static const borderRadiusM = BorderRadius.all(Radius.circular(radiusM));
   static const borderRadiusL = BorderRadius.all(Radius.circular(radiusL));
@@ -20,6 +21,7 @@ class Sizing {
   static const roundShape =
       RoundedRectangleBorder(borderRadius: borderRadiusXLL);
 
+  static const radiusXS = 4.0;
   static const radiusS = 8.0;
   static const radiusM = 12.0;
   static const radiusL = 15.0;
