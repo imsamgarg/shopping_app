@@ -23,6 +23,10 @@ mixin RoutesMixin {
     return Get.to(() => PhoneAuthView(link: link ?? false));
   }
 
+  void onHomeScreenTap() {
+    Get.until((route) => Get.currentRoute == Routes.HOME);
+  }
+
   void onAddressListTap() => Get.toNamed(Routes.ADDRESS);
 
   void onImageTap(String image) => Get.to(() => ImageView(image: image));

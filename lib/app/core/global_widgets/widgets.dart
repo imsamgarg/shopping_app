@@ -1,4 +1,8 @@
+import 'package:custom_utils/spacing_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:shopping_app/app/core/global_widgets/buttons.dart';
+import 'package:shopping_app/app/core/utils/helper.dart';
+import 'package:shopping_app/app/core/values/values.dart';
 
 import 'package:velocity_x/velocity_x.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -210,3 +214,47 @@ BoxDecoration cardDecoration(
       borderRadius: borderRadius ?? BorderRadius.circular(10),
 // boxShadow: [BoxShadow(color: Colors.grey[100], blurRadius: 10, spreadRadius: 10)]
     );
+
+class InfoWidget extends StatelessWidget {
+  const InfoWidget({
+    Key? key,
+    this.onTap,
+    required this.image,
+    required this.message,
+    this.buttonMessage,
+  }) : super(key: key);
+
+  final String image;
+  final VoidCallback? onTap;
+  final String? buttonMessage;
+  final String message;
+
+  @override
+  Widget build(BuildContext context) {
+    // assert(onTap == null || buttonMessage == null);
+    return Center(
+      child: SizedBox(
+        height: kAssetImagesHeight + 200,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(
+              height: kAssetImagesHeight,
+              width: kAssetImagesWidth - 50,
+              child: Image.asset(image),
+            ),
+            verSpacing10,
+            message.text.size(24).bold.color(primaryColor(context)).make(),
+            if (onTap != null) verSpacing16,
+            if (onTap != null)
+              AppTextButton(
+                onTap: onTap!,
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: (buttonMessage)!.text.bold.make(),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}

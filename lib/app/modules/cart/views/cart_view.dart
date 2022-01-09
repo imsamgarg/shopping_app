@@ -1,14 +1,11 @@
-import 'package:custom_utils/spacing_utils.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:shopping_app/app/core/global_widgets/buttons.dart';
 import 'package:shopping_app/app/core/global_widgets/future_builder.dart';
 import 'package:shopping_app/app/core/global_widgets/product_card.dart';
 import 'package:shopping_app/app/core/global_widgets/stepper.dart';
 import 'package:shopping_app/app/core/global_widgets/widgets.dart';
 import 'package:shopping_app/app/core/theme/color_theme.dart';
-import 'package:shopping_app/app/core/utils/helper.dart';
 import 'package:shopping_app/app/core/values/assets.dart';
 import 'package:shopping_app/app/modules/cart/controllers/cart_product_controller.dart';
 
@@ -30,32 +27,11 @@ class CartView extends GetView<CartController> {
             () {
               // customLog(controller., name: "Controller");
               if (controller.isCartEmpty) {
-                return Center(
-                  child: SizedBox(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SizedBox(
-                          height: 300,
-                          width: 300,
-                          child: Image.asset(Assets.assetsImagesEmptyIcon),
-                        ),
-                        verSpacing16,
-                        "Your Cart Is Empty"
-                            .text
-                            .size(24)
-                            .bold
-                            .color(primaryColor(context))
-                            .make(),
-                        verSpacing16,
-                        AppTextButton(
-                          onTap: controller.onHomeScreenTap,
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: ("Home Screen").text.bold.make(),
-                        ),
-                      ],
-                    ),
-                  ),
+                return InfoWidget(
+                  message: "Your Cart Is Empty",
+                  image: Assets.assetsImagesEmptyIcon,
+                  buttonMessage: "Home Screen",
+                  onTap: controller.onHomeScreenTap,
                 );
               }
               return AnimatedList(

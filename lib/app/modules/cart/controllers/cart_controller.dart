@@ -111,8 +111,4 @@ class CartController extends GetxController with ServicesMixin, RoutesMixin {
     //all clear
     return true;
   }
-
-  void onHomeScreenTap() {
-    Get.until((route) => Get.currentRoute == Routes.HOME);
-  }
 }
