@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shopping_app/app/core/utils/helper.dart';
 import 'package:shopping_app/app/core/utils/mixins/routes_mixin.dart';
@@ -5,6 +6,7 @@ import 'package:shopping_app/app/core/utils/mixins/services_mixin.dart';
 import 'package:shopping_app/app/core/values/values.dart';
 import 'package:shopping_app/app/data/models/cart_model.dart';
 import 'package:shopping_app/app/modules/product/controllers/product_controller.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 import 'options_controller.dart';
 
@@ -43,10 +45,36 @@ class ProductOpController extends GetxController
     final cartModel = createModel();
     toggleCartButtonLoading(true);
 
-    await cartService.addToCart(cartModel);
+    final size = cartModel.size;
+    final color = cartModel.color;
 
-    successSnackbar("Product Added To Cart");
+    final isSizeRequired = productController.product.isSizeRequired ?? false;
+    final isColorRequired = productController.product.isColorRequired ?? false;
 
+    if (size == null && isSizeRequired) {
+      toggleCartButtonLoading(false);
+      return errorSnackbar("Please Select Size");
+    }
+
+    if (color == null && isColorRequired) {
+      toggleCartButtonLoading(false);
+      return errorSnackbar("Please Select Color");
+    }
+
+    final alreadyInCart = await cartService.addToCart(cartModel);
+
+    if (!alreadyInCart) {
+      customSnackBar(
+        "Product Is Already In Cart",
+        const Icon(Icons.check, color: Vx.white),
+        Vx.yellow600,
+        fgColor: Vx.white,
+      );
+    } else {
+      successSnackbar("Product Added To Cart");
+    }
+
+// Product Added To Cart
     toggleCartButtonLoading(false);
   }
 

@@ -431,12 +431,14 @@ class _AddToCart extends GetView<ProductOpController> {
       builder: (_) {
         if (controller.isAddToCartLoading) {
           return AppTextButton(
+            key: const ValueKey("A"),
             onTap: () {},
             child: const CenterLoading(color: Vx.white, size: 20),
-          ).paddingOnly(bottom: 12);
+          );
         }
         return Expanded(
           child: AppTextButton(
+            key: const ValueKey("B"),
             padding: const EdgeInsets.all(16),
             onTap: controller.onAddToCart,
             child: ("Add To Cart").text.size(14).bold.make(),
@@ -493,8 +495,6 @@ class _ProductName extends GetView<ProductController> {
             .text
             .fontWeight(FontWeight.w900)
             .textStyle(Theme.of(context).textTheme.headline5!)
-            // .size(26)
-            // .color(ColorTheme.headerColor)
             .make(),
         verSpacing8,
         (controller.product.subCategory!)
@@ -524,7 +524,6 @@ class _Price extends GetView<ProductController> {
               .text
               .bold
               .color(primaryColor(context))
-              // .color(ColorTheme.headerColor.withOpacity(0.9))
               .size(32)
               .make();
         }),
