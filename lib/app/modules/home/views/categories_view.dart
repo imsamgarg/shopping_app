@@ -1,3 +1,4 @@
+import 'package:custom_utils/log_utils.dart';
 import 'package:custom_utils/spacing_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -40,28 +41,34 @@ class _SubCategoryView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     final subCategories = controller.subCats.where(checkCondition).toList();
-    return Column(
-      children: [
-        SizedBox(
-          height: 100,
-          child: _CategoryImage(image: category.img!),
-        ),
-        verSpacing10,
-        Expanded(
-          child: GridView.builder(
-            itemCount: subCategories.length,
-            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: kProductWidth,
-              mainAxisSpacing: 10,
-              mainAxisExtent: kProductHeight - 50,
-              crossAxisSpacing: 10,
+    customLog(category.img!);
+    return Padding(
+      padding: Sizing.sidePadding,
+      child: Column(
+        children: [
+          verSpacing12,
+          if (category.img != null)
+            SizedBox(
+              height: 150,
+              child: _CategoryImage(image: category.img!),
             ),
-            itemBuilder: (context, index) {
-              return SubCategoryCard(subCategory: subCategories[index]);
-            },
+          verSpacing24,
+          Expanded(
+            child: GridView.builder(
+              itemCount: subCategories.length,
+              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: kProductWidth,
+                mainAxisSpacing: 10,
+                mainAxisExtent: kProductHeight - 30,
+                crossAxisSpacing: 10,
+              ),
+              itemBuilder: (context, index) {
+                return SubCategoryCard(subCategory: subCategories[index]);
+              },
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -74,6 +81,7 @@ class _CategoryImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return CachedImage(
       url: image,
+      boxFit: BoxFit.cover,
       borderRadius: Sizing.borderRadiusXLL,
     );
   }

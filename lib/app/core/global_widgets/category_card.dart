@@ -48,12 +48,13 @@ class _CategoryName extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Flexible(
+    return SizedBox(
       child: pName!
           .trim()
           .allWordsCapitilize()
           .trimText(15)
           .text
+          .bold
           .fontWeight(FontWeight.w500)
           .size(19)
           .make(),
