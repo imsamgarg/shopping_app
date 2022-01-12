@@ -2,8 +2,16 @@ import 'package:flutter/material.dart';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_image/firebase_image.dart';
+import 'package:shopping_app/app/core/global_widgets/shimmers.dart';
 
 import 'package:shopping_app/app/core/theme/sizing_theme.dart';
+import 'package:shopping_app/app/core/values/assets.dart';
+
+Widget _errorBuilder(c, e, s) {
+  return Image.asset(
+    Assets.assetsImagesErrorNotFound,
+  );
+}
 
 class CachedFirebaseImage extends StatelessWidget {
   const CachedFirebaseImage({
@@ -20,10 +28,13 @@ class CachedFirebaseImage extends StatelessWidget {
     return ClipRRect(
       borderRadius: borderRadius ?? Sizing.borderRadiusL,
       child: Image(
+        loadingBuilder: (context, child, loadingProgress) {
+          if (loadingProgress == null) return child;
+          return const ShimmerContainer();
+        },
+        errorBuilder: _errorBuilder,
         fit: boxFit ?? BoxFit.cover,
-        image: FirebaseImage(
-          url,
-        ),
+        image: FirebaseImage(url),
       ),
     );
   }
@@ -45,6 +56,10 @@ class CachedHTTPImage extends StatelessWidget {
       borderRadius: borderRadius ?? Sizing.borderRadiusL,
       child: CachedNetworkImage(
         imageUrl: url,
+        errorWidget: _errorBuilder,
+        placeholder: (context, url) {
+          return const ShimmerContainer();
+        },
         fit: boxFit ?? BoxFit.cover,
       ),
     );
