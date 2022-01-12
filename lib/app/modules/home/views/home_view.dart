@@ -4,6 +4,7 @@ import 'package:custom_utils/spacing_utils.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:shopping_app/app/core/global_widgets/shimmers.dart';
 import 'package:shopping_app/app/core/global_widgets/widgets.dart';
 import 'package:shopping_app/app/core/theme/color_theme.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -27,6 +28,7 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return AppFutureBuilder(
+      loading: const HomeShimmer(),
       builder: (data) {
         return WillPopScope(
           onWillPop: controller.onBackPress,
@@ -297,6 +299,7 @@ class _Heading extends StatelessWidget {
     );
   }
 }
+
 
 // "Where Fashion Meets Your Soul"
 // .text

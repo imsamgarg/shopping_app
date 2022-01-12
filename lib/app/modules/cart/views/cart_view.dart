@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shopping_app/app/core/global_widgets/future_builder.dart';
 import 'package:shopping_app/app/core/global_widgets/product_card.dart';
+import 'package:shopping_app/app/core/global_widgets/shimmers.dart';
 import 'package:shopping_app/app/core/global_widgets/stepper.dart';
 import 'package:shopping_app/app/core/global_widgets/widgets.dart';
 import 'package:shopping_app/app/core/theme/color_theme.dart';
@@ -17,6 +18,10 @@ class CartView extends GetView<CartController> {
   Widget build(BuildContext context) {
     return AppFutureBuilder(
       future: controller.instance,
+      loading: Container(
+        color: Vx.white,
+        child: const ShimmerCartGrid(),
+      ),
       builder: (snapshot) {
         return Scaffold(
           appBar: AppBar(

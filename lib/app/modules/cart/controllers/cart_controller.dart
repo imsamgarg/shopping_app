@@ -9,8 +9,6 @@ import 'package:shopping_app/app/core/values/values.dart';
 import 'package:shopping_app/app/data/models/cart_model.dart';
 import 'package:shopping_app/app/modules/cart/controllers/cart_product_controller.dart';
 
-import '../../../routes/app_pages.dart';
-
 class CartController extends GetxController with ServicesMixin, RoutesMixin {
   late final instance = _getCartProducts();
   late final List<CartModel> cartItems = [];
